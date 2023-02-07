@@ -1,0 +1,92 @@
+---
+title: "Wie zuverlässig sind Testergebnisse?"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(shiny)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+prevalence <- 1.0
+```
+
+```{css, echo=FALSE}
+.side {
+  font-size: 0.75em;
+  max-width: 25%;
+  padding-left: 1em;
+}
+```
+
+## Bedingte Wahrscheinlichkeiten: Wie zuverlässig ist das Ergebnis?
+
+### Fragestellung
+
+Sie fühlen sich gerade auch krank und machen einen Corona Schnelltest. Leider fällt der Test positiv aus.
+
+TODO: Bild positiver Schnelltest.
+
+<!--Die Kennzahl, die aussagt wie hoch der Prozentsatz der Menschen ist, die zu einem bestimmten Zeitpunkt an einer bestimmten Krankheit leidet, wird *Prävalenz* genannt.-->
+
+
+Der Test ist zwar positiv, aber wie sicher können Sie sich sein, dass Sie wirklich an Corona erkrankt sind, d.h. wie sicher können Sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass Sie wirklich *nicht* an Corona infiziert sind?
+
+Zunächst einmal können wir feststellen, dass wir es mit vier Möglichkeiten zu tun haben:
+
+- Sie sind krank und der Test ist positiv
+- Sie sind krank und der Test ist negativ
+- Sie sind gesund und der Test ist positiv
+- Sie sind gesund und der Test ist negativ
+
+:::: {style="display: flex;"}
+
+::: {}
+
+Man kann das übersichtlich als Tabelle darstellen:
+
+|  | Test positiv | Test negativ |
+|-----:|:----:|:----:|
+|  **Sie sind krank**    |   richtig positiv   |  falsch negativ    |
+|  **Sie sind gesund**    |   falsch positiv   |  richtig negativ   |
+
+:::
+
+::: {.side}
+
+Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
+
+:::
+
+::::
+
+
+```{r confmat}
+question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten liefern: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für solch einen Test aus?",
+  answer("So wie oben, d.h. 2 Zeilen und 2 Spalten."),
+  answer("2 Zeilen und 3 Spalten."),
+  answer("3 Zeilen und 2 Spalten."),
+  answer("3 Zeilen und 3 Spalten.", correct = TRUE),
+  answer("Es ist nicht möglich, eine Konfusionsmatrix für mehr Tests mit mehr als zwei möglichen Antworten zu erstellen.")
+)
+```
+
+
+Nehmen wir an, dass wir wissen, dass momentan `r prevalence` Prozent aller Menschen in der Bevölkerung erwiesen an COVID-19 erkrankt sind.
+
+### Analyse
+
+Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir dem Ergebnis eines (Corona-)Tests trauen können. D.h. wie hoch ist die Wahrscheinlichkeit, dass Sie tatsächlich krank sind, wenn der Test positiv ausfällt?
+
+TODO: Aufgabe: Wahrscheinlichkeit, dass tatsächlich gesund wenn Test negativ
+
+
+### Lösung
+
+
+
+## Satz von Bayes: Wie zuverlässig sind mehrere Tests?
+
+- Szenarios: Schnelltest + Schnelltest, Schnelltest + PCR
