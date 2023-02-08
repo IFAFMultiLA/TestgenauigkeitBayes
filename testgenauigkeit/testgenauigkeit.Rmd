@@ -7,10 +7,13 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(shiny)
+library(data.tree)
 
 knitr::opts_chunk$set(echo = FALSE)
 
-prevalence <- 1.0
+prevalence <- 0.2 / 100.0   # P(K)
+sens <- 0.9652   # P(T|K)
+spec <- 0.9968   # P(¬T|¬K)
 ```
 
 ```{css, echo=FALSE}
@@ -28,8 +31,6 @@ prevalence <- 1.0
 Sie fühlen sich gerade auch krank und machen einen Corona Schnelltest. Leider fällt der Test positiv aus.
 
 TODO: Bild positiver Schnelltest.
-
-<!--Die Kennzahl, die aussagt wie hoch der Prozentsatz der Menschen ist, die zu einem bestimmten Zeitpunkt an einer bestimmten Krankheit leidet, wird *Prävalenz* genannt.-->
 
 
 Der Test ist zwar positiv, aber wie sicher können Sie sich sein, dass Sie wirklich an Corona erkrankt sind, d.h. wie sicher können Sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass Sie wirklich *nicht* an Corona infiziert sind?
@@ -80,13 +81,169 @@ Nehmen wir an, dass wir wissen, dass momentan `r prevalence` Prozent aller Mensc
 
 Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir dem Ergebnis eines (Corona-)Tests trauen können. D.h. wie hoch ist die Wahrscheinlichkeit, dass Sie tatsächlich krank sind, wenn der Test positiv ausfällt?
 
+Zunächst können diese Fragestellung als Baumdiagramm darstellen, was uns später bei der Berechnung helfen wird:
+
+
+```{r}
+root <- Node$new('')
+node_k <- root$AddChild("krank")
+node_k_p <- node_k$AddChild("Test positiv")
+node_k_np <- node_k$AddChild("Test negativ")
+node_nk <- root$AddChild("gesund")
+node_nk_p <- node_nk$AddChild("Test positiv")
+node_nk_np <- node_nk$AddChild("Test negativ")
+
+SetNodeStyle(root, shape = 'point')
+SetNodeStyle(node_k, shape = 'ellipse')
+SetNodeStyle(node_nk, shape = 'ellipse')
+SetGraphStyle(root, rankdir = "LR")
+plot(root)
+```
+
+Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse und deren Negation. Diese entsprechen den oben genannten Möglichkeiten:
+
+- $K$:Person krank
+- $\neg K$: Person gesund
+- $T$: Test positiv
+- $\neg T$: Test negativ
+
+Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen mit den dazugehörigen Wahrscheinlichkeiten $P$:
+
+```{r}
+root <- Node$new('')
+SetEdgeStyle(root, fontsize = 10)
+
+node_k <- root$AddChild("K")
+SetEdgeStyle(node_k, label = "P(K)")
+node_k_p <- node_k$AddChild("T")
+SetEdgeStyle(node_k_p, label = "P(T|K)")
+node_k_np <- node_k$AddChild("¬T")
+SetEdgeStyle(node_k_np, label = "P(¬T|K)")
+
+node_nk <- root$AddChild("¬K")
+SetEdgeStyle(node_nk, label = "P(¬K)")
+node_nk_p <- node_nk$AddChild("T")
+SetEdgeStyle(node_nk_p, label = "P(T|¬K)")
+node_nk_np <- node_nk$AddChild("¬T")
+SetEdgeStyle(node_nk_np, label = "P(¬T|¬K)")
+
+SetNodeStyle(root, shape = 'point')
+SetNodeStyle(node_k, shape = 'ellipse')
+SetNodeStyle(node_nk, shape = 'ellipse')
+SetGraphStyle(root, rankdir = "LR")
+
+plot(root)
+```
+
+Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass wir tatsächlich krank sind, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(K \mid T)$. Wie errechnen wir diese Wahrscheinlichkeit? Der **Satz von Bayes** gibt uns die Möglichkeit dazu:
+
+
+$$
+P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
+$$
+
+Was wir also brauchen, sind drei Wahrscheinlichkeiten: $P(K)$, $P(T \mid K)$ und $P(T)$.
+
+:::: {style="display: flex;"}
+
+::: {}
+
+$P(K)$ gibt an, wir hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können ein Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`$%. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
+
+:::
+
+::: {.side}
+
+Die Kennzahl, die aussagt wie hoch der Prozentsatz der Menschen ist, die zu einem bestimmten Zeitpunkt an einer bestimmten Krankheit leidet, wird *Prävalenz* genannt.
+
+:::
+
+::::
+
+Nun brauchen wir $P(T \mid K)$.
+
+```{r P_T_K}
+question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",   # werden Formeln gerendert?
+  answer("Die Wahrscheinlichkeit dass ein Test positiv ist, wenn die geteste Person krank ist.", correct = TRUE),
+  answer("Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
+  answer("Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte."),
+  answer("Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist.")
+)
+```
+
+$P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. In den Beipackzetteln von Schnelltests findet sich üblicherweise auch eine Angabe zu dessen Sensitivität.
+
+TODO: Bild Beipackzettel.
+
+Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren:
+
+```{r}
+root <- Node$new('')
+SetEdgeStyle(root, fontsize = 10)
+
+node_k <- root$AddChild("K")
+SetEdgeStyle(node_k, label = "P(K)", color = "red")
+node_k_p <- node_k$AddChild("T")
+SetNodeStyle(node_k_p, color = "red")
+SetEdgeStyle(node_k_p, label = "P(T|K)", color = "red")
+node_k_np <- node_k$AddChild("¬T")
+SetEdgeStyle(node_k_np, label = "P(¬T|K)", color = "black")
+
+node_nk <- root$AddChild("¬K")
+SetEdgeStyle(node_nk, label = "P(¬K)", color = "red")
+node_nk_p <- node_nk$AddChild("T")
+SetNodeStyle(node_nk_p, color = "red")
+SetEdgeStyle(node_nk_p, label = "P(T|¬K)", color = "red")
+node_nk_np <- node_nk$AddChild("¬T")
+SetEdgeStyle(node_nk_np, label = "P(¬T|¬K)", color = "black")
+
+SetNodeStyle(root, shape = 'point')
+SetNodeStyle(node_k, shape = 'ellipse')
+SetNodeStyle(node_nk, shape = 'ellipse')
+SetGraphStyle(root, rankdir = "LR")
+
+plot(root)
+```
+
+Somit erhalten wir
+
+$$
+P(T) = P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K),
+$$
+
+und damit
+
+$$
+P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
+$$
+
+Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \neg K)$ und $P(\neg K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\neg K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\neg K) = 1 - P(K) = `r (1 - prevalence)*100`$%.
+
+Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate*. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\neg T | \neg K)$. Auch die Spezifität wird oft ein Beipackzetteln von Schnelltests abgedruckt. Wir wir im Baumdiagramm sehen, ist $P(\neg T | \neg K)$ komplementär zu $P(T | \neg K)$ und damit gilt $P(T | \neg K) = 1 - P(\neg T | \neg K)$.
+
+
+```{r}
+sens <- 0.9652   # P(T|K)
+spec <- 0.9968   # P(¬T|¬K)
+
+sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalence))
+```
+
+
+
+
+
+
+
 TODO: Aufgabe: Wahrscheinlichkeit, dass tatsächlich gesund wenn Test negativ
 
 
 ### Lösung
 
 
+### Zusammenfassung
 
-## Satz von Bayes: Wie zuverlässig sind mehrere Tests?
+
+## Wie zuverlässig sind mehrere Tests?
 
 - Szenarios: Schnelltest + Schnelltest, Schnelltest + PCR
