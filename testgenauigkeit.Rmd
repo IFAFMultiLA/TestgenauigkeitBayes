@@ -13,6 +13,8 @@ library(ggplot2)
 
 knitr::opts_chunk$set(echo = FALSE)
 
+gradethis_setup()
+
 prevalence <- 0.2 / 100.0   # P(K)
 sens <- 0.97    # P(T|K)
 spec <- 0.997   # P(¬T|¬K)
@@ -245,7 +247,7 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\ne
 
 Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich krank ist (positiver Vorhersagewert), beträgt also nur rund $`r round(pos_pred_val * 100)`\%$. Das ist tatsächlich keine sonderlich hohe Wahrscheinlichkeit. Auf der folgenden Seite werden wir uns genauer anschauen, warum das so ist.
 
-#### Aufgabe
+#### Aufgabe 1
 
 Berechnen Sie die Wahrscheinlichkeit, dass eine Person, die einen negativen Schnelltest hat, tatsächlich gesund ist. Benutzen Sie dabei die selben Parameter (Prävalenz, Sensitivität, Spezifität) wie in der obigen Beispielberechnung. Sie können dafür die Variablen `prevalence`, `sens` und `spec` im Code verwenden.
 
@@ -363,6 +365,102 @@ Wir sehen also: gute Tests (insbesondere mit hoher Spezifität) können hier ger
 
 Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte haben noch bedeutenden Einfluss auf das Ergebnis. Insbesondere ist es wichtig, wie gründlich der Abstrich vorgenommen wurde. Es ist auch bekannt, dass die Temperatur die Genauigkeit von COVID-Schnelltests beeinflusst. Sie sehen also, dass die Berechnungen noch deutlich komplexer werden können!
 
+
+#### Aufgabe 2a
+
+Analog zu den Grafiken für den positiven Vorhersagewert $P(K \mid T)$ möchten wir eine Grafik für den negativen Vorhersagewert $P(\neg K \mid \neg T)$ erstellen. Diese Grafik soll den negativen Vorhersagewert in Abhängigkeit von der Prävalenz und der Sensitivität darstellen.
+
+Zunächst brauchen wir dazu einen *Dataframe* mit einer Reihe von Prävalenz- und Sensitivitätswerten. Erzeugen Sie einen solchen Dataframe für alle Kombinationen aus den Prävalenzwerten $0.1, 0.2, \dots, 0.9$ und den Sensitivitätswerten $0.9, 0.97$ und $0.99$. Sie können dafür die Funktion `expand.grid` verwenden. Der Dataframe sollte `nvw_param` heißen und die Spalten `praev` und `sens` haben.
+
+```{r nvw_a, exercise=TRUE, exercise.timelimit=5, exercise.blanks = "___+"}
+nvw_param <- expand.grid(praev = ___,
+                         sens = ___)
+nvw_param
+```
+
+```{r nvw_a-solution}
+nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
+                         sens = c(0.9, 0.97, 0.99))
+nvw_param
+```
+
+```{r nvw_a-check}
+grade_this({
+    nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
+                             sens = c(0.9, 0.97, 0.99))
+    
+    if (all(dplyr::near(.result, nvw_param))) {
+        pass("Korrekt!")
+    }
+    fail()
+})
+```
+
+#### Aufgabe 2b
+
+Berechnen Sie als nächstes den negativen Vorhersagewert $P(\neg K \mid \neg T)$ für alle gegebenen Parameter und fügen Sie das Ergebnis als Spalte `nvw` zum Dataframe `nvw_param` hinzu. Nutzen Sie dafür eine festgelegte Spezifität von $99.7\%$.
+
+```{r nvw_b-setup}
+nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
+                         sens = c(0.9, 0.97, 0.99))
+nvw_param
+```
+
+```{r nvw_b, exercise=TRUE, exercise.timelimit=5, exercise.blanks = "___+", exercise.setup="nvw_b-setup"}
+spez <- 0.997
+nvw_param$nvw <- ___
+nvw_param
+```
+
+```{r nvw_b-solution}
+spez <- 0.997
+nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
+nvw_param
+```
+
+```{r nvw_b-check}
+grade_this({
+    nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
+                             sens = c(0.9, 0.97, 0.99))
+    spez <- 0.997
+    nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
+    
+    if (all(dplyr::near(.result, nvw_param))) {
+        pass("Korrekt!")
+    }
+    fail()
+})
+```
+
+#### Aufgabe 2c
+
+Erstellen Sie eine Grafik mit *ggplot2*, welche den negativen Vorhersagewert in Abhängigkeit der Prävalenz darstellt. Dabei sollen für die drei unterschiedlichen Werte der Sensitivität drei farblich unterschiedliche Linien dargestellt werden.
+
+Die erzeugte Grafik sollte wie folgt aussehen:
+
+![](images/aufg_2c_plot.png){width=400px}
+
+
+```{r nvw_c-setup, exercise.setup="nvw_b-setup"}
+spez <- 0.997
+nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
+```
+
+```{r nvw_c, exercise=TRUE, exercise.timelimit=5, exercise.blanks = "___+", exercise.setup="nvw_c-setup"}
+ggplot(nvw_param, aes(___)) +
+    ___ +  # "geom_..." für Linienplot
+    theme_minimal()
+```
+
+```{r nvw_c-solution}
+ggplot(nvw_param, aes(praev, nvw, color = sens, group = sens)) +
+    geom_line() +
+    theme_minimal()
+```
+
+```{r nvw_c-code-check}
+grade_this_code()
+```
 
 
 <!--
