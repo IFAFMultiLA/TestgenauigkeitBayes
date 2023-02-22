@@ -329,6 +329,33 @@ ggplot(ppv_fixed_sens_spec, aes(prev, ppv)) +
 
 Andererseits zeigt es auch, wie wichtig genaue Tests sind. Bei niedriger Prävalenz spielt hierbei besonders die Spezifität eine wichtige Rolle, wie folgende Grafiken zeigen:
 
+```{r}
+sliderInput("slider_sens", "Sensitivität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
+sliderInput("slider_spec", "Spezifität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
+sliderInput("slider_prev_max", "Maximal dargestellte Prävalenz in Prozent (x-Achse)", min = 0, max = 100, value = 2, step = 0.1)
+plotOutput("ppv_interactive")
+```
+
+```{r, context="server"}
+output$ppv_interactive <- renderPlot({
+  sens <- input$slider_sens / 100
+  spec <- input$slider_spec / 100
+  df <- data.frame(prev = seq(0, input$slider_prev_max / 100, length.out = 1000))
+  df$ppv <- sens * df$prev / (sens * df$prev + (1-spec) * (1-df$prev))
+  
+  ggplot(df, aes(prev, ppv)) +
+    geom_line() +
+    scale_x_continuous('Prävalenz', labels = scales::percent) +
+    scale_y_continuous(expression("P" * (K ~ "|" ~ T )), labels = scales::percent, limits = c(0, 1)) +
+    labs(title = expression("Positiver Vorhersagewert P" * (K ~ "|" ~ T ) ~ "in Abhängigkeit der Prävalenz"),
+         subtitle = sprintf("Bei Sensitivität von %.1f%% und Spezifität von %.1f%%.", input$slider_sens, input$slider_spec)) +
+    theme_minimal()
+})
+```
+
+
+<!--
+
 ```{r, warning=FALSE}
 #ppv_by_param$sens_spec_lbl <- sprintf("Sens. %.3f%%, Spez. %.3f%%", ppv_by_param$sens * 100, ppv_by_param$spec * 100)
 ppv_by_param$spec_lbl <- sprintf("%.1f%%", ppv_by_param$spec * 100)
@@ -343,6 +370,7 @@ ggplot(ppv_by_param, aes(prev, ppv, color = spec_lbl, group = spec_lbl)) +
     theme_minimal()
 ```
 
+-->
 
 ```{r ppv_sens}
 question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so starke Rolle für den positiven Vorhersagewert?",

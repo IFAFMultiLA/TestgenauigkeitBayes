@@ -8,3 +8,5 @@ renv/staging/
 .rsyncexclude
 Makefile
 *.swp
+testgenauigkeit_files/
+*.html
