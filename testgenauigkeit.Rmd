@@ -22,10 +22,17 @@ pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalenc
 ```
 
 ```{css, echo=FALSE}
-.side {
+.with_sidebar {
+    display: flex;
+}
+
+.with_sidebar > .main {
+    width: 75%
+}
+
+.with_sidebar > .side {
   font-size: 0.8em;
-  min-width: 25%;
-  max-width: 25%;
+  width: 25%;
   padding-left: 2em;
 }
 ```
@@ -48,24 +55,22 @@ Zunächst einmal können wir feststellen, dass wir es mit vier Möglichkeiten zu
 
 Man kann das übersichtlich als Tabelle darstellen:
 
-:::: {style="display: flex;"}
+<div class="with_sidebar">
 
-::: {}
+<div class="main">
 
 |  | Test positiv | Test negativ |
 |-----:|:----:|:----:|
 |  **Person krank**    |   richtig positiv   |  falsch negativ    |
 |  **Person gesund**    |   falsch positiv   |  richtig negativ   |
 
-:::
+</div>
 
-::: {.side}
-
+<div class="side">
 Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
+</div>
 
-:::
-
-::::
+</div>
 
 
 ```{r confmat}
@@ -148,21 +153,17 @@ $$
 
 Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichkeiten: $P(K)$, $P(T \mid K)$ und $P(T)$.
 
-:::: {style="display: flex;"}
+<div class="with_sidebar">
 
-::: {}
-
+<div class="main">
 $P(K)$ gibt an, wir hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können ein Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
+</div>
 
-:::
-
-::: {.side}
-
+<div class="side">
 Die Kennzahl, die aussagt wie hoch der Prozentsatz der Menschen ist, die zu einem bestimmten Zeitpunkt an einer bestimmten Krankheit leidet, wird *Prävalenz* genannt.
+</div>
 
-:::
-
-::::
+</div>
 
 Nun brauchen wir $P(T \mid K)$.
 
