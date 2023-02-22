@@ -1,12 +1,17 @@
-server_sync:
-	rsync -rcv --exclude-from=.rsyncexclude . htwserver-mk:/home/mk/ShinyApps/TestgenauigkeitBayes
+SERVER := htwserver-mk
+APPDIR := ~/ShinyApps/TestgenauigkeitBayes
+SERVER_APP := $(SERVER):$(APPDIR)
+RSYNC_COMMON := -rcv --exclude-from=.rsyncexclude
 
-server_testsync:
-	rsync -rcvn --exclude-from=.rsyncexclude . htwserver-mk:/home/mk/ShinyApps/TestgenauigkeitBayes
 
-server_reload:
-	ssh htwserver-mk 'touch ~/ShinyApps/TestgenauigkeitBayes/restart.txt'
+sync:
+	rsync $(RSYNC_COMMON) . $(SERVER_APP)
 
-server_installdeps:
-	ssh htwserver-mk 'cd ~/ShinyApps/TestgenauigkeitBayes && R -e "renv::restore()"'
+testsync:
+	rsync $(RSYNC_COMMON) -n . $(SERVER_APP)
 
+reload:
+	ssh $(SERVER) 'touch $(APPDIR)/restart.txt'
+
+installdeps:
+	ssh $(SERVER) 'cd $(APPDIR) && R -e "renv::restore()"'
