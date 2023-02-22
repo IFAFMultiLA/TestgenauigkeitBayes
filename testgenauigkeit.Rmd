@@ -2,6 +2,9 @@
 title: "Wie zuverlässig sind Testergebnisse?"
 output: learnr::tutorial
 runtime: shiny_prerendered
+author: Markus Konrad
+email: markus.konrad@htw-berlin.de
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
 ---
 
 ```{r setup, include=FALSE}
@@ -22,6 +25,10 @@ pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalenc
 ```
 
 ```{css, echo=FALSE}
+#doc-metadata {
+    font-size: 0.8em;
+}
+
 .with_sidebar {
     display: flex;
 }
