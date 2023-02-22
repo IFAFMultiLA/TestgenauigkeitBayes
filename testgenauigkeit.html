@@ -182,12 +182,12 @@ Möglichkeiten zu tun haben:</p>
 <h2>Analyse</h2>
 <p>Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark
 wir einem positiven Ergebnis eines (Corona-)Tests trauen können. D.h.
-wie hoch ist die Wahrscheinlichkeit, dass eine Person tatsächlich krank
-ist, wenn der Test positiv ausfällt?</p>
+<strong>wie hoch ist die Wahrscheinlichkeit, dass eine Person
+tatsächlich krank ist, wenn der Test positiv ausfällt?</strong></p>
 <p>Zunächst können wir diese Fragestellung als Baumdiagramm darstellen,
 was uns später bei der Berechnung helfen wird:</p>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2199633ab23521656e42" style="width:624px;height:288px;"></div>
-<script type="application/json" data-for="htmlwidget-2199633ab23521656e42">{"x":{"diagram":"digraph {\n\ngraph [rankdir = \"LR\"]\n\n\n\n  \"1\" [label = \"\", shape = \"point\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"Person krank\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"Test positiv\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"Test negativ\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"Person gesund\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"Test positiv\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"Test negativ\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"1\"->\"5\" \n  \"2\"->\"3\" \n  \"2\"->\"4\" \n  \"5\"->\"6\" \n  \"5\"->\"7\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-031333f1d617b01021b3" style="width:624px;height:288px;"></div>
+<script type="application/json" data-for="htmlwidget-031333f1d617b01021b3">{"x":{"diagram":"digraph {\n\ngraph [rankdir = \"LR\"]\n\n\n\n  \"1\" [label = \"\", shape = \"point\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"Person krank\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"Test positiv\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"Test negativ\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"Person gesund\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"Test positiv\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"Test negativ\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"1\"->\"5\" \n  \"2\"->\"3\" \n  \"2\"->\"4\" \n  \"5\"->\"6\" \n  \"5\"->\"7\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Damit wir später gut rechnen können, definieren wir zunächst zwei
 Ereignisse und deren Negation. Diese entsprechen den oben genannten
 Möglichkeiten:</p>
@@ -200,8 +200,8 @@ Möglichkeiten:</p>
 <p>Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen
 mit den dazugehörigen Wahrscheinlichkeiten <span
 class="math inline">\(P\)</span>:</p>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d0b6b495afd52b7ecce7" style="width:624px;height:288px;"></div>
-<script type="application/json" data-for="htmlwidget-d0b6b495afd52b7ecce7">{"x":{"diagram":"digraph {\n\ngraph [rankdir = \"LR\"]\n\n\n\n  \"1\" [label = \"\", shape = \"point\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"K\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"¬T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"¬K\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"¬T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [fontsize = \"10\", label = \"P(K)\"] \n\"1\"->\"5\" [fontsize = \"10\", label = \"P(¬K)\"] \n\"2\"->\"3\" [fontsize = \"10\", label = \"P(T|K)\"] \n\"2\"->\"4\" [fontsize = \"10\", label = \"P(¬T|K)\"] \n\"5\"->\"6\" [fontsize = \"10\", label = \"P(T|¬K)\"] \n\"5\"->\"7\" [fontsize = \"10\", label = \"P(¬T|¬K)\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-93543f65dc26f5b0b312" style="width:624px;height:288px;"></div>
+<script type="application/json" data-for="htmlwidget-93543f65dc26f5b0b312">{"x":{"diagram":"digraph {\n\ngraph [rankdir = \"LR\"]\n\n\n\n  \"1\" [label = \"\", shape = \"point\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"K\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"¬T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"¬K\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"¬T\", shape = \"ellipse\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [fontsize = \"10\", label = \"P(K)\"] \n\"1\"->\"5\" [fontsize = \"10\", label = \"P(¬K)\"] \n\"2\"->\"3\" [fontsize = \"10\", label = \"P(T|K)\"] \n\"2\"->\"4\" [fontsize = \"10\", label = \"P(¬T|K)\"] \n\"5\"->\"6\" [fontsize = \"10\", label = \"P(T|¬K)\"] \n\"5\"->\"7\" [fontsize = \"10\", label = \"P(¬T|¬K)\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch
 die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn
 der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten
@@ -214,7 +214,8 @@ Bayes</strong> gibt uns die Möglichkeit dazu:</p>
 <p><span class="math display">\[
 P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
 \]</span></p>
-<p>Was wir also brauchen, sind drei Wahrscheinlichkeiten: <span
+<p>Was wir also brauchen, um <span class="math inline">\(P(K \mid
+T)\)</span> zu berechnen, sind drei Wahrscheinlichkeiten: <span
 class="math inline">\(P(K)\)</span>, <span class="math inline">\(P(T
 \mid K)\)</span> und <span class="math inline">\(P(T)\)</span>.</p>
 <div style="display: flex;">
@@ -252,7 +253,7 @@ ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und
 wird daher auch <em>Richtig-positiv-Rate</em> genannt. In den
 Beipackzetteln von Schnelltests findet sich üblicherweise auch eine
 Angabe zu dessen Sensitivität.</p>
-<p>TODO: Bild Beipackzettel.</p>
+<p><strong>TODO:</strong> Bild Beipackzettel.</p>
 <p>Schließlich fehlt noch <span class="math inline">\(P(T)\)</span>: die
 Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund –
 bei einem Test ein positives Ergebnis erhält. Hier hilft uns das
@@ -260,8 +261,8 @@ bei einem Test ein positives Ergebnis erhält. Hier hilft uns das
 Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven
 Tests führen (Person krank und Person gesund), zu addieren, da sie sich
 gegenseitig ausschließen:</p>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-60c16405752383eafa4e" style="width:624px;height:288px;"></div>
-<script type="application/json" data-for="htmlwidget-60c16405752383eafa4e">{"x":{"diagram":"digraph {\n\ngraph [rankdir = \"LR\"]\n\n\n\n  \"1\" [label = \"\", shape = \"point\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"K\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"T\", shape = \"ellipse\", color = \"red\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"¬T\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"¬K\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"T\", shape = \"ellipse\", color = \"red\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"¬T\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [fontsize = \"10\", label = \"P(K)\", color = \"red\"] \n\"1\"->\"5\" [fontsize = \"10\", label = \"P(¬K)\", color = \"red\"] \n\"2\"->\"3\" [fontsize = \"10\", label = \"P(T|K)\", color = \"red\"] \n\"2\"->\"4\" [fontsize = \"10\", label = \"P(¬T|K)\", color = \"black\"] \n\"5\"->\"6\" [fontsize = \"10\", label = \"P(T|¬K)\", color = \"red\"] \n\"5\"->\"7\" [fontsize = \"10\", label = \"P(¬T|¬K)\", color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fb270c048799c63cb102" style="width:624px;height:288px;"></div>
+<script type="application/json" data-for="htmlwidget-fb270c048799c63cb102">{"x":{"diagram":"digraph {\n\ngraph [rankdir = \"LR\"]\n\n\n\n  \"1\" [label = \"\", shape = \"point\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"K\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"T\", shape = \"ellipse\", color = \"red\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"¬T\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"¬K\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"T\", shape = \"ellipse\", color = \"red\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"¬T\", shape = \"ellipse\", color = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n\"1\"->\"2\" [fontsize = \"10\", label = \"P(K)\", color = \"red\"] \n\"1\"->\"5\" [fontsize = \"10\", label = \"P(¬K)\", color = \"red\"] \n\"2\"->\"3\" [fontsize = \"10\", label = \"P(T|K)\", color = \"red\"] \n\"2\"->\"4\" [fontsize = \"10\", label = \"P(¬T|K)\", color = \"black\"] \n\"5\"->\"6\" [fontsize = \"10\", label = \"P(T|¬K)\", color = \"red\"] \n\"5\"->\"7\" [fontsize = \"10\", label = \"P(¬T|¬K)\", color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Somit erhalten wir</p>
 <p><span class="math display">\[
 P(T) = P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K),
@@ -279,7 +280,7 @@ Damit ist <span class="math inline">\(P(\neg K)\)</span> (die generelle
 Wahrscheinlichkeit <em>nicht</em> krank zu sein) leicht zu errechnen,
 denn <span class="math inline">\(P(K)\)</span> (die generelle
 Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen
-wir schon: <span class="math inline">\(P(\neg K) = 1 - P(K) =
+wir schon: <span class="math inline">\(P(\neg K) = 100\% - P(K) =
 99.8\%\)</span>.</p>
 <p>Fehlt zu guter letzt noch <span class="math inline">\(P(T \mid \neg
 K)\)</span>: Die Wahrscheinlichkeit ein positives Testergebnis zu haben,
@@ -292,16 +293,16 @@ class="math inline">\(P(\neg T | \neg K)\)</span>. Auch die Spezifität
 wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im
 Baumdiagramm sehen, ist <span class="math inline">\(P(\neg T | \neg
 K)\)</span> komplementär zu <span class="math inline">\(P(T | \neg
-K)\)</span> und damit gilt <span class="math inline">\(P(T | \neg K) = 1
-- P(\neg T | \neg K)\)</span>.</p>
+K)\)</span> und damit gilt <span class="math inline">\(P(T | \neg K) =
+100\% - P(\neg T | \neg K)\)</span>.</p>
 <div id="section-berechnung" class="section level3">
 <h3>Berechnung</h3>
 <p>Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist,
-dass eine Person tatsächlich krank ist, wenn Sie ein positives
+dass eine Person tatsächlich krank ist, wenn sie ein positives
 Testergebnis erhält, nehmen wir zunächst gängige Werte für die
 Sensitivität und Spezifität von guten COVID Schnelltests an:</p>
 <ul>
-<li>Sensitivät: <span class="math inline">\(P(T \mid K) =
+<li>Sensitivität: <span class="math inline">\(P(T \mid K) =
 97\%\)</span></li>
 <li>Spezifität: <span class="math inline">\(P(\neg T \mid \neg K) =
 99.7\%\)</span></li>
@@ -326,6 +327,7 @@ tatsächlich krank ist (positiver Vorhersagewert), beträgt also nur rund
 <span class="math inline">\(39\%\)</span>. Das ist tatsächlich keine
 sonderlich hohe Wahrscheinlichkeit. Auf der folgenden Seite werden wir
 uns genauer anschauen, warum das so ist.</p>
+<hr />
 <div id="section-aufgabe-1" class="section level4">
 <h4>Aufgabe 1</h4>
 <p>Berechnen Sie die Wahrscheinlichkeit, dass eine Person, die einen
@@ -388,6 +390,10 @@ gerechtfertigt, wie hier noch mal im Detail dargestellt:</p>
 <p>Andererseits zeigt es auch, wie wichtig genaue Tests sind. Bei
 niedriger Prävalenz spielt hierbei besonders die Spezifität eine
 wichtige Rolle, wie folgende Grafiken zeigen:</p>
+<p><img src="testgenauigkeit_files/figure-html/unnamed-chunk-7-1.png" width="624" /></p>
+<p>Mittels dieser interaktiven Grafik können Sie für selbst gewählte
+Sensitivitäts- und Spezifitätswerte den positiven Vorhersagewert in
+Abhängigkeit zur Prävalenz darstellen:</p>
 <div class="form-group shiny-input-container">
 <label class="control-label" id="slider_sens-label" for="slider_sens">Sensitivität in Prozent</label>
 <input class="js-range-slider" id="slider_sens" data-skin="shiny" data-min="0" data-max="100" data-from="95" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
@@ -401,11 +407,6 @@ wichtige Rolle, wie folgende Grafiken zeigen:</p>
 <input class="js-range-slider" id="slider_prev_max" data-skin="shiny" data-min="0" data-max="100" data-from="2" data-step="0.1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
 </div>
 <div class="shiny-plot-output html-fill-item" id="ppv_interactive" style="width:100%;height:400px;"></div>
-<!--
-
-<img src="testgenauigkeit_files/figure-html/unnamed-chunk-9-1.png" width="624" />
-
--->
 <div class="panel panel-default tutorial-question-container">
 <div data-label="ppv_sens" class="tutorial-question panel-body">
 <div id="ppv_sens-answer_container" class="shiny-html-output"></div>
@@ -440,6 +441,7 @@ ist es wichtig, wie gründlich der Abstrich vorgenommen wurde. Es ist
 auch bekannt, dass die Temperatur die Genauigkeit von COVID-Schnelltests
 beeinflusst. Sie sehen also, dass die Berechnungen noch deutlich
 komplexer werden können!</p>
+<hr />
 <div id="section-aufgabe-2a" class="section level4">
 <h4>Aufgabe 2a</h4>
 <p>Analog zu den Grafiken für den positiven Vorhersagewert <span
@@ -562,23 +564,23 @@ session$onSessionEnded(function() {
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "confmat", question = structure("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten liefern: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für solch einen Test aus?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_10186d0", 
+"character")), answers = list(structure(list(id = "lnr_ans_8f87d6b", 
     option = "So wie oben, d.h. 2 Zeilen und 2 Spalten.", value = "So wie oben, d.h. 2 Zeilen und 2 Spalten.", 
     label = structure("So wie oben, d.h. 2 Zeilen und 2 Spalten.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9c89578", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6a601b8", 
     option = "2 Zeilen und 3 Spalten.", value = "2 Zeilen und 3 Spalten.", 
     label = structure("2 Zeilen und 3 Spalten.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e8a07d7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bbbbaee", 
     option = "3 Zeilen und 2 Spalten.", value = "3 Zeilen und 2 Spalten.", 
     label = structure("3 Zeilen und 2 Spalten.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d7a0736", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_60fcd97", 
     option = "3 Zeilen und 3 Spalten.", value = "3 Zeilen und 3 Spalten.", 
     label = structure("3 Zeilen und 3 Spalten.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_285010b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e016dea", 
     option = "Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen.", 
     value = "Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen.", 
     label = structure("Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen.", html = TRUE, class = c("html", 
@@ -590,7 +592,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "confmat-answer", question = "confmat"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1156774338.46133, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1952801942.09066, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -598,22 +600,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "P_T_K", question = structure("Was gibt die Wahrscheinlichkeit \\(P(T \\mid K)\\) an?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_916e78c", 
+"character")), answers = list(structure(list(id = "lnr_ans_1f21e0c", 
     option = "Die Wahrscheinlichkeit dass ein Test positiv ist, wenn die geteste Person krank ist.", 
     value = "Die Wahrscheinlichkeit dass ein Test positiv ist, wenn die geteste Person krank ist.", 
     label = structure("Die Wahrscheinlichkeit dass ein Test positiv ist, wenn die geteste Person krank ist.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5428bd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7eb330d", 
     option = "Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte.", 
     value = "Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte.", 
     label = structure("Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_29d0227", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_33937a3", 
     option = "Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte.", 
     value = "Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte.", 
     label = structure("Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_82b6cd0", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a454c85", 
     option = "Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist.", 
     value = "Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist.", 
     label = structure("Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist.", html = TRUE, class = c("html", 
@@ -625,7 +627,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "P_T_K-answer", question = "P_T_K"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 844599440.106703, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 150657698.429845, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -697,17 +699,17 @@ output$ppv_interactive <- renderPlot({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "ppv_sens", 
     question = structure("Warum spielt die Sensitivität bei niedriger Prävalenz keine so starke Rolle für den positiven Vorhersagewert?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_ae75556", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d999b3b", 
         option = "Da bei niedriger Prävalenz die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein, ganz unabhängig von der Sensitivität.", 
         value = "Da bei niedriger Prävalenz die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein, ganz unabhängig von der Sensitivität.", 
         label = structure("Da bei niedriger Prävalenz die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein, ganz unabhängig von der Sensitivität.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3c23226", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a7c682a", 
         option = "Da bei niedriger Prävalenz die Sensitivität automatisch geringer ist.", 
         value = "Da bei niedriger Prävalenz die Sensitivität automatisch geringer ist.", 
         label = structure("Da bei niedriger Prävalenz die Sensitivität automatisch geringer ist.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d083f2a", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_963c3ee", 
         option = "Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", 
         value = "Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", 
         label = structure("Da bei niedriger Prävalenz der Term \\(P(T \\mid K) P(K)\\) immer sehr klein ausfällt, die Sensitivität \\(P(T \\mid K)\\) also kaum einen Einfluss auf das Gesamtergebnis haben kann.", html = TRUE, class = c("html", 
@@ -719,7 +721,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", lab
     "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "ppv_sens-answer", question = "ppv_sens"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 337061650.843043, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1116708094.97999, 
     options = list()), class = c("learnr_checkbox", "tutorial_question"
 )), session = session)
 </script>

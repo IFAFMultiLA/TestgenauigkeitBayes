@@ -81,7 +81,7 @@ question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten l
 
 ## Analyse
 
-Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir einem positiven Ergebnis eines (Corona-)Tests trauen können. D.h. wie hoch ist die Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt?
+Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir einem positiven Ergebnis eines (Corona-)Tests trauen können. D.h. **wie hoch ist die Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt?**
 
 Zunächst können wir diese Fragestellung als Baumdiagramm darstellen, was uns später bei der Berechnung helfen wird:
 
@@ -146,7 +146,7 @@ $$
 P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
 $$
 
-Was wir also brauchen, sind drei Wahrscheinlichkeiten: $P(K)$, $P(T \mid K)$ und $P(T)$.
+Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichkeiten: $P(K)$, $P(T \mid K)$ und $P(T)$.
 
 :::: {style="display: flex;"}
 
@@ -177,7 +177,7 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
 
 $P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. In den Beipackzetteln von Schnelltests findet sich üblicherweise auch eine Angabe zu dessen Sensitivität.
 
-TODO: Bild Beipackzettel.
+**TODO:** Bild Beipackzettel.
 
 Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
 
@@ -221,15 +221,15 @@ $$
 P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
 $$
 
-Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \neg K)$ und $P(\neg K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\neg K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\neg K) = 1 - P(K) = `r (1 - prevalence)*100`\%$.
+Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \neg K)$ und $P(\neg K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\neg K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\neg K) = 100\% - P(K) = `r (1 - prevalence)*100`\%$.
 
-Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\neg T | \neg K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im Baumdiagramm sehen, ist $P(\neg T | \neg K)$ komplementär zu $P(T | \neg K)$ und damit gilt $P(T | \neg K) = 1 - P(\neg T | \neg K)$.
+Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\neg T | \neg K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im Baumdiagramm sehen, ist $P(\neg T | \neg K)$ komplementär zu $P(T | \neg K)$ und damit gilt $P(T | \neg K) = 100\% - P(\neg T | \neg K)$.
 
 ### Berechnung
 
-Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn Sie ein positives Testergebnis erhält, nehmen wir zunächst gängige Werte für die Sensitivität und Spezifität von guten COVID Schnelltests an:
+Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn sie ein positives Testergebnis erhält, nehmen wir zunächst gängige Werte für die Sensitivität und Spezifität von guten COVID Schnelltests an:
 
-- Sensitivät: $P(T \mid K) = `r sens * 100`\%$
+- Sensitivität: $P(T \mid K) = `r sens * 100`\%$
 - Spezifität: $P(\neg T \mid \neg K) = `r spec * 100`\%$
 
 Für die Prävalenz hatten wir $P(K) = `r prevalence * 100`\%$ angenommen.
@@ -246,6 +246,8 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\ne
 ### Interpretation
 
 Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich krank ist (positiver Vorhersagewert), beträgt also nur rund $`r round(pos_pred_val * 100)`\%$. Das ist tatsächlich keine sonderlich hohe Wahrscheinlichkeit. Auf der folgenden Seite werden wir uns genauer anschauen, warum das so ist.
+
+---
 
 #### Aufgabe 1
 
@@ -329,6 +331,23 @@ ggplot(ppv_fixed_sens_spec, aes(prev, ppv)) +
 
 Andererseits zeigt es auch, wie wichtig genaue Tests sind. Bei niedriger Prävalenz spielt hierbei besonders die Spezifität eine wichtige Rolle, wie folgende Grafiken zeigen:
 
+
+```{r, warning=FALSE}
+#ppv_by_param$sens_spec_lbl <- sprintf("Sens. %.3f%%, Spez. %.3f%%", ppv_by_param$sens * 100, ppv_by_param$spec * 100)
+ppv_by_param$spec_lbl <- sprintf("%.1f%%", ppv_by_param$spec * 100)
+ggplot(ppv_by_param, aes(prev, ppv, color = spec_lbl, group = spec_lbl)) +
+    geom_line() +
+    scale_x_continuous('Prävalenz', labels = scales::percent, limits = c(0.001, 0.02)) +
+    scale_y_continuous(expression("P" * (K ~ "|" ~ T )), labels = scales::percent) +
+    scale_color_discrete("Spezifität") +
+    labs(title = expression("Positiver Vorhersagewert P" * (K ~ "|" ~ T )),
+         subtitle = "In Abhängigkeit der Prävalenz, Sensitivität und Spezifität.") +
+    facet_wrap(vars(sens), labeller = as_labeller(function(s) {sprintf("%.2f%%", as.numeric(s)*100)})) +
+    theme_minimal()
+```
+
+Mittels dieser interaktiven Grafik können Sie für selbst gewählte Sensitivitäts- und Spezifitätswerte den positiven Vorhersagewert in Abhängigkeit zur Prävalenz darstellen:
+
 ```{r}
 sliderInput("slider_sens", "Sensitivität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
 sliderInput("slider_spec", "Spezifität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
@@ -354,24 +373,6 @@ output$ppv_interactive <- renderPlot({
 ```
 
 
-<!--
-
-```{r, warning=FALSE}
-#ppv_by_param$sens_spec_lbl <- sprintf("Sens. %.3f%%, Spez. %.3f%%", ppv_by_param$sens * 100, ppv_by_param$spec * 100)
-ppv_by_param$spec_lbl <- sprintf("%.1f%%", ppv_by_param$spec * 100)
-ggplot(ppv_by_param, aes(prev, ppv, color = spec_lbl, group = spec_lbl)) +
-    geom_line() +
-    scale_x_continuous('Prävalenz', labels = scales::percent, limits = c(0.001, 0.02)) +
-    scale_y_continuous(expression("P" * (K ~ "|" ~ T )), labels = scales::percent) +
-    scale_color_discrete("Spezifität") +
-    labs(title = expression("Positiver Vorhersagewert P" * (K ~ "|" ~ T )),
-         subtitle = "In Abhängigkeit der Prävalenz, Sensitivität und Spezifität.") +
-    facet_wrap(vars(sens), labeller = as_labeller(function(s) {sprintf("%.2f%%", as.numeric(s)*100)})) +
-    theme_minimal()
-```
-
--->
-
 ```{r ppv_sens}
 question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so starke Rolle für den positiven Vorhersagewert?",
   answer("Da bei niedriger Prävalenz die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein, ganz unabhängig von der Sensitivität.", correct = TRUE),
@@ -393,6 +394,7 @@ Wir sehen also: gute Tests (insbesondere mit hoher Spezifität) können hier ger
 
 Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte haben noch bedeutenden Einfluss auf das Ergebnis. Insbesondere ist es wichtig, wie gründlich der Abstrich vorgenommen wurde. Es ist auch bekannt, dass die Temperatur die Genauigkeit von COVID-Schnelltests beeinflusst. Sie sehen also, dass die Berechnungen noch deutlich komplexer werden können!
 
+---
 
 #### Aufgabe 2a
 
