@@ -18,3 +18,4 @@ Dieses Lerndashboard verwendet [learnr](https://rstudio.github.io/learnr/).
 - danach können mittels `make server_installdeps` die benötigten Pakete installiert werden
 - mittels `make server_testsync` kann simuliert werden, welche Dateien für das Deployment auf den Server kopiert werden würden
 - mittels `make server_sync` werden die Dateien dann tatsächlich auf den Server übertragen
+- mittels `make server_reload` wird die App auf dem Server neu gestartet – **das ist notwendig, damit die Änderungen nach einem Upload tatsächlich angezeigt werden**
