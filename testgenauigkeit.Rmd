@@ -1,6 +1,8 @@
 ---
 title: "Wie zuverlässig sind Testergebnisse?"
-output: learnr::tutorial
+output:
+    learnr::tutorial:
+        css: "www/tutorial.css"
 runtime: shiny_prerendered
 author: Markus Konrad
 email: markus.konrad@htw-berlin.de
@@ -24,25 +26,12 @@ spec <- 0.997   # P(¬T|¬K)
 pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalence))   # P(K|T)
 ```
 
-```{css, echo=FALSE}
-#doc-metadata {
-    font-size: 0.8em;
-}
-
-.with_sidebar {
-    display: flex;
-}
-
-.with_sidebar > .main {
-    width: 75%
-}
-
-.with_sidebar > .side {
-  font-size: 0.8em;
-  width: 25%;
-  padding-left: 2em;
-}
+```{r setup_js, echo=FALSE}
+htmltools::tagList(
+  htmltools::tags$script(src = "www/tutorial.js")
+)
 ```
+
 
 ## Fragestellung
 
