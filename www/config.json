@@ -1,4 +1,5 @@
 {
+    "css": ["tutorial.css", "extra.css"],
     "exclude": [
         "#section-der-einfluss-von-prävalenz-und-testgenauigkeit",
         "#section-aufgabe-1"

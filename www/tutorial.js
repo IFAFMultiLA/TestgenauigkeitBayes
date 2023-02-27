@@ -11,6 +11,10 @@ function setup(config) {
             }
         });
     });
+    
+    config.css.forEach(function(cssfile) {
+        $('head').append('<link rel="stylesheet" type="text/css" href="./www/' +  cssfile + '">');
+    });
 }
 
 

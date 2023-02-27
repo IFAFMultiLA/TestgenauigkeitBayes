@@ -1,12 +1,11 @@
 ---
 title: "Wie zuverlässig sind Testergebnisse?"
-output:
-    learnr::tutorial:
-        css: "www/tutorial.css"
 runtime: shiny_prerendered
 author: Markus Konrad
 email: markus.konrad@htw-berlin.de
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
+output:
+    learnr::tutorial
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +14,8 @@ library(gradethis)
 library(shiny)
 library(data.tree)
 library(ggplot2)
+
+config <- jsonlite::fromJSON('www/config.json')
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -28,7 +29,7 @@ pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalenc
 
 ```{r setup_js, echo=FALSE}
 htmltools::tagList(
-  htmltools::tags$script(src = "www/tutorial.js")
+    htmltools::tags$script(src = "www/tutorial.js")
 )
 ```
 
