@@ -5,7 +5,8 @@ author: Markus Konrad
 email: markus.konrad@htw-berlin.de
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
-    learnr::tutorial
+    learnr::tutorial:
+        css: "www/tutorial.css"
 ---
 
 ```{r setup, include=FALSE}

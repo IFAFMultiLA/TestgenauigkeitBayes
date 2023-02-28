@@ -12,7 +12,15 @@ function setup(config) {
         });
     });
     
+    config.js.forEach(function(jsfile) {
+        console.log("loading additional JS file", jsfile);
+        $.getScript("./www/" + jsfile, function() {
+            console.log("done loading JS file", jsfile);
+        });
+    });
+    
     config.css.forEach(function(cssfile) {
+        console.log("loading additional CSS file", cssfile);
         $('head').append('<link rel="stylesheet" type="text/css" href="./www/' +  cssfile + '">');
     });
 }
