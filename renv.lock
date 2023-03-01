@@ -35,6 +35,12 @@
       "Hash": "470851b6d5d0ac559e9d01bb352b4021",
       "Requirements": []
     },
+    "RAppArmor": {
+      "Package": "RAppArmor",
+      "Version": "3.2.3",
+      "Source": "Repository",
+      "Requirements": []
+    },
     "RColorBrewer": {
       "Package": "RColorBrewer",
       "Version": "1.1-3",
@@ -927,6 +933,12 @@
       "Requirements": [
         "xfun"
       ]
+    },
+    "unix": {
+      "Package": "unix",
+      "Version": "1.5.5",
+      "Source": "Repository",
+      "Requirements": []
     },
     "utf8": {
       "Package": "utf8",
