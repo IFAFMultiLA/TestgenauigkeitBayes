@@ -69,7 +69,8 @@ question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten l
   answer("2 Zeilen und 3 Spalten."),
   answer("3 Zeilen und 2 Spalten."),
   answer("3 Zeilen und 3 Spalten.", correct = TRUE),
-  answer("Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen.")
+  answer("Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen."),
+  allow_retry = TRUE
 )
 ```
 
@@ -169,7 +170,8 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
   answer("Die Wahrscheinlichkeit dass ein Test positiv ist, wenn die geteste Person krank ist.", correct = TRUE),
   answer("Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
   answer("Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte."),
-  answer("Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist.")
+  answer("Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist."),
+  allow_retry = TRUE
 )
 ```
 
@@ -397,7 +399,8 @@ output$ppv_interactive <- renderPlot({
 question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so starke Rolle für den positiven Vorhersagewert?",
   answer("Da bei niedriger Prävalenz unabhängig vom Testergebnis die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein.", correct = TRUE),
   answer("Da bei niedriger Prävalenz die Sensitivität automatisch geringer ist."),
-  answer("Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", correct = TRUE)
+  answer("Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", correct = TRUE),
+  allow_retry = TRUE
 )
 ```
 
