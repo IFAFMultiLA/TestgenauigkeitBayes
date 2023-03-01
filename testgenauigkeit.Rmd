@@ -9,18 +9,18 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-library(learnr)
-library(gradethis)
-library(shiny)
-library(data.tree)
-library(ggplot2)
-
-config <- jsonlite::fromJSON('www/config.json')
+require(RAppArmor)     # auf Server notwendig für abgesicherte Codeausführung in Übungen
+library(learnr)        # für Quizze, Code-Übungen, etc.
+library(gradethis)     # für Evaluierung von Code-Einsendungen
+library(shiny)         # für interaktive Elemente
+library(data.tree)     # für Baumdiagramme
+library(ggplot2)       # für Grafiken
 
 knitr::opts_chunk$set(echo = FALSE)
 
 gradethis_setup()
 
+# Werte für das Beispiel
 prevalence <- 0.2 / 100.0   # P(K)
 sens <- 0.97    # P(T|K)
 spec <- 0.997   # P(¬T|¬K)
@@ -82,6 +82,7 @@ Zunächst können wir diese Fragestellung als Baumdiagramm darstellen, was uns s
 
 
 ```{r fig.height=3, fig.align='center'}
+# Knoten und Kanten des Baumdiagramms
 root <- Node$new('')
 node_k <- root$AddChild("Person krank")
 node_k_p <- node_k$AddChild("Test positiv")
@@ -90,10 +91,13 @@ node_nk <- root$AddChild("Person gesund")
 node_nk_p <- node_nk$AddChild("Test positiv")
 node_nk_np <- node_nk$AddChild("Test negativ")
 
+# Optische Anpassungen
 SetNodeStyle(root, shape = 'point')
 SetNodeStyle(node_k, shape = 'ellipse')
 SetNodeStyle(node_nk, shape = 'ellipse')
-SetGraphStyle(root, rankdir = "LR")
+SetGraphStyle(root, rankdir = "LR")   # Baum von links nach rechts statt von oben nach unten
+
+# Resultat darstellen
 plot(root)
 ```
 
@@ -107,9 +111,11 @@ Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse 
 Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen mit den dazugehörigen Wahrscheinlichkeiten $P$:
 
 ```{r fig.height=3, fig.align='center'}
+# Knoten und Kanten des Baumdiagramms
 root <- Node$new('')
 SetEdgeStyle(root, fontsize = 10)
 
+# oberer Strang (krank)
 node_k <- root$AddChild("K")
 SetEdgeStyle(node_k, label = "P(K)")
 node_k_p <- node_k$AddChild("T")
@@ -117,6 +123,7 @@ SetEdgeStyle(node_k_p, label = "P(T|K)")
 node_k_np <- node_k$AddChild("¬T")
 SetEdgeStyle(node_k_np, label = "P(¬T|K)")
 
+# unterer Strang (nicht krank)
 node_nk <- root$AddChild("¬K")
 SetEdgeStyle(node_nk, label = "P(¬K)")
 node_nk_p <- node_nk$AddChild("T")
@@ -124,14 +131,14 @@ SetEdgeStyle(node_nk_p, label = "P(T|¬K)")
 node_nk_np <- node_nk$AddChild("¬T")
 SetEdgeStyle(node_nk_np, label = "P(¬T|¬K)")
 
+# Optische Anpassungen
 SetNodeStyle(root, shape = 'point')
 SetNodeStyle(node_k, shape = 'ellipse')
 SetNodeStyle(node_nk, shape = 'ellipse')
 SetGraphStyle(root, rankdir = "LR")
 
-p <- plot(root)
-#p$width <- 300
-p
+# Resultat darstellen
+plot(root)
 ```
 
 Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(K \mid T)$. Diese Wahrscheinlichkeit wird auch *positiver Vorhersagewert* genannt. Wie errechnen wir diese Wahrscheinlichkeit? Der **Satz von Bayes** gibt uns die Möglichkeit dazu:
@@ -173,9 +180,11 @@ $P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test
 Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
 
 ```{r fig.height=3, fig.align='center'}
+# Knoten und Kanten des Baumdiagramms
 root <- Node$new('')
 SetEdgeStyle(root, fontsize = 10)
 
+# oberer Strang (krank)
 node_k <- root$AddChild("K")
 SetEdgeStyle(node_k, label = "P(K)", color = "red")
 node_k_p <- node_k$AddChild("T")
@@ -184,6 +193,7 @@ SetEdgeStyle(node_k_p, label = "P(T|K)", color = "red")
 node_k_np <- node_k$AddChild("¬T")
 SetEdgeStyle(node_k_np, label = "P(¬T|K)", color = "black")
 
+# unterer Strang (nicht krank)
 node_nk <- root$AddChild("¬K")
 SetEdgeStyle(node_nk, label = "P(¬K)", color = "red")
 node_nk_p <- node_nk$AddChild("T")
@@ -192,11 +202,13 @@ SetEdgeStyle(node_nk_p, label = "P(T|¬K)", color = "red")
 node_nk_np <- node_nk$AddChild("¬T")
 SetEdgeStyle(node_nk_np, label = "P(¬T|¬K)", color = "black")
 
+# Optische Anpassungen
 SetNodeStyle(root, shape = 'point')
 SetNodeStyle(node_k, shape = 'ellipse')
 SetNodeStyle(node_nk, shape = 'ellipse')
 SetGraphStyle(root, rankdir = "LR")
 
+# Resultat darstellen
 plot(root)
 ```
 
@@ -254,11 +266,13 @@ spec * (1-prevalence) / (spec * (1-prevalence) + (1-sens) * prevalence)
 
 ```{r neg_pred_value-check}
 grade_this({
+    # P(nicht K|nicht T) berechnen
     neg_pred_val <- spec * (1-prevalence) / (spec * (1-prevalence) + (1-sens) * prevalence)
+    # Prüfen d. Ergebnisses
     if (identical(round(.result, 6), round(neg_pred_val, 6))) {
         pass("Korrekt!")
     }
-    fail()
+    fail()  # falls nicht korrekt
 })
 ```
 
@@ -287,11 +301,14 @@ calc_ppv <- function(prev, sens, spec) {
     sens * prev / (sens * prev + (1-spec) * (1-prev))
 }
 
+# Erstellung eines Dataframes mit der Kombination aller Parameter (kartesisches Produkt)
 ppv_by_param <- expand.grid(prev = seq(0, 1, length.out = 1001),
                             sens = c(0.9, 0.97, 0.9999),
                             spec = seq(0.990, 0.999, length.out = 10))
+# P(K|T) für jede Parameterkombination berechnen
 ppv_by_param$ppv <- calc_ppv(ppv_by_param$prev, ppv_by_param$sens, ppv_by_param$spec)
 
+# Darstellung P(K|T) für bestimmte Sensitivität und Spezifität in Abh. von Prävalenz
 fixed_sens <- sens
 fixed_spec <- spec
 
@@ -299,7 +316,9 @@ ppv_fixed_sens_spec <- ppv_by_param[ppv_by_param$sens == fixed_sens & ppv_by_par
 
 ggplot(ppv_fixed_sens_spec, aes(prev, ppv)) +
     geom_line() +
+    # X-Achse in Prozent
     scale_x_continuous('Prävalenz', labels = scales::percent) +
+    # Y-Achse in Prozent
     scale_y_continuous(expression("P" * (K ~ "|" ~ T )), labels = scales::percent) +
     labs(title = expression("Positiver Vorhersagewert P" * (K ~ "|" ~ T ) ~ "in Abhängigkeit der Prävalenz"),
          subtitle = sprintf("Bei Sensitivität von %.1f%% und Spezifität von %.1f%%.", fixed_sens * 100, fixed_spec * 100)) +
@@ -310,6 +329,7 @@ Wir sehen, wie stark die Kurve ansteigt und schon bei einer Prävalenz von 10% k
 
 
 ```{r, warning=FALSE}
+# wie oben, nur mit Begrenzung der X-Achse
 ggplot(ppv_fixed_sens_spec, aes(prev, ppv)) +
     geom_line() +
     scale_x_continuous('Prävalenz', labels = scales::percent, limits = c(0.001, 0.02)) +
@@ -324,15 +344,18 @@ Andererseits zeigt es auch, wie wichtig genaue Tests sind. Bei niedriger Präval
 
 
 ```{r, warning=FALSE}
-#ppv_by_param$sens_spec_lbl <- sprintf("Sens. %.3f%%, Spez. %.3f%%", ppv_by_param$sens * 100, ppv_by_param$spec * 100)
+# Wie oben, aber mit verschiedenen Werten für die Spezifität als unterschiedlich gefärbte Linien und
+# mit versch. Werten für die Sensitivität als extra Grafik (facets)
 ppv_by_param$spec_lbl <- sprintf("%.1f%%", ppv_by_param$spec * 100)
 ggplot(ppv_by_param, aes(prev, ppv, color = spec_lbl, group = spec_lbl)) +
     geom_line() +
     scale_x_continuous('Prävalenz', labels = scales::percent, limits = c(0.001, 0.02)) +
     scale_y_continuous(expression("P" * (K ~ "|" ~ T )), labels = scales::percent) +
+    # Spezifität als diskrete Werte auffassen anstatt kontinuierliche Werte
     scale_color_discrete("Spezifität") +
     labs(title = expression("Positiver Vorhersagewert P" * (K ~ "|" ~ T )),
          subtitle = "In Abhängigkeit der Prävalenz, Sensitivität und Spezifität.") +
+    # für jeden Wert der Sensitivität eine extra Grafik
     facet_wrap(vars(sens), labeller = as_labeller(function(s) {sprintf("%.2f%%", as.numeric(s)*100)})) +
     theme_minimal()
 ```
@@ -340,19 +363,25 @@ ggplot(ppv_by_param, aes(prev, ppv, color = spec_lbl, group = spec_lbl)) +
 Mittels dieser interaktiven Grafik können Sie für selbst gewählte Sensitivitäts- und Spezifitätswerte den positiven Vorhersagewert in Abhängigkeit zur Prävalenz darstellen:
 
 ```{r}
+# Eingaberegler für Sensitivität, Spez., und maximal dargestellte Prävalenz
 sliderInput("slider_sens", "Sensitivität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
 sliderInput("slider_spec", "Spezifität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
 sliderInput("slider_prev_max", "Maximal dargestellte Prävalenz in Prozent (x-Achse)", min = 0, max = 100, value = 2, step = 0.1)
+# Plotausgabe
 plotOutput("ppv_interactive")
 ```
 
 ```{r, context="server"}
+# Erzeugung der Plotausgabe im Shiny "Serverkontext"
 output$ppv_interactive <- renderPlot({
   sens <- input$slider_sens / 100
   spec <- input$slider_spec / 100
+  # Daten generieren für Prävalenz
   df <- data.frame(prev = seq(0, input$slider_prev_max / 100, length.out = 1000))
+  # P(K|T) berechnen
   df$ppv <- sens * df$prev / (sens * df$prev + (1-spec) * (1-df$prev))
   
+  # Plot erstellen
   ggplot(df, aes(prev, ppv)) +
     geom_line() +
     scale_x_continuous('Prävalenz', labels = scales::percent) +
@@ -366,7 +395,7 @@ output$ppv_interactive <- renderPlot({
 
 ```{r ppv_sens}
 question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so starke Rolle für den positiven Vorhersagewert?",
-  answer("Da bei niedriger Prävalenz die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein, ganz unabhängig von der Sensitivität.", correct = TRUE),
+  answer("Da bei niedriger Prävalenz unabhängig vom Testergebnis die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein.", correct = TRUE),
   answer("Da bei niedriger Prävalenz die Sensitivität automatisch geringer ist."),
   answer("Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", correct = TRUE)
 )
@@ -410,7 +439,8 @@ grade_this({
     nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
                              sens = c(0.9, 0.97, 0.99))
     
-    if (all(dplyr::near(.result, nvw_param))) {
+    # Gleitkommazahlenprüfung mit näherungsweiser Übereinstimmung
+    if (isTRUE(all.equal(.result, nvw_param))) {
         pass("Korrekt!")
     }
     fail()
@@ -446,7 +476,8 @@ grade_this({
     spez <- 0.997
     nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
     
-    if (all(dplyr::near(.result, nvw_param))) {
+    # Gleitkommazahlenprüfung mit näherungsweiser Übereinstimmung
+    if (isTRUE(all.equal(.result, nvw_param))) {
         pass("Korrekt!")
     }
     fail()
