@@ -5,7 +5,8 @@ author: Markus Konrad
 email: markus.konrad@htw-berlin.de
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
-    adaptivelearnr::tutorial
+    adaptivelearnr::tutorial:
+        language: de
 ---
 
 ```{r setup, include=FALSE}
@@ -18,6 +19,14 @@ library(ggplot2)       # für Grafiken
 
 knitr::opts_chunk$set(echo = FALSE)
 
+# Quizaufgaben sind momentan noch nicht richtig internationalisiert bei learnr;
+# Wir überschreiben die englischsprachigen Nachrichten:
+correct_msg <- "Richtig!"
+incorrect_msg <- "Leider falsch. Versuch's noch ein mal."
+
+# Das gleiche gilt für gradethis:
+options("gradethis.pass" = correct_msg)
+options("gradethis.fail" = incorrect_msg)   # damit werden Codevorschläge bei falscher Antwort deaktiviert
 gradethis_setup()
 
 # Werte für das Beispiel
@@ -70,7 +79,9 @@ question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten l
   answer("3 Zeilen und 2 Spalten."),
   answer("3 Zeilen und 3 Spalten.", correct = TRUE),
   answer("Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen."),
-  allow_retry = TRUE
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
 )
 ```
 
@@ -171,7 +182,9 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
   answer("Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
   answer("Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte."),
   answer("Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist."),
-  allow_retry = TRUE
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
 )
 ```
 
@@ -272,7 +285,7 @@ grade_this({
     neg_pred_val <- spec * (1-prevalence) / (spec * (1-prevalence) + (1-sens) * prevalence)
     # Prüfen d. Ergebnisses
     if (identical(round(.result, 6), round(neg_pred_val, 6))) {
-        pass("Korrekt!")
+        pass()
     }
     fail()  # falls nicht korrekt
 })
@@ -400,7 +413,9 @@ question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so stark
   answer("Da bei niedriger Prävalenz unabhängig vom Testergebnis die Wahrscheinlichkeit sehr gering ist, erkrankt zu sein.", correct = TRUE),
   answer("Da bei niedriger Prävalenz die Sensitivität automatisch geringer ist."),
   answer("Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", correct = TRUE),
-  allow_retry = TRUE
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
 )
 ```
 
@@ -444,7 +459,7 @@ grade_this({
     
     # Gleitkommazahlenprüfung mit näherungsweiser Übereinstimmung
     if (isTRUE(all.equal(.result, nvw_param))) {
-        pass("Korrekt!")
+        pass()
     }
     fail()
 })
@@ -481,7 +496,7 @@ grade_this({
     
     # Gleitkommazahlenprüfung mit näherungsweiser Übereinstimmung
     if (isTRUE(all.equal(.result, nvw_param))) {
-        pass("Korrekt!")
+        pass()
     }
     fail()
 })
