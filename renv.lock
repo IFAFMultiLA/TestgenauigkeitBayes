@@ -64,15 +64,15 @@
     },
     "adaptivelearnr": {
       "Package": "adaptivelearnr",
-      "Version": "0.1.0",
+      "Version": "0.1.1",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "adaptivelearnr",
       "RemoteUsername": "IFAFMultiLA",
       "RemoteRef": "HEAD",
-      "RemoteSha": "a1fcb4bd27ded894487a13e7cd4acfc6029212cc",
-      "Hash": "39d87d83afe3128ed864264f48e87888",
+      "RemoteSha": "9c5e4a91e2c879a538d247db8217a916000c9b71",
+      "Hash": "995177a1936da944538efab477bcced5",
       "Requirements": [
         "htmltools",
         "learnr"
