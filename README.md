@@ -17,6 +17,13 @@ Es ist momentan online verfügbar unter https://rshiny.f4.htw-berlin.de/users/mk
 
 - alternativ zum "Run document" Knopf in RStudio kann `make devserver` verwendet werden, womit die Anwendung auf `http://localhost:8000` zur Verfügung gestellt wird
 
+## "adaptivelearnr" Paket
+
+- dieses Lerndashboard ist abhängig von einer selbstentwickelten Erweiterung zu learnr namens *adaptivelearnr*
+- adaptivelearnr fügt u.a. JavaScript hinzu, um eine Anpassbarkeit des Lerndashboards via JSON zu gewährleisten
+- momentan wird die Entwicklungsversion von adaptivelearnr in ein [öffentliches GitHub-Repository](https://github.com/IFAFMultiLA/adaptivelearnr) geladen
+- wird die Entwicklungsversion von adaptivelearn aktualisiert, also ein neuer Commit in den Main-Branch des Repositories geladen, kann diese neue Version mittels `devtools::install_github('IFAFMultiLA/adaptivelearnr')` installiert werden (alternativ kann `devtools::install_local(<Pfad-zum-lokalen-Projekt>)` verwendet werden)
+
 ## Deployment auf HTW Server
 
 - das Deployment kann über die `Makefile` gesteuert werden
