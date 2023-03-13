@@ -39,7 +39,12 @@
       "Package": "RAppArmor",
       "Version": "3.2.3",
       "Source": "Repository",
-      "Requirements": []
+      "Repository": "CRAN",
+      "OS_type": "unix",
+      "Hash": "d8f3d80d4b37309774431d287bcf263f",
+      "Requirements": [
+        "unix"
+      ]
     },
     "RColorBrewer": {
       "Package": "RColorBrewer",
@@ -228,26 +233,6 @@
       "Hash": "8b708f296afd9ae69f450f9640be8990",
       "Requirements": []
     },
-    "dplyr": {
-      "Package": "dplyr",
-      "Version": "1.1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d3c34618017e7ae252d46d79a1b9ec32",
-      "Requirements": [
-        "R6",
-        "cli",
-        "generics",
-        "glue",
-        "lifecycle",
-        "magrittr",
-        "pillar",
-        "rlang",
-        "tibble",
-        "tidyselect",
-        "vctrs"
-      ]
-    },
     "ellipsis": {
       "Package": "ellipsis",
       "Version": "0.3.2",
@@ -307,14 +292,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "f4dcd23b67e33d851d2079f703e8b985",
-      "Requirements": []
-    },
-    "generics": {
-      "Package": "generics",
-      "Version": "0.1.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "15e9634c0fcd294799e9b2e929ed1b86",
       "Requirements": []
     },
     "ggplot2": {
@@ -909,21 +886,6 @@
         "vctrs"
       ]
     },
-    "tidyselect": {
-      "Package": "tidyselect",
-      "Version": "1.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "79540e5fcd9e0435af547d885f184fd5",
-      "Requirements": [
-        "cli",
-        "glue",
-        "lifecycle",
-        "rlang",
-        "vctrs",
-        "withr"
-      ]
-    },
     "tinytex": {
       "Package": "tinytex",
       "Version": "0.44",
@@ -938,6 +900,9 @@
       "Package": "unix",
       "Version": "1.5.5",
       "Source": "Repository",
+      "Repository": "CRAN",
+      "OS_type": "unix",
+      "Hash": "5bed1fc6d749a278f9bcffdc1a2f02c2",
       "Requirements": []
     },
     "utf8": {
