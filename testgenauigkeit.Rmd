@@ -190,7 +190,7 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
 
 $P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. In den Beipackzetteln von Schnelltests findet sich üblicherweise auch eine Angabe zu dessen Sensitivität.
 
-![Der Beipackzettel eines handelsüblichen COVID 19 Schnelltests.](images/covid19test-beipack.jpg){height=200px}
+![Der Beipackzettel eines handelsüblichen COVID 19 Schnelltests.](images/covid19test-beipack.jpg){height=350px}
 
 Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
 
