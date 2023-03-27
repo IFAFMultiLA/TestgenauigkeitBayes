@@ -7,6 +7,7 @@ date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
     adaptivelearnr::tutorial:
         language: de
+        configserver: http://localhost:8000/
 ---
 
 ```{r setup, include=FALSE}
