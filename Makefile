@@ -4,7 +4,7 @@ SERVER_APP := $(SERVER):$(APPDIR)
 RSYNC_COMMON := -rcv --exclude-from=.rsyncexclude
 
 devserver:
-	rm testgenauigkeit.html
+	-rm testgenauigkeit.html
 	R -e 'renv::install("../adaptivelearnr");rmarkdown::run("testgenauigkeit.Rmd", shiny_args = list(port = 8001, launch.browser = FALSE))'
 
 sync:
