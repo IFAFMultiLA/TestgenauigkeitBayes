@@ -19,7 +19,7 @@ while true; do
   $1 &
   PID=$!
   echo "watching $2"
-  inotifywait -e modify -e move -e create -e delete -e attrib -r "$2"
+  inotifywait -e modify -e move -e create -e delete -r "$2"
   kill $PID
 done
 
