@@ -11,3 +11,4 @@ Makefile
 testgenauigkeit_files/
 *.html
 README.md
+depwatcher.sh
