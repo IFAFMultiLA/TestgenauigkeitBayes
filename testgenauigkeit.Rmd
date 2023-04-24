@@ -12,6 +12,7 @@ output:
 
 ```{r setup, include=FALSE}
 require(RAppArmor)     # auf Server notwendig für abgesicherte Codeausführung in Übungen
+require(DiagrammeR)    # auf Server notwendig
 library(learnr)        # für Quizze, Code-Übungen, etc.
 library(gradethis)     # für Evaluierung von Code-Einsendungen
 library(shiny)         # für interaktive Elemente
