@@ -40,7 +40,7 @@
     },
     "MASS": {
       "Package": "MASS",
-      "Version": "7.3-58.3",
+      "Version": "7.3-59",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -51,7 +51,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "9586b552d57f5516fe4d25398c1bacd6"
+      "Hash": "26570ae748e78cb2b0f56019dd2ba354"
     },
     "Matrix": {
       "Package": "Matrix",
@@ -114,18 +114,14 @@
     "adaptivelearnr": {
       "Package": "adaptivelearnr",
       "Version": "0.1.5",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "IFAFMultiLA",
-      "RemoteRepo": "adaptivelearnr",
-      "RemoteRef": "main",
-      "RemoteSha": "815cc6bc9e895487f70d50f36b4ab8c1a4e43f6a",
+      "Source": "Local",
+      "RemoteType": "local",
+      "RemoteUrl": "../adaptivelearnr",
       "Requirements": [
         "htmltools",
         "learnr"
       ],
-      "Hash": "fedb1d4e494386c637eb89988d7f12ed"
+      "Hash": "1ef2c4f5dcda8560af76cba3b7f6b7fe"
     },
     "backports": {
       "Package": "backports",
