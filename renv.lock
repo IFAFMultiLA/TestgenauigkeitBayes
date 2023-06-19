@@ -113,7 +113,7 @@
     },
     "adaptivelearnr": {
       "Package": "adaptivelearnr",
-      "Version": "0.2.0",
+      "Version": "0.3.0",
       "Source": "Local",
       "RemoteType": "local",
       "RemoteUrl": "../adaptivelearnr",
@@ -121,7 +121,7 @@
         "htmltools",
         "learnr"
       ],
-      "Hash": "7d04adfac910b2d844ac00ac3c65ff02"
+      "Hash": "522b0748e2cc34b01e60e9133f5256dd"
     },
     "backports": {
       "Package": "backports",
