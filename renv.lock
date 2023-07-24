@@ -113,7 +113,7 @@
     },
     "adaptivelearnr": {
       "Package": "adaptivelearnr",
-      "Version": "0.3.2",
+      "Version": "0.3.3",
       "Source": "Local",
       "RemoteType": "local",
       "RemoteUrl": "../adaptivelearnr",
@@ -121,7 +121,7 @@
         "htmltools",
         "learnr"
       ],
-      "Hash": "fb3f4f7552dff1a79d8452309a352564"
+      "Hash": "648208c378b89e450969c715e4f491a1"
     },
     "backports": {
       "Package": "backports",
@@ -832,7 +832,7 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.8-42",
+      "Version": "1.9-0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -845,7 +845,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "3460beba7ccc8946249ba35327ba902a"
+      "Hash": "086028ca0460d0c368028d3bda58f31b"
     },
     "mime": {
       "Package": "mime",
