@@ -291,16 +291,6 @@
       ],
       "Hash": "e8a1e41acf02548751f45c718d55aa6a"
     },
-    "curl": {
-      "Package": "curl",
-      "Version": "5.0.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "e4f97056611e8e6b8b852d13b7400cf1"
-    },
     "data.tree": {
       "Package": "data.tree",
       "Version": "1.0.0",
@@ -754,12 +744,11 @@
     },
     "learnr": {
       "Package": "learnr",
-      "Version": "0.11.3",
+      "Version": "0.11.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "checkmate",
-        "curl",
         "digest",
         "ellipsis",
         "evaluate",
@@ -781,7 +770,7 @@
         "utils",
         "withr"
       ],
-      "Hash": "eb611c8535c23f4a8c519e1625f45b18"
+      "Hash": "dc1688afc60662f96f6f847f7bf86402"
     },
     "lifecycle": {
       "Package": "lifecycle",
