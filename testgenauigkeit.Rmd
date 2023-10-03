@@ -56,22 +56,12 @@ Zunächst einmal können wir feststellen, dass wir es mit vier Möglichkeiten zu
 
 Man kann das übersichtlich als Tabelle darstellen:
 
-<div class="with_sidebar">
-
-<div class="main">
-
 |  | Test positiv | Test negativ |
 |-----:|:----:|:----:|
 |  **Person krank**    |   richtig positiv   |  falsch negativ    |
 |  **Person gesund**    |   falsch positiv   |  richtig negativ   |
 
-</div>
-
-<div class="side">
 Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
-</div>
-
-</div>
 
 
 ```{r confmat}
@@ -87,8 +77,15 @@ question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten l
 )
 ```
 
+::: summary
+
+**Fragestellung:** Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *wirklich* erkrankt ist? Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit negativem Corona-Test *wirklich* gesund ist?  
+
+:::
+
 
 ## Analyse
+
 
 Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir einem positiven Ergebnis eines (Corona-)Tests trauen können. D.h. **wie hoch ist die Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt?**
 
@@ -121,6 +118,15 @@ Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse 
 - $\neg K$: Person gesund
 - $T$: Test positiv
 - $\neg T$: Test negativ
+
+::: summary
+
+**Definition der Ereignisse:**
+
+- $K$:Person krank und $\neg K$: Person gesund
+- $T$: Test positiv und $\neg T$: Test negativ
+
+:::
 
 Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen mit den dazugehörigen Wahrscheinlichkeiten $P$:
 
@@ -164,6 +170,21 @@ $$
 
 Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichkeiten: $P(K)$, $P(T \mid K)$ und $P(T)$.
 
+::: summary
+
+**Definition der bedingten Wahrscheinlichkeiten:**
+
+- $P(K \mid T)$ – Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist
+- $P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzeigt, unter der Bedingung dass die Person tatsächlich erkrankt ist (Sensitivität)
+
+**Satz von Bayes:**
+
+$$
+P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
+$$
+
+:::
+
 <div class="with_sidebar">
 
 <div class="main">
@@ -180,10 +201,10 @@ Nun brauchen wir $P(T \mid K)$.
 
 ```{r P_T_K}
 question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
-  answer("Die Wahrscheinlichkeit dass ein Test positiv ist, wenn die geteste Person krank ist.", correct = TRUE),
-  answer("Die Wahrscheinlichkeit dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
-  answer("Die Wahrscheinlichkeit dass eine Person krank ist, wenn sie einen positiven Test hatte."),
-  answer("Die Wahrscheinlichkeit dass ein Test positiv ist, obwohl die geteste Person gesund ist."),
+  answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist.", correct = TRUE),
+  answer("Die Wahrscheinlichkeit, dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
+  answer("Die Wahrscheinlichkeit, dass eine Person krank ist, wenn sie einen positiven Test hatte."),
+  answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, obwohl die getestete Person gesund ist."),
   allow_retry = TRUE,
   correct = correct_msg,
   incorrect = incorrect_msg
@@ -244,6 +265,16 @@ $$
 Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \neg K)$ und $P(\neg K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\neg K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\neg K) = 100\% - P(K) = `r (1 - prevalence)*100`\%$.
 
 Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\neg T | \neg K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im Baumdiagramm sehen, ist $P(\neg T | \neg K)$ komplementär zu $P(T | \neg K)$ und damit gilt $P(T | \neg K) = 100\% - P(\neg T | \neg K)$.
+
+::: summary
+
+**Satz von Bayes (erweitert):**
+
+$$
+P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
+$$
+
+:::
 
 ### Berechnung
 

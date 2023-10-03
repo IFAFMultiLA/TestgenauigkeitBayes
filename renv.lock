@@ -113,7 +113,7 @@
     },
     "adaptivelearnr": {
       "Package": "adaptivelearnr",
-      "Version": "0.4.0",
+      "Version": "0.4.1",
       "Source": "Local",
       "RemoteType": "local",
       "RemoteUrl": "../adaptivelearnr",
@@ -121,7 +121,7 @@
         "htmltools",
         "learnr"
       ],
-      "Hash": "3e50548dcee8438cf89f882517350798"
+      "Hash": "b492d41b117529a03bfeb61239a3c10f"
     },
     "backports": {
       "Package": "backports",
@@ -1044,13 +1044,13 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.17.3",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "utils"
       ],
-      "Hash": "4543b8cd233ae25c6aba8548be9e747e"
+      "Hash": "41b847654f567341725473431dd0d5ab"
     },
     "rlang": {
       "Package": "rlang",
