@@ -79,7 +79,9 @@ question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten l
 
 ::: summary
 
-**Fragestellung:** Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *wirklich* erkrankt ist? Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit negativem Corona-Test *wirklich* gesund ist?  
+#### Fragestellung
+
+Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *wirklich* erkrankt ist? Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit negativem Corona-Test *wirklich* gesund ist?  
 
 :::
 
@@ -121,7 +123,7 @@ Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse 
 
 ::: summary
 
-**Definition der Ereignisse:**
+#### Definition der Ereignisse
 
 - $K$:Person krank und $\neg K$: Person gesund
 - $T$: Test positiv und $\neg T$: Test negativ
@@ -172,12 +174,11 @@ Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichke
 
 ::: summary
 
-**Definition der bedingten Wahrscheinlichkeiten:**
+#### Definition der bedingten Wahrscheinlichkeiten
 
-- $P(K \mid T)$ – Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist
-- $P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzeigt, unter der Bedingung dass die Person tatsächlich erkrankt ist (Sensitivität)
+$P(K \mid T)$ – Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist
 
-**Satz von Bayes:**
+#### Satz von Bayes
 
 $$
 P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
@@ -212,6 +213,14 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
 ```
 
 $P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. In den Beipackzetteln von Schnelltests findet sich üblicherweise auch eine Angabe zu dessen Sensitivität.
+
+::: summary
+
+#### Definition der bedingten Wahrscheinlichkeiten
+
+$P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzeigt, unter der Bedingung dass die Person tatsächlich erkrankt ist (Sensitivität)
+
+:::
 
 ![Der Beipackzettel eines handelsüblichen COVID 19 Schnelltests.](images/covid19test-beipack.jpg){height=350px}
 
@@ -268,7 +277,7 @@ Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positiv
 
 ::: summary
 
-**Satz von Bayes (erweitert):**
+#### Satz von Bayes {.replace}
 
 $$
 P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
