@@ -19,6 +19,10 @@ library(shiny)         # für interaktive Elemente
 library(data.tree)     # für Baumdiagramme
 library(ggplot2)       # für Grafiken
 
+# folgendes ist notwendig um aktualisierte System-seitig installierte Version von pandoc zu verwenden, anstatt die in
+# Shiny-Server / RStudio integrierte Variante:
+rmarkdown::find_pandoc(cache = FALSE)
+
 knitr::opts_chunk$set(echo = FALSE)
 
 # Quizaufgaben sind momentan noch nicht richtig internationalisiert bei learnr;
