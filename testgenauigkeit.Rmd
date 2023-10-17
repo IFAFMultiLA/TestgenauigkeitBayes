@@ -283,9 +283,10 @@ Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positiv
 
 #### Satz von Bayes {.replace}
 
-$$
-P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
-$$
+\begin{align}
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T)} \\
+            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
+\end{align}
 
 :::
 
@@ -301,9 +302,9 @@ Für die Prävalenz hatten wir $P(K) = `r prevalence * 100`\%$ angenommen.
 Damit können wir die Werte in die Formel einsetzen und erhalten:
 
 \begin{align}
-P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\
-            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\neg T \mid \neg K)) (1 - P(K))} \\
-            &= \frac{`r sens` \cdot `r prevalence`}{`r sens` \cdot `r prevalence` + (1 - `r spec`) \cdot (1 - `r prevalence`)} \\
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\[10pt]
+            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\neg T \mid \neg K)) (1 - P(K))} \\[10pt]
+            &= \frac{`r sens` \cdot `r prevalence`}{`r sens` \cdot `r prevalence` + (1 - `r spec`) \cdot (1 - `r prevalence`)} \\[10pt]
             &= `r round(pos_pred_val, 4)`.
 \end{align}
 
@@ -348,8 +349,8 @@ Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\neg K
 Schauen wir uns noch mal die Berechnung der bedingten Wahrscheinlichkeit $P(K \mid T)$ an:
 
 \begin{align}
-P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\
-            &= \frac{`r sens` \cdot `r prevalence`}{`r sens` \cdot `r prevalence` + `r 1-spec` \cdot `r 1-prevalence`} \\
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\[10pt]
+            &= \frac{`r sens` \cdot `r prevalence`}{`r sens` \cdot `r prevalence` + `r 1-spec` \cdot `r 1-prevalence`} \\[10pt]
             &= `r round(pos_pred_val, 4)`.
 \end{align}
 
@@ -468,8 +469,8 @@ question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so stark
 Die Spezifität $P(\neg T \mid \neg K)$ hat einen großen Einfluss, denn wie wir schon gezeigt haben gilt
 
 \begin{align}
-P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\
-            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\neg T \mid \neg K)) P(\neg K)}, \\ 
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\[10pt]
+            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\neg T \mid \neg K)) P(\neg K)},
 \end{align}
 
 und da $P(K)$ sehr klein ist, ist $P(\neg K)$ sehr groß und somit hat die Spezifität $P(\neg T \mid \neg K)$ über den Term $(1 - P(\neg T \mid \neg K)) P(\neg K)$ die "Macht" über den Nenner. Damit bewirkt eine hohe Spezifität einen kleinen Nenner und damit einen hohen positiven Vorhersagewert.
