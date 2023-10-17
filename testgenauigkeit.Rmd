@@ -421,7 +421,7 @@ ggplot(ppv_by_param, aes(prev, ppv, color = spec_lbl, group = spec_lbl)) +
     labs(title = expression("Positiver Vorhersagewert P" * (K ~ "|" ~ T )),
          subtitle = "In Abhängigkeit der Prävalenz, Sensitivität und Spezifität.") +
     # für jeden Wert der Sensitivität eine extra Grafik
-    facet_wrap(vars(sens), labeller = as_labeller(function(s) {sprintf("%.2f%%", as.numeric(s)*100)})) +
+    facet_wrap(vars(sens), labeller = as_labeller(function(s) {sprintf("Sensitivität %.2f%%", as.numeric(s)*100)})) +
     theme_minimal()
 ```
 
@@ -429,11 +429,18 @@ Mittels dieser interaktiven Grafik können Sie für selbst gewählte Sensitivit�
 
 ```{r}
 # Eingaberegler für Sensitivität, Spez., und maximal dargestellte Prävalenz
-sliderInput("slider_sens", "Sensitivität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
-sliderInput("slider_spec", "Spezifität in Prozent", min = 0, max = 100, value = 95, step = 0.1)
-sliderInput("slider_prev_max", "Maximal dargestellte Prävalenz in Prozent (x-Achse)", min = 0, max = 100, value = 2, step = 0.1)
-# Plotausgabe
-plotOutput("ppv_interactive")
+
+fluidRow(
+    column(8, plotOutput("ppv_interactive")),   # Plot Ausgabe
+    column(4,
+           sliderInput("slider_sens", "Sensitivität in Prozent",
+                       min = 0, max = 100, value = 95, step = 0.1),
+           sliderInput("slider_spec", "Spezifität in Prozent",
+                       min = 0, max = 100, value = 95, step = 0.1),
+           sliderInput("slider_prev_max", "Maximal dargestellte Prävalenz in Prozent (x-Achse)",
+                       min = 0, max = 100, value = 2, step = 0.1)
+    )
+)
 ```
 
 ```{r, context="server"}
