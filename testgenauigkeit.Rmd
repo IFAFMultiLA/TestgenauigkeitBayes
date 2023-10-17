@@ -11,6 +11,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+# Hinweis: Die "Unicode Overline" Notation für ein Komplementärereignis "nicht A" kann in HTML mittels A&#773;
+# dargestellt werden. Das funktioniert auch in den Baumdiagrammen.
+
 require(RAppArmor)     # auf Server notwendig für abgesicherte Codeausführung in Übungen
 require(DiagrammeR)    # auf Server notwendig
 library(learnr)        # für Quizze, Code-Übungen, etc.
@@ -38,7 +41,7 @@ gradethis_setup()
 # Werte für das Beispiel
 prevalence <- 0.2 / 100.0   # P(K)
 sens <- 0.97    # P(T|K)
-spec <- 0.997   # P(¬T|¬K)
+spec <- 0.997   # P(T&#773;|K&#773;)
 pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalence))   # P(K|T)
 ```
 
@@ -121,16 +124,16 @@ plot(root)
 Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse und deren Negation. Diese entsprechen den oben genannten Möglichkeiten:
 
 - $K$:Person krank
-- $\neg K$: Person gesund
+- $\overline K$: Person gesund
 - $T$: Test positiv
-- $\neg T$: Test negativ
+- $\overline T$: Test negativ
 
 ::: summary
 
 #### Definition der Ereignisse
 
-- $K$:Person krank und $\neg K$: Person gesund
-- $T$: Test positiv und $\neg T$: Test negativ
+- $K$:Person krank und $\overline K$: Person gesund
+- $T$: Test positiv und $\overline T$: Test negativ
 
 :::
 
@@ -146,16 +149,16 @@ node_k <- root$AddChild("K")
 SetEdgeStyle(node_k, label = "P(K)")
 node_k_p <- node_k$AddChild("T")
 SetEdgeStyle(node_k_p, label = "P(T|K)")
-node_k_np <- node_k$AddChild("¬T")
-SetEdgeStyle(node_k_np, label = "P(¬T|K)")
+node_k_np <- node_k$AddChild("T&#773;")
+SetEdgeStyle(node_k_np, label = "P(T&#773;|K)")
 
 # unterer Strang (nicht krank)
-node_nk <- root$AddChild("¬K")
-SetEdgeStyle(node_nk, label = "P(¬K)")
+node_nk <- root$AddChild("K&#773;")
+SetEdgeStyle(node_nk, label = "P(K&#773;)")
 node_nk_p <- node_nk$AddChild("T")
-SetEdgeStyle(node_nk_p, label = "P(T|¬K)")
-node_nk_np <- node_nk$AddChild("¬T")
-SetEdgeStyle(node_nk_np, label = "P(¬T|¬K)")
+SetEdgeStyle(node_nk_p, label = "P(T|K&#773;)")
+node_nk_np <- node_nk$AddChild("T&#773;")
+SetEdgeStyle(node_nk_np, label = "P(T&#773;|K&#773;)")
 
 # Optische Anpassungen
 SetNodeStyle(root, shape = 'point')
@@ -241,17 +244,17 @@ SetEdgeStyle(node_k, label = "P(K)", color = "red")
 node_k_p <- node_k$AddChild("T")
 SetNodeStyle(node_k_p, color = "red")
 SetEdgeStyle(node_k_p, label = "P(T|K)", color = "red")
-node_k_np <- node_k$AddChild("¬T")
-SetEdgeStyle(node_k_np, label = "P(¬T|K)", color = "black")
+node_k_np <- node_k$AddChild("T&#773;")
+SetEdgeStyle(node_k_np, label = "P(T&#773;|K)", color = "black")
 
 # unterer Strang (nicht krank)
-node_nk <- root$AddChild("¬K")
-SetEdgeStyle(node_nk, label = "P(¬K)", color = "red")
+node_nk <- root$AddChild("K&#773;")
+SetEdgeStyle(node_nk, label = "P(K&#773;)", color = "red")
 node_nk_p <- node_nk$AddChild("T")
 SetNodeStyle(node_nk_p, color = "red")
-SetEdgeStyle(node_nk_p, label = "P(T|¬K)", color = "red")
-node_nk_np <- node_nk$AddChild("¬T")
-SetEdgeStyle(node_nk_np, label = "P(¬T|¬K)", color = "black")
+SetEdgeStyle(node_nk_p, label = "P(T|K&#773;)", color = "red")
+node_nk_np <- node_nk$AddChild("T&#773;")
+SetEdgeStyle(node_nk_np, label = "P(T&#773;|K&#773;)", color = "black")
 
 # Optische Anpassungen
 SetNodeStyle(root, shape = 'point')
@@ -266,18 +269,18 @@ plot(root)
 Somit erhalten wir
 
 $$
-P(T) = P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K),
+P(T) = P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K),
 $$
 
 und damit
 
 $$
-P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
+P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)} = \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K)}.
 $$
 
-Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \neg K)$ und $P(\neg K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\neg K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\neg K) = 100\% - P(K) = `r (1 - prevalence)*100`\%$.
+Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \overline K)$ und $P(\overline K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\overline K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\overline K) = 100\% - P(K) = `r (1 - prevalence)*100`\%$.
 
-Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\neg T | \neg K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im Baumdiagramm sehen, ist $P(\neg T | \neg K)$ komplementär zu $P(T | \neg K)$ und damit gilt $P(T | \neg K) = 100\% - P(\neg T | \neg K)$.
+Fehlt zu guter letzt noch $P(T \mid \overline K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\overline T | \overline K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im Baumdiagramm sehen, ist $P(\overline T | \overline K)$ komplementär zu $P(T | \overline K)$ und damit gilt $P(T | \overline K) = 100\% - P(\overline T | \overline K)$.
 
 ::: summary
 
@@ -285,7 +288,7 @@ Fehlt zu guter letzt noch $P(T \mid \neg K)$: Die Wahrscheinlichkeit ein positiv
 
 \begin{align}
 P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T)} \\
-            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)}.
+            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K)}.
 \end{align}
 
 :::
@@ -295,15 +298,15 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T)} \\
 Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn sie ein positives Testergebnis erhält, nehmen wir zunächst gängige Werte für die Sensitivität und Spezifität von guten COVID Schnelltests an:
 
 - Sensitivität: $P(T \mid K) = `r sens * 100`\%$
-- Spezifität: $P(\neg T \mid \neg K) = `r spec * 100`\%$
+- Spezifität: $P(\overline T \mid \overline K) = `r spec * 100`\%$
 
 Für die Prävalenz hatten wir $P(K) = `r prevalence * 100`\%$ angenommen.
 
 Damit können wir die Werte in die Formel einsetzen und erhalten:
 
 \begin{align}
-P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\[10pt]
-            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\neg T \mid \neg K)) (1 - P(K))} \\[10pt]
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K)} \\[10pt]
+            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\overline T \mid \overline K)) (1 - P(K))} \\[10pt]
             &= \frac{`r sens` \cdot `r prevalence`}{`r sens` \cdot `r prevalence` + (1 - `r spec`) \cdot (1 - `r prevalence`)} \\[10pt]
             &= `r round(pos_pred_val, 4)`.
 \end{align}
@@ -340,7 +343,7 @@ grade_this({
 
 
 <div id="neg_pred_value-hint">
-Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\neg K \mid \neg T)$ anzuwenden.
+Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\overline K \mid \overline T)$ anzuwenden.
 </div>
 
 
@@ -349,7 +352,7 @@ Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\neg K
 Schauen wir uns noch mal die Berechnung der bedingten Wahrscheinlichkeit $P(K \mid T)$ an:
 
 \begin{align}
-P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\[10pt]
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K)} \\[10pt]
             &= \frac{`r sens` \cdot `r prevalence`}{`r sens` \cdot `r prevalence` + `r 1-spec` \cdot `r 1-prevalence`} \\[10pt]
             &= `r round(pos_pred_val, 4)`.
 \end{align}
@@ -466,14 +469,14 @@ question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so stark
 )
 ```
 
-Die Spezifität $P(\neg T \mid \neg K)$ hat einen großen Einfluss, denn wie wir schon gezeigt haben gilt
+Die Spezifität $P(\overline T \mid \overline K)$ hat einen großen Einfluss, denn wie wir schon gezeigt haben gilt
 
 \begin{align}
-P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \neg K) P(\neg K)} \\[10pt]
-            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\neg T \mid \neg K)) P(\neg K)},
+P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K)} \\[10pt]
+            &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + (1 - P(\overline T \mid \overline K)) P(\overline K)},
 \end{align}
 
-und da $P(K)$ sehr klein ist, ist $P(\neg K)$ sehr groß und somit hat die Spezifität $P(\neg T \mid \neg K)$ über den Term $(1 - P(\neg T \mid \neg K)) P(\neg K)$ die "Macht" über den Nenner. Damit bewirkt eine hohe Spezifität einen kleinen Nenner und damit einen hohen positiven Vorhersagewert.
+und da $P(K)$ sehr klein ist, ist $P(\overline K)$ sehr groß und somit hat die Spezifität $P(\overline T \mid \overline K)$ über den Term $(1 - P(\overline T \mid \overline K)) P(\overline K)$ die "Macht" über den Nenner. Damit bewirkt eine hohe Spezifität einen kleinen Nenner und damit einen hohen positiven Vorhersagewert.
 
 Wir sehen also: gute Tests (insbesondere mit hoher Spezifität) können hier gerade am Anfang einer Krankheitswelle einen großen Unterschied machen, denn sie erlauben es schon frühzeitig recht zuverlässig Infektionen zu erkennen, selbst wenn die Prävalenz noch niedrig ist.
 
@@ -483,7 +486,7 @@ Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte hab
 
 #### Aufgabe 2a
 
-Analog zu den Grafiken für den positiven Vorhersagewert $P(K \mid T)$ möchten wir eine Grafik für den negativen Vorhersagewert $P(\neg K \mid \neg T)$ erstellen. Diese Grafik soll den negativen Vorhersagewert in Abhängigkeit von der Prävalenz und der Sensitivität darstellen.
+Analog zu den Grafiken für den positiven Vorhersagewert $P(K \mid T)$ möchten wir eine Grafik für den negativen Vorhersagewert $P(\overline K \mid \overline T)$ erstellen. Diese Grafik soll den negativen Vorhersagewert in Abhängigkeit von der Prävalenz und der Sensitivität darstellen.
 
 Zunächst brauchen wir dazu einen *Dataframe* mit einer Reihe von Prävalenz- und Sensitivitätswerten. Erzeugen Sie einen solchen Dataframe für alle Kombinationen aus den Prävalenzwerten $0.1, 0.2, \dots, 0.9$ und den Sensitivitätswerten $0.9, 0.97$ und $0.99$. Sie können dafür die Funktion `expand.grid` verwenden. Der Dataframe sollte `nvw_param` heißen und die Spalten `praev` und `sens` haben.
 
@@ -514,7 +517,7 @@ grade_this({
 
 #### Aufgabe 2b
 
-Berechnen Sie als nächstes den negativen Vorhersagewert $P(\neg K \mid \neg T)$ für alle gegebenen Parameter und fügen Sie das Ergebnis als Spalte `nvw` zum Dataframe `nvw_param` hinzu. Nutzen Sie dafür eine festgelegte Spezifität von $99.7\%$.
+Berechnen Sie als nächstes den negativen Vorhersagewert $P(\overline K \mid \overline T)$ für alle gegebenen Parameter und fügen Sie das Ergebnis als Spalte `nvw` zum Dataframe `nvw_param` hinzu. Nutzen Sie dafür eine festgelegte Spezifität von $99.7\%$.
 
 ```{r nvw_b-setup}
 nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
