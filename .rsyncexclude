@@ -12,3 +12,6 @@ testgenauigkeit_files/
 *.html
 README.md
 depwatcher.sh
+images/*.dot
+baumdiagramme.R
+
