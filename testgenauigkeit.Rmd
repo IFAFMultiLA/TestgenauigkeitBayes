@@ -15,11 +15,9 @@ output:
 # dargestellt werden. Das funktioniert auch in den Baumdiagrammen.
 
 require(RAppArmor)     # auf Server notwendig für abgesicherte Codeausführung in Übungen
-require(DiagrammeR)    # auf Server notwendig
 library(learnr)        # für Quizze, Code-Übungen, etc.
 library(gradethis)     # für Evaluierung von Code-Einsendungen
 library(shiny)         # für interaktive Elemente
-library(data.tree)     # für Baumdiagramme
 library(ggplot2)       # für Grafiken
 
 # folgendes ist notwendig um aktualisierte System-seitig installierte Version von pandoc zu verwenden, anstatt die in
@@ -101,25 +99,8 @@ Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir einem 
 Zunächst können wir diese Fragestellung als Baumdiagramm darstellen, was uns später bei der Berechnung helfen wird:
 
 
-```{r fig.height=3, fig.align='center'}
-# Knoten und Kanten des Baumdiagramms
-root <- Node$new('')
-node_k <- root$AddChild("Person krank")
-node_k_p <- node_k$AddChild("Test positiv")
-node_k_np <- node_k$AddChild("Test negativ")
-node_nk <- root$AddChild("Person gesund")
-node_nk_p <- node_nk$AddChild("Test positiv")
-node_nk_np <- node_nk$AddChild("Test negativ")
+![Baumdiagramm mit Ereignissen](images/baum1.png){height=200px}
 
-# Optische Anpassungen
-SetNodeStyle(root, shape = 'point')
-SetNodeStyle(node_k, shape = 'ellipse')
-SetNodeStyle(node_nk, shape = 'ellipse')
-SetGraphStyle(root, rankdir = "LR")   # Baum von links nach rechts statt von oben nach unten
-
-# Resultat darstellen
-plot(root)
-```
 
 Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse und deren Negation. Diese entsprechen den oben genannten Möglichkeiten:
 
@@ -139,36 +120,7 @@ Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse 
 
 Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen mit den dazugehörigen Wahrscheinlichkeiten $P$:
 
-```{r fig.height=3, fig.align='center'}
-# Knoten und Kanten des Baumdiagramms
-root <- Node$new('')
-SetEdgeStyle(root, fontsize = 10)
-
-# oberer Strang (krank)
-node_k <- root$AddChild("K")
-SetEdgeStyle(node_k, label = "P(K)")
-node_k_p <- node_k$AddChild("T")
-SetEdgeStyle(node_k_p, label = "P(T|K)")
-node_k_np <- node_k$AddChild("T&#773;")
-SetEdgeStyle(node_k_np, label = "P(T&#773;|K)")
-
-# unterer Strang (nicht krank)
-node_nk <- root$AddChild("K&#773;")
-SetEdgeStyle(node_nk, label = "P(K&#773;)")
-node_nk_p <- node_nk$AddChild("T")
-SetEdgeStyle(node_nk_p, label = "P(T|K&#773;)")
-node_nk_np <- node_nk$AddChild("T&#773;")
-SetEdgeStyle(node_nk_np, label = "P(T&#773;|K&#773;)")
-
-# Optische Anpassungen
-SetNodeStyle(root, shape = 'point')
-SetNodeStyle(node_k, shape = 'ellipse')
-SetNodeStyle(node_nk, shape = 'ellipse')
-SetGraphStyle(root, rankdir = "LR")
-
-# Resultat darstellen
-plot(root)
-```
+![Baumdiagramm mit Ereignissen und deren Wahrscheinlichkeiten](images/baum2.png){height=300px}
 
 Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(K \mid T)$. Diese Wahrscheinlichkeit wird auch *positiver Vorhersagewert* genannt. Wie errechnen wir diese Wahrscheinlichkeit? Der **Satz von Bayes** gibt uns die Möglichkeit dazu:
 
@@ -233,38 +185,7 @@ $P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzei
 
 Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
 
-```{r fig.height=3, fig.align='center'}
-# Knoten und Kanten des Baumdiagramms
-root <- Node$new('')
-SetEdgeStyle(root, fontsize = 10)
-
-# oberer Strang (krank)
-node_k <- root$AddChild("K")
-SetEdgeStyle(node_k, label = "P(K)", color = "red")
-node_k_p <- node_k$AddChild("T")
-SetNodeStyle(node_k_p, color = "red")
-SetEdgeStyle(node_k_p, label = "P(T|K)", color = "red")
-node_k_np <- node_k$AddChild("T&#773;")
-SetEdgeStyle(node_k_np, label = "P(T&#773;|K)", color = "black")
-
-# unterer Strang (nicht krank)
-node_nk <- root$AddChild("K&#773;")
-SetEdgeStyle(node_nk, label = "P(K&#773;)", color = "red")
-node_nk_p <- node_nk$AddChild("T")
-SetNodeStyle(node_nk_p, color = "red")
-SetEdgeStyle(node_nk_p, label = "P(T|K&#773;)", color = "red")
-node_nk_np <- node_nk$AddChild("T&#773;")
-SetEdgeStyle(node_nk_np, label = "P(T&#773;|K&#773;)", color = "black")
-
-# Optische Anpassungen
-SetNodeStyle(root, shape = 'point')
-SetNodeStyle(node_k, shape = 'ellipse')
-SetNodeStyle(node_nk, shape = 'ellipse')
-SetGraphStyle(root, rankdir = "LR")
-
-# Resultat darstellen
-plot(root)
-```
+![Baumdiagramm mit beiden Möglichkeiten, die zu positiven Tests führen](images/baum3.png){height=300px}
 
 Somit erhalten wir
 

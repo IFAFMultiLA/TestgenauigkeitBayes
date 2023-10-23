@@ -1,0 +1,20 @@
+digraph {
+
+graph [rankdir = "LR"]
+
+
+
+  "1" [label = "", shape = "point"] 
+  "2" [label = "K", shape = "ellipse"] 
+  "3" [label = "T", shape = "ellipse"] 
+  "4" [label = "T&#773;", shape = "ellipse"] 
+  "5" [label = "K&#773;", shape = "ellipse"] 
+  "6" [label = "T", shape = "ellipse"] 
+  "7" [label = "T&#773;", shape = "ellipse"] 
+"1"->"2" [fontsize = "10", label = "P(K)"] 
+"1"->"5" [fontsize = "10", label = "P(K&#773;)"] 
+"2"->"3" [fontsize = "10", label = "P(T|K)"] 
+"2"->"4" [fontsize = "10", label = "P(T&#773;|K)"] 
+"5"->"6" [fontsize = "10", label = "P(T|K&#773;)"] 
+"5"->"7" [fontsize = "10", label = "P(T&#773;|K&#773;)"] 
+}

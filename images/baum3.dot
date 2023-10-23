@@ -1,0 +1,20 @@
+digraph {
+
+graph [rankdir = "LR"]
+
+
+
+  "1" [label = "", shape = "point", color = ""] 
+  "2" [label = "K", shape = "ellipse", color = ""] 
+  "3" [label = "T", shape = "ellipse", color = "red"] 
+  "4" [label = "T&#773;", shape = "ellipse", color = ""] 
+  "5" [label = "K&#773;", shape = "ellipse", color = ""] 
+  "6" [label = "T", shape = "ellipse", color = "red"] 
+  "7" [label = "T&#773;", shape = "ellipse", color = ""] 
+"1"->"2" [fontsize = "10", label = "P(K)", color = "red"] 
+"1"->"5" [fontsize = "10", label = "P(K&#773;)", color = "red"] 
+"2"->"3" [fontsize = "10", label = "P(T|K)", color = "red"] 
+"2"->"4" [fontsize = "10", label = "P(T&#773;|K)", color = "black"] 
+"5"->"6" [fontsize = "10", label = "P(T|K&#773;)", color = "red"] 
+"5"->"7" [fontsize = "10", label = "P(T&#773;|K&#773;)", color = "black"] 
+}
