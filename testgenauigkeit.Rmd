@@ -70,7 +70,7 @@ Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* ge
 
 
 ```{r confmat}
-question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten liefern: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für solch einen Test aus?",
+question("Nehmen wir an, es gäbe drei Krankheitszustände: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für einen fiktiven Test aus, der einen dieser Zustände als Testergebnis liefert?",
   answer("So wie oben, d.h. 2 Zeilen und 2 Spalten."),
   answer("2 Zeilen und 3 Spalten."),
   answer("3 Zeilen und 2 Spalten."),
