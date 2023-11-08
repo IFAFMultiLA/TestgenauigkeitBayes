@@ -45,12 +45,27 @@ pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalenc
 
 ## Fragestellung
 
-Eine Person fühlt sich gerade krank und macht einen Corona Schnelltest. Leider fällt der Test positiv aus.
+Eine Person fühlt sich gerade krank und macht einen Corona-Schnelltest. Leider fällt der Test positiv aus.
 
-![Ein positiver Schnelltest](images/covid19test.jpg){height=300px}
-
+![Ein positiver Schnelltest](images/covid19test.jpg){height=300px}    
 
 Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie wirklich an Corona erkrankt ist, d.h. wie sicher kann sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass die Person wirklich *nicht* an Corona infiziert ist?
+
+Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, dass wir dort Antworten auf unsere Fragen finden. 
+
+![Der Beipackzettel eines handelsüblichen COVID-19-Schnelltests.](images/covid19test-beipack.jpg){height=350px}
+
+Versuchen wir, die Informationen zu entschlüsseln. Offenbar wurde eine Studie durchgeführt, in der Personen Proben entnommen wurden. Diese wurden einem RT-PCR-Test und einem Schnelltest (Nasal Swab) unterzogen und für jede Person wurden die Ergebnisse der beiden Tests miteinander verglichen. 
+
+```{r clinicalstudy1}
+question_numeric("Wie viele Personen haben an der Studie teilgenommen?",
+ answer(437, correct = TRUE),
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+In dieser Studie sind wir nur an der Genauigkeit des Schnelltests interessiert. Dazu nehmen wir an, dass das Ergebnis des RT-PCR-Tests exakt ist und wir damit wissen, ob eine Person an Covid-19 erkrankt ist oder nicht. Wir überprüfen dann, ob der Schnelltest den Krankheitszustand der Personen richtig erkennt oder nicht. Statt Schnelltest schreiben ab hier nur kurz *Test*.      
 
 Zunächst einmal können wir feststellen, dass wir es mit vier Möglichkeiten zu tun haben:
 
@@ -66,11 +81,11 @@ Man kann das übersichtlich als Tabelle darstellen:
 |  **Person krank**    |   richtig positiv   |  falsch negativ    |
 |  **Person gesund**    |   falsch positiv   |  richtig negativ   |
 
-Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
+Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt. Beachte, dass wir die Matrix gegenüber der Darstellung im Beipackzettel transponiert haben. 
 
 
 ```{r confmat}
-question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten liefern: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für solch einen Test aus?",
+question("Nehmen wir an, es gäbe drei Krankheitszustände: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für einen fiktiven Test aus, der einen dieser Zustände als Testergebnis liefert?",
   answer("So wie oben, d.h. 2 Zeilen und 2 Spalten."),
   answer("2 Zeilen und 3 Spalten."),
   answer("3 Zeilen und 2 Spalten."),
@@ -82,6 +97,20 @@ question("Nehmen wir an, ein fiktiver Test könnte drei verschiedene Antworten l
 )
 ```
 
+```{r clinicalstudy2}
+question_numeric("Bei wie vielen Personen in der Studie hat der Test den Krankheitszustand richtig erkannt?",
+ answer(430, correct = TRUE),
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+Die Testgenauigkeit (*Total Accuracy*) im Beipackzettel gibt uns den relativen Anteil der richtigen Testergebnisse im Vergleich zu allen an, also $430/437 = 98.4\%$. Weiterhin finden wir dort mit Sensitivität (*Sensitivity*) und Spezifität (*Specificity*) zwei weitere Gütemaße, welche im Text darunter erklärt werden:
+
+- Von 100 nachweislich positiven Covid-Fällen erkennt der Test etwa 97 Fälle richtig als positiv (Sensitivität)
+- Von 100 nachweislich negativen Fällen erkennt der Test etwa 99 Fälle richtig als negativ (Spezifität)
+
 ::: summary
 
 #### Fragestellung
@@ -90,13 +119,11 @@ Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *
 
 :::
 
+Überlege dir, wie man die Werte von Sensitivität und Spezifität aus der Tabelle im Beipackzettel berechnen kann. Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung, die wir jetzt in der Zusammenfassung rechts oben sehen?
 
 ## Analyse
 
-
-Wir wollen uns nun anschauen, wie wir herausfinden können, wie stark wir einem positiven Ergebnis eines (Corona-)Tests trauen können. D.h. **wie hoch ist die Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt?**
-
-Zunächst können wir diese Fragestellung als Baumdiagramm darstellen, was uns später bei der Berechnung helfen wird:
+Zur Formalisierung des Problems stellen wir das Vorgehen in der Studie als Baumdiagramm dar, was uns später bei der Beantwortung der eigentlich Fragestellung helfen wird. Wir wissen, wer gesund und wer krank ist und überprüfen für diese Gruppen von Personen jeweils, wie der Test ausfällt:
 
 
 ![Baumdiagramm mit Ereignissen](images/baum1.png){height=200px}
@@ -122,7 +149,23 @@ Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen mit den d
 
 ![Baumdiagramm mit Ereignissen und deren Wahrscheinlichkeiten](images/baum2.png){height=300px}
 
-Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(K \mid T)$. Diese Wahrscheinlichkeit wird auch *positiver Vorhersagewert* genannt. Wie errechnen wir diese Wahrscheinlichkeit? Der **Satz von Bayes** gibt uns die Möglichkeit dazu:
+Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(K \mid T)$. Diese Wahrscheinlichkeit wird auch *positiver Vorhersagewert* genannt, aber sie taucht im obigen Baumdiagramm nicht auf. Dort sind die Ereignisse K und T vertauscht wie in $P(T \mid K)$.
+
+```{r P_T_K}
+question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
+  answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist.", correct = TRUE),
+  answer("Die Wahrscheinlichkeit, dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
+  answer("Die Wahrscheinlichkeit, dass eine Person krank ist, wenn sie einen positiven Test hatte."),
+  answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, obwohl die getestete Person gesund ist."),
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+$P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test, wie wir im Beipackzettel schon gesehen haben. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. 
+
+Um nun den eigentlich gesuchten *positiven Vorhersagewert*, also die bedingte Wahrscheinlichkeit $P(K \mid T)$ zu berechnen, können wir den **Satz von Bayes** benutzen:
 
 
 $$
@@ -148,7 +191,9 @@ $$
 <div class="with_sidebar">
 
 <div class="main">
-$P(K)$ gibt an, wir hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können ein Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
+$P(K)$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
+
+Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen. Warum ist das in den meisten Fällen nicht sinnvoll? 
 </div>
 
 <div class="side">
@@ -157,21 +202,7 @@ Die Kennzahl, die aussagt wie hoch der Prozentsatz der Menschen ist, die zu eine
 
 </div>
 
-Nun brauchen wir $P(T \mid K)$.
 
-```{r P_T_K}
-question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
-  answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist.", correct = TRUE),
-  answer("Die Wahrscheinlichkeit, dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
-  answer("Die Wahrscheinlichkeit, dass eine Person krank ist, wenn sie einen positiven Test hatte."),
-  answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, obwohl die getestete Person gesund ist."),
-  allow_retry = TRUE,
-  correct = correct_msg,
-  incorrect = incorrect_msg
-)
-```
-
-$P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. In den Beipackzetteln von Schnelltests findet sich üblicherweise auch eine Angabe zu dessen Sensitivität.
 
 ::: summary
 
@@ -181,9 +212,11 @@ $P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzei
 
 :::
 
-![Der Beipackzettel eines handelsüblichen COVID 19 Schnelltests.](images/covid19test-beipack.jpg){height=350px}
+<!-- ![Der Beipackzettel eines handelsüblichen COVID 19 Schnelltests.](images/covid19test-beipack.jpg){height=350px} -->
 
-Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
+Die Wahrscheinlichkeit $P(T \mid K)$ ist im Beipackzettel als Sensitivität schon angegeben. 
+
+Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt, die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
 
 ![Baumdiagramm mit beiden Möglichkeiten, die zu positiven Tests führen](images/baum3.png){height=300px}
 
@@ -201,7 +234,7 @@ $$
 
 Das bringt uns allerdings zwei neue Probleme ein: Wir brauchen $P(T \mid \overline K)$ und $P(\overline K)$. Beides können wir zum Glück über die Wahrscheinlichkeit für komplementäre Ereignisse berechnen. Damit ist $P(\overline K)$ (die generelle Wahrscheinlichkeit *nicht* krank zu sein) leicht zu errechnen, denn $P(K)$ (die generelle Wahrscheinlichkeit krank zu sein, geschätzt mittels Prävalenz) kennen wir schon: $P(\overline K) = 100\% - P(K) = `r (1 - prevalence)*100`\%$.
 
-Fehlt zu guter letzt noch $P(T \mid \overline K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\overline T | \overline K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt. Wie wir im Baumdiagramm sehen, ist $P(\overline T | \overline K)$ komplementär zu $P(T | \overline K)$ und damit gilt $P(T | \overline K) = 100\% - P(\overline T | \overline K)$.
+Fehlt zu guter letzt noch $P(T \mid \overline K)$: Die Wahrscheinlichkeit ein positives Testergebnis zu haben, wenn man eigentlich gesund ist (ein *falsch-positives Ergebnis*). Hier hilft uns ein weiteres Gütemaß für Tests weiter: die *Spezifität*, auch *Richtig-negativ Rate* genannt. Sie gibt uns die Wahrscheinlichkeit an, dass eine Person ein negatives Testergebnis erhält, wenn sie tatsächlich gesund ist, also $P(\overline T | \overline K)$. Auch die Spezifität wird oft im Beipackzettel von Schnelltests abgedruckt, wie wir schon gesehen haben. Wie wir im Baumdiagramm erkennen, ist $P(\overline T | \overline K)$ komplementär zu $P(T | \overline K)$ und damit gilt $P(T | \overline K) = 100\% - P(\overline T | \overline K)$.
 
 ::: summary
 
@@ -234,7 +267,7 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) 
 
 ### Interpretation
 
-Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich krank ist (positiver Vorhersagewert), beträgt also nur rund $`r round(pos_pred_val * 100)`\%$. Das ist tatsächlich keine sonderlich hohe Wahrscheinlichkeit. Auf der folgenden Seite werden wir uns genauer anschauen, warum das so ist.
+Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich krank ist (positiver Vorhersagewert), beträgt also nur rund $`r round(pos_pred_val * 100)`\%$. Das ist tatsächlich keine sonderlich hohe Wahrscheinlichkeit und auf den ersten Blick verwunderlich, denn sowohl Sensitivität als auch Spezifität liegen als Gütemaße im Beipackzettel des Tests nahe 100%. Auf der folgenden Seite werden wir uns genauer anschauen, warum das so ist.
 
 ---
 
