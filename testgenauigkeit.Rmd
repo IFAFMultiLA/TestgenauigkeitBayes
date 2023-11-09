@@ -65,7 +65,7 @@ question_numeric("Wie viele Personen haben an der Studie teilgenommen?",
   incorrect = incorrect_msg
 )
 ```
-In dieser Studie sind wir nur an der Genauigkeit des Schnelltests interessiert. Dazu nehmen wir an, dass das Ergebnis des RT-PCR-Tests exakt ist und wir damit wissen, ob eine Person an Covid-19 erkrankt ist oder nicht. Wir überprüfen dann, ob der Schnelltest den Krankheitszustand der Personen richtig erkennt oder nicht. Statt Schnelltest schreiben ab hier nur kurz *Test*.      
+In dieser Studie sind wir nur an der Genauigkeit des Schnelltests interessiert. Dazu nehmen wir an, dass das Ergebnis des RT-PCR-Tests exakt ist und wir damit wissen, ob eine Person an Covid-19 erkrankt ist oder nicht. Wir überprüfen dann, ob der Schnelltest den Krankheitszustand der Personen richtig erkennt oder nicht. Statt Schnelltest schreiben wir ab hier nur kurz *Test*.
 
 Zunächst einmal können wir feststellen, dass wir es mit vier Möglichkeiten zu tun haben:
 
