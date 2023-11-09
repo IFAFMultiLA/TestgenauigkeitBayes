@@ -11,9 +11,6 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-# Hinweis: Die "Unicode Overline" Notation für ein Komplementärereignis "nicht A" kann in HTML mittels A&#773;
-# dargestellt werden. Das funktioniert auch in den Baumdiagrammen.
-
 require(RAppArmor)     # auf Server notwendig für abgesicherte Codeausführung in Übungen
 library(learnr)        # für Quizze, Code-Übungen, etc.
 library(gradethis)     # für Evaluierung von Code-Einsendungen
@@ -38,8 +35,8 @@ gradethis_setup()
 
 # Werte für das Beispiel
 prevalence <- 0.2 / 100.0   # P(K)
-sens <- 0.97    # P(T|K)
-spec <- 0.997   # P(T&#773;|K&#773;)
+sens <- 0.914   # P(T|K)
+spec <- 0.994   # P(~T|~K)
 pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalence))   # P(K|T)
 ```
 
@@ -53,35 +50,90 @@ Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie w
 
 Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, dass wir dort Antworten auf unsere Fragen finden. 
 
-![Der Beipackzettel eines handelsüblichen COVID-19-Schnelltests.](images/covid19test-beipack.jpg){height=350px}
+![Der Beipackzettel eines handelsüblichen Covid-19-Schnelltests.](images/test-performance-clungene2edit.png){height=350px}
 
-Versuchen wir, die Informationen zu entschlüsseln. Offenbar wurde eine Studie durchgeführt, in der Personen Proben entnommen wurden. Diese wurden einem RT-PCR-Test und einem Schnelltest (Nasal Swab) unterzogen und für jede Person wurden die Ergebnisse der beiden Tests miteinander verglichen. 
+::: summary
+
+#### Konfusionsmatrix des Schnelltests
+
+|                 | **Person krank** | **Person gesund** | Gesamt |
+|-----:|:----:|:----:|:----:|
+|  Test positiv   |   139            |  3                | 142    |
+|  Test negativ   |   13             |  462              | 475    |
+|  Gesamt         |   152            |  465              | 617    |
+
+:::
+
+Versuchen wir, die Informationen zu entschlüsseln. Offenbar wurde eine Studie durchgeführt, in der Personen Proben entnommen wurden. Diese wurden einem RT-PCR-Test und einem Schnelltest der Marke CLUNGENE per Nasenabstrich (nasal swab) unterzogen und für jede Person wurden die Ergebnisse der beiden Tests miteinander verglichen. 
 
 ```{r clinicalstudy1}
 question_numeric("Wie viele Personen haben an der Studie teilgenommen?",
- answer(437, correct = TRUE),
+  answer(617, correct = TRUE),
   allow_retry = TRUE,
   correct = correct_msg,
   incorrect = incorrect_msg
 )
 ```
+
 In dieser Studie sind wir nur an der Genauigkeit des Schnelltests interessiert. Dazu nehmen wir an, dass das Ergebnis des RT-PCR-Tests exakt ist und wir damit wissen, ob eine Person an Covid-19 erkrankt ist oder nicht. Wir überprüfen dann, ob der Schnelltest den Krankheitszustand der Personen richtig erkennt oder nicht. Statt Schnelltest schreiben wir ab hier nur kurz *Test*.
 
-Zunächst einmal können wir feststellen, dass wir es mit vier Möglichkeiten zu tun haben:
+Werten wir das Ergebnis eines solchen Tests aus, können wir zunächst feststellen, dass wir es mit vier Möglichkeiten zu tun haben:
 
-- Die Person ist krank und der Test ist positiv
-- Die Person ist krank und der Test ist negativ
-- Die Person ist gesund und der Test ist positiv
-- Die Person ist gesund und der Test ist negativ
+- Die Person ist krank und der Test ist positiv.
+- Die Person ist krank und der Test ist negativ.
+- Die Person ist gesund und der Test ist positiv.
+- Die Person ist gesund und der Test ist negativ.
 
 Man kann das übersichtlich als Tabelle darstellen:
 
-|  | Test positiv | Test negativ |
+|  | **Person krank** | **Person gesund** |
 |-----:|:----:|:----:|
-|  **Person krank**    |   richtig positiv   |  falsch negativ    |
-|  **Person gesund**    |   falsch positiv   |  richtig negativ   |
+|  Test positiv   |   richtig positiv   |  falsch positiv    |
+|  Test negativ   |   falsch negativ   |  richtig negativ   |
 
-Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt. Beachte, dass wir die Matrix gegenüber der Darstellung im Beipackzettel transponiert haben. 
+Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
+
+```{r clinicalstudy2}
+question_numeric("Bei wie vielen Personen in der Studie hat der Test den Krankheitszustand richtig erkannt?",
+  answer(430, correct = TRUE),
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+Unter der Konfusionsmatrix im Beipackzettel finden wir noch zwei Prozentangaben: *PPA* und *NPA*. Diese wurden aus den Werten in der Tabelle berechnet und sind Gütemaße für medizinische Tests:
+
+**PPA** bedeutet *Positive Percent Agreement* oder auch *Richtig-Positiv-Rate*, bzw. *Sensitivität (Sensitivity).* Der Wert gibt an, wie viele Prozent von nachweislich positiven Covid-Fällen vom Test richtig als positiv erkannt werden. Bei unserem Test sind es im Mittel 91.4%.
+
+**NPA** bedeutet *Negative Percent Agreement* oder auch *Richtig-Negativ-Rate*, bzw. *Spezifität (Specificity).* Der Wert gibt an, wie viele Prozent von nachweislich negativen Covid-Fällen vom Test richtig als negativ erkannt werden. Bei unserem Test sind es im Mittel 99.4%.
+
+```{r calc_sens}
+question_text("Wie wurde die Richtig-Positiv-Rate, bzw. Sensitivität von 91.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
+  answer_fn(function (input) {
+      mark_as(gsub("\\s+", "", input) == "139/152*100")   # Leerzeichen im Text ignorieren
+  }),
+  allow_retry = TRUE,
+  trim = TRUE,
+  placeholder = 'Geben Sie eine Prozentrechnung der Form "a/b*100" ein.',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+
+```{r calc_spec}
+question_text("Wie wird die Richtig-Negativ-Rate, bzw. Spezifität von 99.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
+  answer_fn(function (input) {
+      mark_as(gsub("\\s+", "", input) == "462/465*100")   # Leerzeichen im Text ignorieren
+  }),
+  allow_retry = TRUE,
+  trim = TRUE,
+  placeholder = 'Geben Sie eine Prozentrechnung der Form "a/b*100" ein.',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
 
 
 ```{r confmat}
@@ -97,20 +149,6 @@ question("Nehmen wir an, es gäbe drei Krankheitszustände: nicht erkrankt, mild
 )
 ```
 
-```{r clinicalstudy2}
-question_numeric("Bei wie vielen Personen in der Studie hat der Test den Krankheitszustand richtig erkannt?",
- answer(430, correct = TRUE),
-  allow_retry = TRUE,
-  correct = correct_msg,
-  incorrect = incorrect_msg
-)
-```
-
-Die Testgenauigkeit (*Total Accuracy*) im Beipackzettel gibt uns den relativen Anteil der richtigen Testergebnisse im Vergleich zu allen an, also $430/437 = 98.4\%$. Weiterhin finden wir dort mit Sensitivität (*Sensitivity*) und Spezifität (*Specificity*) zwei weitere Gütemaße, welche im Text darunter erklärt werden:
-
-- Von 100 nachweislich positiven Covid-Fällen erkennt der Test etwa 97 Fälle richtig als positiv (Sensitivität)
-- Von 100 nachweislich negativen Fällen erkennt der Test etwa 99 Fälle richtig als negativ (Spezifität)
-
 ::: summary
 
 #### Fragestellung
@@ -119,7 +157,7 @@ Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *
 
 :::
 
-Überlege dir, wie man die Werte von Sensitivität und Spezifität aus der Tabelle im Beipackzettel berechnen kann. Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung, die wir jetzt in der Zusammenfassung rechts oben sehen?
+Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung, die wir jetzt in der Zusammenfassung rechts oben sehen? Das werden wir uns auf der folgenden Seite anschauen.
 
 ## Analyse
 
@@ -212,8 +250,6 @@ $P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzei
 
 :::
 
-<!-- ![Der Beipackzettel eines handelsüblichen COVID 19 Schnelltests.](images/covid19test-beipack.jpg){height=350px} -->
-
 Die Wahrscheinlichkeit $P(T \mid K)$ ist im Beipackzettel als Sensitivität schon angegeben. 
 
 Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt, die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
@@ -249,7 +285,7 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T)} \\
 
 ### Berechnung
 
-Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn sie ein positives Testergebnis erhält, nehmen wir zunächst gängige Werte für die Sensitivität und Spezifität von guten COVID Schnelltests an:
+Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn sie ein positives Testergebnis erhält, nehmen wir zunächst gängige Werte für die Sensitivität und Spezifität von guten Covid Schnelltests an:
 
 - Sensitivität: $P(T \mid K) = `r sens * 100`\%$
 - Spezifität: $P(\overline T \mid \overline K) = `r spec * 100`\%$
@@ -322,7 +358,7 @@ calc_ppv <- function(prev, sens, spec) {
 
 # Erstellung eines Dataframes mit der Kombination aller Parameter (kartesisches Produkt)
 ppv_by_param <- expand.grid(prev = seq(0, 1, length.out = 1001),
-                            sens = c(0.9, 0.97, 0.9999),
+                            sens = c(0.80, 0.914, 0.9999),
                             spec = seq(0.990, 0.999, length.out = 10))
 # P(K|T) für jede Parameterkombination berechnen
 ppv_by_param$ppv <- calc_ppv(ppv_by_param$prev, ppv_by_param$sens, ppv_by_param$spec)
@@ -441,7 +477,7 @@ und da $P(K)$ sehr klein ist, ist $P(\overline K)$ sehr groß und somit hat die 
 
 Wir sehen also: gute Tests (insbesondere mit hoher Spezifität) können hier gerade am Anfang einer Krankheitswelle einen großen Unterschied machen, denn sie erlauben es schon frühzeitig recht zuverlässig Infektionen zu erkennen, selbst wenn die Prävalenz noch niedrig ist.
 
-Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte haben noch bedeutenden Einfluss auf das Ergebnis. Insbesondere ist es wichtig, wie gründlich der Abstrich vorgenommen wurde. Es ist auch bekannt, dass die Temperatur die Genauigkeit von COVID-Schnelltests beeinflusst. Sie sehen also, dass die Berechnungen noch deutlich komplexer werden können!
+Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte haben noch bedeutenden Einfluss auf das Ergebnis. Insbesondere ist es wichtig, wie gründlich der Abstrich vorgenommen wurde. Es ist auch bekannt, dass die Temperatur die Genauigkeit von Covid-Schnelltests beeinflusst. Sie sehen also, dass die Berechnungen noch deutlich komplexer werden können!
 
 ---
 
@@ -449,7 +485,7 @@ Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte hab
 
 Analog zu den Grafiken für den positiven Vorhersagewert $P(K \mid T)$ möchten wir eine Grafik für den negativen Vorhersagewert $P(\overline K \mid \overline T)$ erstellen. Diese Grafik soll den negativen Vorhersagewert in Abhängigkeit von der Prävalenz und der Sensitivität darstellen.
 
-Zunächst brauchen wir dazu einen *Dataframe* mit einer Reihe von Prävalenz- und Sensitivitätswerten. Erzeugen Sie einen solchen Dataframe für alle Kombinationen aus den Prävalenzwerten $0.1, 0.2, \dots, 0.9$ und den Sensitivitätswerten $0.9, 0.97$ und $0.99$. Sie können dafür die Funktion `expand.grid` verwenden. Der Dataframe sollte `nvw_param` heißen und die Spalten `praev` und `sens` haben.
+Zunächst brauchen wir dazu einen *Dataframe* mit einer Reihe von Prävalenz- und Sensitivitätswerten. Erzeugen Sie einen solchen Dataframe für alle Kombinationen aus den Prävalenzwerten $0.1, 0.2, \dots, 0.9$ und den Sensitivitätswerten $0.8, 0.91$ und $0.99$. Sie können dafür die Funktion `expand.grid` verwenden. Der Dataframe sollte `nvw_param` heißen und die Spalten `praev` und `sens` haben.
 
 ```{r nvw_a, exercise=TRUE, exercise.timelimit=5, exercise.blanks = "___+"}
 nvw_param <- expand.grid(praev = ___,
@@ -459,14 +495,14 @@ nvw_param
 
 ```{r nvw_a-solution}
 nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
-                         sens = c(0.9, 0.97, 0.99))
+                         sens = c(0.8, 0.91, 0.99))
 nvw_param
 ```
 
 ```{r nvw_a-check}
 grade_this({
     nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
-                             sens = c(0.9, 0.97, 0.99))
+                             sens = c(0.8, 0.91, 0.99))
     
     # Gleitkommazahlenprüfung mit näherungsweiser Übereinstimmung
     if (isTRUE(all.equal(.result, nvw_param))) {
@@ -478,22 +514,22 @@ grade_this({
 
 #### Aufgabe 2b
 
-Berechnen Sie als nächstes den negativen Vorhersagewert $P(\overline K \mid \overline T)$ für alle gegebenen Parameter und fügen Sie das Ergebnis als Spalte `nvw` zum Dataframe `nvw_param` hinzu. Nutzen Sie dafür eine festgelegte Spezifität von $99.7\%$.
+Berechnen Sie als nächstes den negativen Vorhersagewert $P(\overline K \mid \overline T)$ für alle gegebenen Parameter und fügen Sie das Ergebnis als Spalte `nvw` zum Dataframe `nvw_param` hinzu. Nutzen Sie dafür eine festgelegte Spezifität von $99.4\%$.
 
 ```{r nvw_b-setup}
 nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
-                         sens = c(0.9, 0.97, 0.99))
+                         sens = c(0.8, 0.91, 0.99))
 nvw_param
 ```
 
 ```{r nvw_b, exercise=TRUE, exercise.timelimit=5, exercise.blanks = "___+", exercise.setup="nvw_b-setup"}
-spez <- 0.997
+spez <- 0.994
 nvw_param$nvw <- ___
 nvw_param
 ```
 
 ```{r nvw_b-solution}
-spez <- 0.997
+spez <- 0.994
 nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
 nvw_param
 ```
@@ -501,8 +537,8 @@ nvw_param
 ```{r nvw_b-check}
 grade_this({
     nvw_param <- expand.grid(praev = seq(0.1, 0.9, length.out = 9),
-                             sens = c(0.9, 0.97, 0.99))
-    spez <- 0.997
+                             sens = c(0.8, 0.91, 0.99))
+    spez <- 0.994
     nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
     
     # Gleitkommazahlenprüfung mit näherungsweiser Übereinstimmung
@@ -523,7 +559,7 @@ Die erzeugte Grafik sollte wie folgt aussehen:
 
 
 ```{r nvw_c-setup, exercise.setup="nvw_b-setup"}
-spez <- 0.997
+spez <- 0.994
 nvw_param$nvw <- spez * (1-nvw_param$praev) / (spez * (1-nvw_param$praev) + (1-nvw_param$sens) * nvw_param$praev)
 ```
 
