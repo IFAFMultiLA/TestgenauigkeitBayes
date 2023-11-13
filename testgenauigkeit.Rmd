@@ -1,7 +1,7 @@
 ---
 title: "Wie zuverlässig sind Testergebnisse?"
 runtime: shiny_prerendered
-author: Markus Konrad
+author: Markus Konrad, Prof. Dr. Martin Spott
 email: markus.konrad@htw-berlin.de
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
