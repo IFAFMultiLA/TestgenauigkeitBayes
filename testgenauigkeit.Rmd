@@ -48,6 +48,14 @@ Eine Person fühlt sich gerade krank und macht einen Corona-Schnelltest. Leider 
 
 Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie wirklich an Corona erkrankt ist, d.h. wie sicher kann sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass die Person wirklich *nicht* an Corona infiziert ist?
 
+::: summary
+
+#### Fragestellung
+
+Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *wirklich* erkrankt ist? Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit negativem Corona-Test *wirklich* gesund ist?  
+
+:::
+
 Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, dass wir dort Antworten auf unsere Fragen finden. 
 
 ![Der Beipackzettel eines handelsüblichen Covid-19-Schnelltests.](images/test-performance-clungene2edit.png){height=350px}
@@ -95,7 +103,7 @@ Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* ge
 
 ```{r clinicalstudy2}
 question_numeric("Bei wie vielen Personen in der Studie hat der Test den Krankheitszustand richtig erkannt?",
-  answer(430, correct = TRUE),
+  answer(601, correct = TRUE),
   allow_retry = TRUE,
   correct = correct_msg,
   incorrect = incorrect_msg
@@ -149,15 +157,7 @@ question("Nehmen wir an, es gäbe drei Krankheitszustände: nicht erkrankt, mild
 )
 ```
 
-::: summary
-
-#### Fragestellung
-
-Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *wirklich* erkrankt ist? Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit negativem Corona-Test *wirklich* gesund ist?  
-
-:::
-
-Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung, die wir jetzt in der Zusammenfassung rechts oben sehen? Das werden wir uns auf der folgenden Seite anschauen.
+Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung, die wir in der Zusammenfassung rechts oben sehen? Das werden wir uns auf der folgenden Seite anschauen.
 
 ## Analyse
 
