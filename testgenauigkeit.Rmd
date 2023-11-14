@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = FALSE)
 # Quizaufgaben sind momentan noch nicht richtig internationalisiert bei learnr;
 # Wir überschreiben die englischsprachigen Nachrichten:
 correct_msg <- "Richtig!"
-incorrect_msg <- "Leider falsch. Versuch's noch ein mal."
+incorrect_msg <- "Leider falsch. Versuch's noch einmal."
 
 # Das gleiche gilt für gradethis:
 options("gradethis.pass" = correct_msg)
@@ -46,7 +46,7 @@ Eine Person fühlt sich gerade krank und macht einen Corona-Schnelltest. Leider 
 
 ![Ein positiver Schnelltest](images/covid19test.jpg){height=300px}    
 
-Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie wirklich an Corona erkrankt ist, d.h. wie sicher kann sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass die Person wirklich *nicht* an Corona infiziert ist?
+Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie wirklich an Corona erkrankt ist, d.h. wie sicher kann sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass die Person wirklich *nicht* an Corona erkrankt ist?
 
 ::: summary
 
@@ -58,7 +58,7 @@ Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *
 
 Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, dass wir dort Antworten auf unsere Fragen finden. 
 
-![Der Beipackzettel eines handelsüblichen Covid-19-Schnelltests.](images/test-performance-clungene2edit.png){height=350px}
+![Der Beipackzettel eines handelsüblichen Covid-19-Schnelltests](images/test-performance-clungene2edit.png){height=350px}
 
 ::: summary
 
@@ -226,21 +226,9 @@ $$
 
 :::
 
-<div class="with_sidebar">
-
-<div class="main">
-$P(K)$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
+$P(K)$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Diesen Wert nennt man auch *Prävalenz.* Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
 
 Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen. Warum ist das in den meisten Fällen nicht sinnvoll? 
-</div>
-
-<div class="side">
-Die Kennzahl, die aussagt wie hoch der Prozentsatz der Menschen ist, die zu einem bestimmten Zeitpunkt an einer bestimmten Krankheit leidet, wird *Prävalenz* genannt.
-</div>
-
-</div>
-
-
 
 ::: summary
 
@@ -462,7 +450,8 @@ question("Warum spielt die Sensitivität bei niedriger Prävalenz keine so stark
   answer("Da bei niedriger Prävalenz der Term $P(T \\mid K) P(K)$ immer sehr klein ausfällt, die Sensitivität $P(T \\mid K)$ also kaum einen Einfluss auf das Gesamtergebnis haben kann.", correct = TRUE),
   allow_retry = TRUE,
   correct = correct_msg,
-  incorrect = incorrect_msg
+  incorrect = incorrect_msg,
+  try_again = incorrect_msg
 )
 ```
 
