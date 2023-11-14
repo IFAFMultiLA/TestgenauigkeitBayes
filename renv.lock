@@ -113,7 +113,7 @@
     },
     "adaptivelearnr": {
       "Package": "adaptivelearnr",
-      "Version": "0.6.6",
+      "Version": "0.6.7",
       "Source": "Local",
       "RemoteType": "local",
       "RemoteUrl": "../adaptivelearnr",
@@ -124,7 +124,7 @@
         "learnr",
         "shiny"
       ],
-      "Hash": "7e557cc745f7afc761c059b43e3bef46"
+      "Hash": "2524a5ab3f16206e4f3106163b116481"
     },
     "backports": {
       "Package": "backports",
