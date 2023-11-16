@@ -216,7 +216,7 @@ Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichke
 
 #### Definition der bedingten Wahrscheinlichkeiten
 
-$P(K \mid T)$ – Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist
+$P(K \mid T)$ – Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, unter der Bedingung dass der Test positiv ist
 
 #### Satz von Bayes
 
