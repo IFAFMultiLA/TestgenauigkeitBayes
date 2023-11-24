@@ -145,12 +145,12 @@ question_text("Wie wird die Richtig-Negativ-Rate, bzw. Spezifität von 99.4% aus
 
 
 ```{r confmat}
-question("Nehmen wir an, es gäbe drei Krankheitszustände: nicht erkrankt, mild erkrankt und schwer erkrankt. Wie sähe die Konfusionsmatrix für einen fiktiven Test aus, der einen dieser Zustände als Testergebnis liefert?",
-  answer("So wie oben, d.h. 2 Zeilen und 2 Spalten."),
+question("Nehmen wir an, ein Computersystem kann anhand eines Röntgenbildes erkennen, ob ein Knochen beschädigt ist. Dabei kann es drei verschiedene Zustände erkennen: Keine Beschädigung, Prellung, Knochenbruch. Lässt sich auch für ein solches System eine Konfusionsmatrix erstellen? Wenn ja, wie viele Zeilen und Spalten hätte diese Matrix?",
+  answer("2 Zeilen und 2 Spalten."),
   answer("2 Zeilen und 3 Spalten."),
   answer("3 Zeilen und 2 Spalten."),
   answer("3 Zeilen und 3 Spalten.", correct = TRUE),
-  answer("Es ist nicht möglich, eine Konfusionsmatrix für Tests mit mehr als zwei möglichen Antworten zu erstellen."),
+  answer("Es ist nicht möglich, eine Konfusionsmatrix für ein solches Computersystem zu erstellen."),
   allow_retry = TRUE,
   correct = correct_msg,
   incorrect = incorrect_msg
