@@ -295,6 +295,40 @@ Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich 
 
 ---
 
+#### Einführung Code-Aufgaben
+
+In dieser Lernanwendung werden Ihnen auch Aufgaben gestellt, die Sie mittels R-Code lösen sollen. Dabei geht es um kurze Codeschnipsel, die Sie entweder ergänzen sollen (indem Sie Platzhalter durch entsprechenden Code ersetzen) oder die Sie komplett selbst schreiben sollen. In den meisten Fällen erzeugen Sie dabei ein abschließendes Ergebnis, **welches in der letzten Zeile stehen muss.**
+
+**Beispielaufgabe:** Bestimmen Sie den Mittelwert der Augenzahlen eines sechsseitigen Würfels. Im Code haben wir schon die Augenzahlen 1 bis 6 in der Variable `wuerfel` vorgegeben. Benutzen Sie jetzt eine entsprechende R-Funktion, um den Mittelwert daraus zu bestimmen. Ersetzen Sie dafür den Platzhalter `___`.
+
+```{r code_intro1, exercise=TRUE, exercise.timelimit=5, exercise.blanks = "___+"}
+wuerfel <- 1:6
+___(wuerfel)
+```
+
+```{r code_intro1-solution}
+wuerfel <- 1:6
+mean(wuerfel)
+```
+
+```{r code_intro1-check}
+grade_this({
+    wuerfel <- 1:6
+    # Prüfen d. Ergebnisses
+    if (.result == mean(wuerfel)) {
+        pass()
+    }
+    fail()  # falls nicht korrekt
+})
+```
+
+<div id="code_intro1-hint">
+Mit der Funktion `mean()` lässt sich das arithmetische Mittel in R berechnen.
+</div>
+
+Wie Sie sehen, müssen Sie also das Endergebnis in die letzte Zeile der Code-Eingabe schreiben.
+
+
 #### Aufgabe 1
 
 Berechnen Sie die Wahrscheinlichkeit, dass eine Person, die einen negativen Schnelltest hat, tatsächlich gesund ist. Benutzen Sie dabei die selben Parameter (Prävalenz, Sensitivität, Spezifität) wie in der obigen Beispielberechnung. Sie können dafür die Variablen `prevalence`, `sens` und `spec` im Code verwenden.
