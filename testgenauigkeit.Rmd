@@ -40,6 +40,24 @@ spec <- 0.994   # P(~T|~K)
 pos_pred_val <- sens * prevalence / (sens * prevalence + (1-spec) * (1-prevalence))   # P(K|T)
 ```
 
+<style>
+span.K {
+    color: red;
+}
+
+span.nK {
+    color: teal;
+}
+
+span.T {
+    color: darkred;
+}
+
+span.nT {
+    color: blue;
+}
+</style>
+
 ## Fragestellung
 
 Eine Person fühlt sich gerade krank und macht einen Corona-Schnelltest. Leider fällt der Test positiv aus.
@@ -64,11 +82,11 @@ Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, 
 
 #### Konfusionsmatrix des Schnelltests
 
-|                 | **Person krank** | **Person gesund** | Gesamt |
+|                 | **Person <span class="K">krank</span>** | **Person <span class="nK">gesund</span>** | **Gesamt** |
 |-----:|:----:|:----:|:----:|
-|  Test positiv   |   139            |  3                | 142    |
-|  Test negativ   |   13             |  462              | 475    |
-|  Gesamt         |   152            |  465              | 617    |
+|  **Test <span class="T">positiv</span>**    |   139            |  3                | 142    |
+|  **Test <span class="nT">negativ</span>**   |   13             |  462              | 475    |
+|  **Gesamt**         |   152            |  465              | 617    |
 
 :::
 
@@ -87,17 +105,17 @@ In dieser Studie sind wir nur an der Genauigkeit des Schnelltests interessiert. 
 
 Werten wir das Ergebnis eines solchen Tests aus, können wir zunächst feststellen, dass wir es mit vier Möglichkeiten zu tun haben:
 
-- Die Person ist krank und der Test ist positiv.
-- Die Person ist krank und der Test ist negativ.
-- Die Person ist gesund und der Test ist positiv.
-- Die Person ist gesund und der Test ist negativ.
+- Die Person ist <span class="K">krank</span> und der Test ist <span class="T">positiv</span>.
+- Die Person ist <span class="K">krank</span> und der Test ist <span class="nT">negativ</span>.
+- Die Person ist <span class="nK">gesund</span> und der Test ist <span class="T">positiv</span>.
+- Die Person ist <span class="nK">gesund</span> und der Test ist <span class="nT">negativ</span>.
 
 Man kann das übersichtlich als Tabelle darstellen:
 
-|  | **Person krank** | **Person gesund** |
+|  | **Person <span class="K">krank</span>** | **Person <span class="nK">gesund</span>** |
 |-----:|:----:|:----:|
-|  Test positiv   |   richtig positiv   |  falsch positiv    |
-|  Test negativ   |   falsch negativ   |  richtig negativ   |
+|  **Test <span class="T">positiv</span>**   |   richtig positiv   |  falsch positiv    |
+|  **Test <span class="nT">negativ</span>**  |   falsch negativ    |  richtig negativ   |
 
 Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
 
@@ -164,33 +182,33 @@ Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere ei
 Zur Formalisierung des Problems stellen wir das Vorgehen in der Studie als Baumdiagramm dar, was uns später bei der Beantwortung der eigentlich Fragestellung helfen wird. Wir wissen, wer gesund und wer krank ist und überprüfen für diese Gruppen von Personen jeweils, wie der Test ausfällt:
 
 
-![Baumdiagramm mit Ereignissen](images/baum1.png){height=200px}
+![Baumdiagramm mit Ereignissen](images/baum1_farbig.png){height=200px}
 
 
 Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse und deren Negation. Diese entsprechen den oben genannten Möglichkeiten:
 
-- $K$:Person krank
-- $\overline K$: Person gesund
-- $T$: Test positiv
-- $\overline T$: Test negativ
+- $\color{red}{K}$:Person krank
+- $\color{teal}{\overline K}$: Person gesund
+- $\color{darkred}{T}$: Test positiv
+- $\color{blue}{\overline T}$: Test negativ
 
 ::: summary
 
 #### Definition der Ereignisse
 
-- $K$:Person krank und $\overline K$: Person gesund
-- $T$: Test positiv und $\overline T$: Test negativ
+- $\color{red}{K}$:Person krank und $\color{teal}{\overline K}$: Person gesund
+- $\color{darkred}{T}$: Test positiv und $\color{blue}{\overline T}$: Test negativ
 
 :::
 
 Diese Ereignisse können wir in ein Baumdiagramm übertragen, zusammen mit den dazugehörigen Wahrscheinlichkeiten $P$:
 
-![Baumdiagramm mit Ereignissen und deren Wahrscheinlichkeiten](images/baum2.png){height=300px}
+![Baumdiagramm mit Ereignissen und deren Wahrscheinlichkeiten](images/baum2_farbig.png){height=300px}
 
-Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(K \mid T)$. Diese Wahrscheinlichkeit wird auch *positiver Vorhersagewert* genannt, aber sie taucht im obigen Baumdiagramm nicht auf. Dort sind die Ereignisse K und T vertauscht wie in $P(T \mid K)$.
+Wie in der Frage eingangs formuliert, möchten wir wissen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn der Test positiv ausfällt. Das lässt sich mithilfe der oben definierten Ereignisse als *bedingte Wahrscheinlichkeit* formulieren – die Wahrscheinlichkeit, dass eine Person krank ist, gegeben dass der Test positiv ist: $P(\color{red}{K} \mid \color{darkred}{T})$. Diese Wahrscheinlichkeit wird auch *positiver Vorhersagewert* genannt, aber sie taucht im obigen Baumdiagramm nicht auf. Dort sind die Ereignisse $\color{red}{K}$ und $\color{darkred}{T}$ vertauscht wie in $P(\color{darkred}{T} \mid \color{red}{K})$.
 
 ```{r P_T_K}
-question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
+question("Was gibt die Wahrscheinlichkeit $P(\\color{darkred}{T} \\mid \\color{red}{K})$ an?",
   answer("Die Wahrscheinlichkeit, dass ein Test positiv ist, wenn die getestete Person krank ist.", correct = TRUE),
   answer("Die Wahrscheinlichkeit, dass eine Person gesund ist, wenn sie einen positiven Test hatte."),
   answer("Die Wahrscheinlichkeit, dass eine Person krank ist, wenn sie einen positiven Test hatte."),
@@ -201,46 +219,46 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
 )
 ```
 
-$P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test, wie wir im Beipackzettel schon gesehen haben. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. 
+$P(\color{darkred}{T} \mid \color{red}{K})$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test, wie wir im Beipackzettel schon gesehen haben. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. 
 
-Um nun den eigentlich gesuchten *positiven Vorhersagewert*, also die bedingte Wahrscheinlichkeit $P(K \mid T)$ zu berechnen, können wir den **Satz von Bayes** benutzen:
+Um nun den eigentlich gesuchten *positiven Vorhersagewert*, also die bedingte Wahrscheinlichkeit $P(\color{red}{K} \mid \color{darkred}{T})$ zu berechnen, können wir den **Satz von Bayes** benutzen:
 
 
 $$
-P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
+P(\color{red}{K} \mid \color{darkred}{T}) = \frac{P(\color{darkred}{T} \mid \color{red}{K}) P(\color{red}{K})}{P(\color{darkred}{T})}.
 $$
 
-Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichkeiten: $P(K)$, $P(T \mid K)$ und $P(T)$.
+Was wir also brauchen, um $P(\color{red}{K} \mid \color{darkred}{T})$ zu berechnen, sind drei Wahrscheinlichkeiten: $P(\color{red}{K})$, $P(\color{darkred}{T} \mid \color{red}{K})$ und $P(\color{darkred}{T})$.
 
 ::: summary
 
 #### Definition der bedingten Wahrscheinlichkeiten
 
-$P(K \mid T)$ – Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, unter der Bedingung dass der Test positiv ist
+$P(\color{red}{K} \mid \color{darkred}{T})$ – Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, unter der Bedingung dass der Test positiv ist
 
 #### Satz von Bayes
 
 $$
-P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
+P(\color{red}{K} \mid \color{darkred}{T}) = \frac{P(\color{darkred}{T} \mid \color{red}{K}) P(\color{red}{K})}{P(\color{darkred}{T})}.
 $$
 
 :::
 
-$P(K)$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Diesen Wert nennt man auch *Prävalenz.* Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
+$P(\color{red}{K})$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Diesen Wert nennt man auch *Prävalenz.* Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(\color{red}{K}) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
 
-Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen. Warum ist das in den meisten Fällen nicht sinnvoll? 
+Man könnte auch auf die Idee kommen, $P(\color{red}{K})$ aus der Studie im Beipackzettel abzulesen. Warum ist das in den meisten Fällen nicht sinnvoll? 
 
 ::: summary
 
 #### Definition der bedingten Wahrscheinlichkeiten
 
-$P(T \mid K)$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzeigt, unter der Bedingung dass die Person tatsächlich erkrankt ist (Sensitivität)
+$P(\color{darkred}{T} \mid \color{red}{K})$ – Wahrscheinlichkeit, dass ein Test ein positives Ergebnis anzeigt, unter der Bedingung dass die Person tatsächlich erkrankt ist (Sensitivität)
 
 :::
 
-Die Wahrscheinlichkeit $P(T \mid K)$ ist im Beipackzettel als Sensitivität schon angegeben. 
+Die Wahrscheinlichkeit $P(\color{darkred}{T} \mid \color{red}{K})$ ist im Beipackzettel als Sensitivität schon angegeben. 
 
-Schließlich fehlt noch $P(T)$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt, die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
+Schließlich fehlt noch $P(\color{darkred}{T})$: die Wahrscheinlichkeit dafür, dass eine Person – egal ob krank oder gesund – bei einem Test ein positives Ergebnis erhält. Hier hilft uns das *Gesetz der totalen Wahrscheinlichkeit*, das es uns erlaubt, die Wahrscheinlichkeiten für die beiden Möglichkeiten, die zu positiven Tests führen (Person krank und Person gesund), zu addieren, da sie sich gegenseitig ausschließen:
 
 ![Baumdiagramm mit beiden Möglichkeiten, die zu positiven Tests führen](images/baum3.png){height=300px}
 

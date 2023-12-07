@@ -1,0 +1,20 @@
+digraph {
+
+graph [rankdir = "LR"]
+
+
+
+  "1" [label = "", shape = "point", fontcolor = ""] 
+  "2" [label = "Person krank", shape = "ellipse", fontcolor = "#FF0000"] 
+  "3" [label = "Test positiv", shape = "ellipse", fontcolor = "#8b0000"] 
+  "4" [label = "Test negativ", shape = "ellipse", fontcolor = "#0000ff"] 
+  "5" [label = "Person gesund", shape = "ellipse", fontcolor = "#008080"] 
+  "6" [label = "Test positiv", shape = "ellipse", fontcolor = "#8b0000"] 
+  "7" [label = "Test negativ", shape = "ellipse", fontcolor = "#0000ff"] 
+  "1"->"2" 
+  "1"->"5" 
+  "2"->"3" 
+  "2"->"4" 
+  "5"->"6" 
+  "5"->"7" 
+}
