@@ -46,7 +46,7 @@ span.K {
 }
 
 span.nK {
-    color: teal;
+    color: blue;
 }
 
 span.T {
@@ -54,7 +54,7 @@ span.T {
 }
 
 span.nT {
-    color: blue;
+    color: navy;
 }
 </style>
 
@@ -188,16 +188,16 @@ Zur Formalisierung des Problems stellen wir das Vorgehen in der Studie als Baumd
 Damit wir später gut rechnen können, definieren wir zunächst zwei Ereignisse und deren Negation. Diese entsprechen den oben genannten Möglichkeiten:
 
 - $\color{red}{K}$:Person krank
-- $\color{teal}{\overline K}$: Person gesund
+- $\color{blue}{\overline K}$: Person gesund
 - $\color{darkred}{T}$: Test positiv
-- $\color{blue}{\overline T}$: Test negativ
+- $\color{navy}{\overline T}$: Test negativ
 
 ::: summary
 
 #### Definition der Ereignisse
 
-- $\color{red}{K}$:Person krank und $\color{teal}{\overline K}$: Person gesund
-- $\color{darkred}{T}$: Test positiv und $\color{blue}{\overline T}$: Test negativ
+- $\color{red}{K}$:Person krank und $\color{blue}{\overline K}$: Person gesund
+- $\color{darkred}{T}$: Test positiv und $\color{navy}{\overline T}$: Test negativ
 
 :::
 
