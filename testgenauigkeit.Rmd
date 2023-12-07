@@ -228,7 +228,7 @@ $$
 
 $P(K)$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Diesen Wert nennt man auch *Prävalenz.* Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
 
-Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen. Warum ist das in den meisten Fällen nicht sinnvoll? 
+Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen, doch das ist in den meisten Fällen nicht sinnvoll: die Studie, die zu den Ergebnissen im Beipackzettel geführt hat, untersucht ja gerade wie gut der Test bei kranken Personen funktioniert, daher wurden gezielt Menschen mit nachweislicher Covid-Infektion getestet, so dass hier nicht von einem Querschnitt der Bevölkerung gesprochen werden kann.
 
 ::: summary
 
@@ -262,6 +262,7 @@ Fehlt zu guter letzt noch $P(T \mid \overline K)$: Die Wahrscheinlichkeit ein po
 
 ::: summary
 
+
 #### Satz von Bayes {.replace}
 
 \begin{align}
@@ -269,11 +270,15 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T)} \\
             &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) P(\overline K)}.
 \end{align}
 
+#### Definition der bedingten Wahrscheinlichkeiten
+
+$P(\overline T \mid \overline K)$ – Wahrscheinlichkeit, dass ein Test ein negatives Ergebnis anzeigt, unter der Bedingung dass die Person tatsächlich gesund ist (Spezifität)
+
 :::
 
 ### Berechnung
 
-Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn sie ein positives Testergebnis erhält, nehmen wir zunächst gängige Werte für die Sensitivität und Spezifität von guten Covid Schnelltests an:
+Um beispielhaft zu berechnen, wie hoch die Wahrscheinlichkeit ist, dass eine Person tatsächlich krank ist, wenn sie ein positives Testergebnis von unserem betrachteten Schnelltest erhält, notieren wir noch mal die Sensitivität und Spezifität aus dem Beipackzettel:
 
 - Sensitivität: $P(T \mid K) = `r sens * 100`\%$
 - Spezifität: $P(\overline T \mid \overline K) = `r spec * 100`\%$
@@ -292,6 +297,184 @@ P(K \mid T) &= \frac{P(T \mid K) P(K)}{P(T \mid K) P(K) + P(T \mid \overline K) 
 ### Interpretation
 
 Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich krank ist (positiver Vorhersagewert), beträgt also nur rund $`r round(pos_pred_val * 100)`\%$. Das ist tatsächlich keine sonderlich hohe Wahrscheinlichkeit und auf den ersten Blick verwunderlich, denn sowohl Sensitivität als auch Spezifität liegen als Gütemaße im Beipackzettel des Tests nahe 100%. Auf der folgenden Seite werden wir uns genauer anschauen, warum das so ist.
+
+### Quizaufgaben
+
+```{r P_K}
+question_text(
+  "Nehmen wir an, die Studie mit der der Schnelltest evaluiert wurde, spiegelt die wirkliche Krankheitsrate
+in der Bevölkerung (d.h. die Prävelenz) wider. Berechnen Sie diese Prävalenz $P(K)$ aus den Daten in der 
+Konfusionsmatrix, abgebildet in der Zusammenfassung auf der echten Seite.
+
+Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
+(Achtung, das Dezimalzeichen ist der Punkt).",
+  answer_fn(function(input) {
+    expected_result <- 152/617
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_max_length <- 128
+
+    if (nchar(input) > allowed_max_length) {
+        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
+    }
+
+    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
+        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
+                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
+    }
+
+    result <- eval(parse(text = input), envir = new.env())
+    
+    if (identical(round(result, 4), round(expected_result, 4))) {
+        correct(sprintf("Das Ergebnis ist %.2f.", result))
+    } else {
+        incorrect(NULL)
+    }
+  }),
+  allow_retry = TRUE,
+  trim = TRUE,
+  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+```{r P_T}
+question_text(
+  "Berechnen Sie die totale Wahrscheinlichkeit $P(T)$, dass ein Test positiv ausfällt, unabhängig vom
+Krankheitszustand der getesteten Person. Nehmen Sie dieses mal eine Prävalenz von $P(K)=0.25$ an, aber nutzen
+Sie die Werte von Sensitivität und Spezifität vom Beipackzettel, d.h. $P(T \\mid K) = 0.914$ und
+$P(\\overline T \\mid \\overline K) = 0.994$.
+
+Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
+(Achtung, das Dezimalzeichen ist der Punkt).
+",
+  answer_fn(function(input) {
+    expected_result <- 0.914*0.25+(1-0.994)*(1-0.25)
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_max_length <- 128
+
+    if (nchar(input) > allowed_max_length) {
+        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
+    }
+
+    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
+        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
+                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
+    }
+
+    result <- eval(parse(text = input), envir = new.env())
+    
+    if (identical(round(result, 4), round(expected_result, 4))) {
+        correct(sprintf("Das Ergebnis ist %.2f.", result))
+    } else {
+        incorrect(NULL)
+    }
+  }),
+  allow_retry = TRUE,
+  trim = TRUE,
+  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+
+```{r P_K_T}
+question_text(
+  "Berechnen Sie die totale Wahrscheinlichkeit $P(K|T)$, dass eine positiv getestete Person tatsächlich krank ist.
+Nehmen Sie dieses mal eine Prävalenz von $P(K)=0.25$ sowie eine totale Wahrscheinlichkeit für einen positiven Test
+von $P(T)=0.233$ an, aber nutzen Sie die Werte von Sensitivität und Spezifität vom Beipackzettel, d.h.
+$P(T \\mid K) = 0.914$ und $P(\\overline T \\mid \\overline K) = 0.994$. Vergleichen Sie das Ergebnis mit dem
+Ergebnis, dass bei der Beispielrechnung mit einer Prävalenz von $P(K) = 0.2\\%$ erzeugt wurde.
+
+Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
+(Achtung, das Dezimalzeichen ist der Punkt).",
+  answer_fn(function(input) {
+    expected_result <- 0.914*0.25/0.233
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_max_length <- 128
+
+    if (nchar(input) > allowed_max_length) {
+        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
+    }
+
+    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
+        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
+                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
+    }
+
+    result <- eval(parse(text = input), envir = new.env())
+    
+    if (identical(round(result, 4), round(expected_result, 4))) {
+        correct(sprintf("Das Ergebnis ist %.2f.", result))
+    } else {
+        incorrect(NULL)
+    }
+  }),
+  allow_retry = TRUE,
+  trim = TRUE,
+  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+```{r P_nK_nT_ausdruck}
+question("Sie möchten die Wahrscheinlichkeit berechnen, dass eine Person, die einen negativen Schnelltest hat,
+          tatsächlich gesund ist. Welche Wahrschlichkeit ist das, mathematisch ausgedrückt?",
+  answer("$P(\\overline T \\mid \\overline K)$"),
+  answer("$P(T \\mid \\overline K)$"),
+  answer("$P(K \\mid \\overline T)$"),
+  answer("$P(\\overline K \\mid \\overline T)$", correct = TRUE),
+  answer("$P(\\overline K, \\overline T)$"),
+  answer("$P(\\overline T, \\overline K)$"),
+  allow_retry = TRUE,
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+```{r P_nK_nT_berechnet}
+question_text(
+  "Sie möchten die Wahrscheinlichkeit berechnen, dass eine Person, die einen negativen Schnelltest hat, tatsächlich
+gesund ist. Nehmen Sie eine Prävalenz von $P(K)=0.2\\%$ an. Für die Güte des Schnelltests nehmen Sie die Werte von
+Sensitivität und Spezifität aus dem Beipackzettel, d.h. $P(T \\mid K) = 0.914$ und
+$P(\\overline T \\mid \\overline K) = 0.994$.
+
+Tipp: Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\\overline K \\mid \\overline T)$
+anzuwenden.
+
+Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
+(Achtung, das Dezimalzeichen ist der Punkt).",
+  answer_fn(function(input) {
+    expected_result <- 0.994 * (1-0.002) / (0.994 * (1-0.002) + (1-0.914) * 0.002)
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_max_length <- 128
+
+    if (nchar(input) > allowed_max_length) {
+        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
+    }
+
+    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
+        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
+                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
+    }
+
+    result <- eval(parse(text = input), envir = new.env())
+    
+    if (identical(round(result, 4), round(expected_result, 4))) {
+        correct(sprintf("Das Ergebnis ist %.6f.", result))
+    } else {
+        incorrect(NULL)
+    }
+  }),
+  allow_retry = TRUE,
+  trim = TRUE,
+  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
 
 ---
 
@@ -329,24 +512,36 @@ Mit der Funktion `mean()` lässt sich das arithmetische Mittel in R berechnen.
 Wie Sie sehen, müssen Sie also das Endergebnis in die letzte Zeile der Code-Eingabe schreiben.
 
 
-#### Aufgabe 1
+#### Aufgabe 1a
 
-Berechnen Sie die Wahrscheinlichkeit, dass eine Person, die einen negativen Schnelltest hat, tatsächlich gesund ist. Benutzen Sie dabei die selben Parameter (Prävalenz, Sensitivität, Spezifität) wie in der obigen Beispielberechnung. Sie können dafür die Variablen `prevalence`, `sens` und `spec` im Code verwenden.
+Im folgenden Code wird die Konfusionsmatrix `konfmat` mit den Werten aus dem Beipackzettel erzeugt.
 
-```{r neg_pred_value, exercise=TRUE, exercise.timelimit=5}
+Erweitern Sie den Code so, dass `konfmat` um die Randsummen erweitert wird. Nutzen Sie dafür die Funktion `addmargins`.
 
+```{r konfmat_randsummen, exercise=TRUE, exercise.timelimit=5}
+konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
+colnames(konfmat) <- c("krank", "gesund")
+rownames(konfmat) <- c("positiv", "negativ")
+konfmat
 ```
 
-```{r neg_pred_value-solution}
-spec * (1-prevalence) / (spec * (1-prevalence) + (1-sens) * prevalence)
+```{r konfmat_randsummen-solution}
+konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
+colnames(konfmat) <- c("krank", "gesund")
+rownames(konfmat) <- c("positiv", "negativ")
+konfmat2 <- addmargins(konfmat)
+konfmat2
 ```
 
-```{r neg_pred_value-check}
+```{r konfmat_randsummen-check}
 grade_this({
-    # P(nicht K|nicht T) berechnen
-    neg_pred_val <- spec * (1-prevalence) / (spec * (1-prevalence) + (1-sens) * prevalence)
+    konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
+    colnames(konfmat) <- c("krank", "gesund")
+    rownames(konfmat) <- c("positiv", "negativ")
+    konfmat2 <- addmargins(konfmat)
+    
     # Prüfen d. Ergebnisses
-    if (identical(round(.result, 6), round(neg_pred_val, 6))) {
+    if (identical(.result, konfmat2)) {
         pass()
     }
     fail()  # falls nicht korrekt
@@ -354,10 +549,48 @@ grade_this({
 ```
 
 
-<div id="neg_pred_value-hint">
-Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\overline K \mid \overline T)$ anzuwenden.
-</div>
+#### Aufgabe 1b
 
+Im folgenden Code wird die Konfusionsmatrix `konfmat` mit den Werten aus dem Beipackzettel erzeugt. Berechnen Sie
+$P(T \mid K) = \frac{P(T, K)}{P(K)}$ direkt mittels `konfmat`. Sie können auf den Wert in Zeile `i` und Spalte `j`
+zugreifen, indem Sie die Syntax `konfmat[i, j]` verwenden. Sie können die komplette Zeile `i` mittels
+`konfmat[i,]` und die komplette Spalte `j` mittels `konfmat[,j]` auswählen.
+
+
+```{r konfmat_r_P_T_K, exercise=TRUE, exercise.timelimit=5}
+konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
+colnames(konfmat) <- c("krank", "gesund")
+rownames(konfmat) <- c("positiv", "negativ")
+konfmat
+```
+
+```{r konfmat_r_P_T_K-solution}
+konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
+colnames(konfmat) <- c("krank", "gesund")
+rownames(konfmat) <- c("positiv", "negativ")
+konfmat[1, 1] / sum(konfmat[,1])
+```
+
+```{r konfmat_r_P_T_K-check}
+grade_this({
+    konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
+    colnames(konfmat) <- c("krank", "gesund")
+    rownames(konfmat) <- c("positiv", "negativ")
+    
+    # Prüfen d. Ergebnisses
+    if (identical(.result, konfmat[1, 1] / sum(konfmat[,1]))) {
+        pass()
+    }
+    fail()  # falls nicht korrekt
+})
+```
+
+<div id="konfmat_r_P_T_K-hint">
+Wählen Sie mittels `konfmat[i,j]` den entsprechenden Wert für $T \cap K$ (positiver Test *und* krank) aus `konfmat`
+aus. Berechnen Sie außerdem die Anzahl der Menschen die nachweislich krank waren als Summe der "krank" Spalte. Das
+können Sie mittels Auswahl der Spalte machen und der Funktion `sum()`. Anschließend können Sie die Anzahl für 
+$T \cap K$ teilen durch die Anzahl für $K$.
+</div>
 
 ## Der Einfluss von Prävalenz und Testgenauigkeit
 
