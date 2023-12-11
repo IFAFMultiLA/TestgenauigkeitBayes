@@ -303,8 +303,8 @@ Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich 
 ```{r P_K}
 question_text(
   "Nehmen wir an, die Studie mit der der Schnelltest evaluiert wurde, spiegelt die wirkliche Krankheitsrate
-in der Bevölkerung (d.h. die Prävelenz) wider. Berechnen Sie diese Prävalenz $P(K)$ aus den Daten in der 
-Konfusionsmatrix, abgebildet in der Zusammenfassung auf der echten Seite.
+in der Bevölkerung (d.h. die Prävalenz) wider. Berechnen Sie diese Prävalenz $P(K)$ aus den Daten in der 
+Konfusionsmatrix, abgebildet in der Zusammenfassung auf der rechten Seite.
 
 Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
 (Achtung, das Dezimalzeichen ist der Punkt).",
@@ -381,7 +381,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
 
 ```{r P_K_T}
 question_text(
-  "Berechnen Sie die totale Wahrscheinlichkeit $P(K|T)$, dass eine positiv getestete Person tatsächlich krank ist.
+  "Berechnen Sie die Wahrscheinlichkeit $P(K|T)$, dass eine positiv getestete Person tatsächlich krank ist.
 Nehmen Sie dieses mal eine Prävalenz von $P(K)=0.25$ sowie eine totale Wahrscheinlichkeit für einen positiven Test
 von $P(T)=0.233$ an, aber nutzen Sie die Werte von Sensitivität und Spezifität vom Beipackzettel, d.h.
 $P(T \\mid K) = 0.914$ und $P(\\overline T \\mid \\overline K) = 0.994$. Vergleichen Sie das Ergebnis mit dem
