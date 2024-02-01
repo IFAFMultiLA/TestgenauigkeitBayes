@@ -5,7 +5,7 @@ author: Markus Konrad, Prof. Dr. Martin Spott
 email: markus.konrad@htw-berlin.de
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
-    adaptivelearnr::tutorial:
+    learnrextra::tutorial:
         language: de
         apiserver: http://localhost:8000/
 ---

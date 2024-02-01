@@ -40,7 +40,7 @@
     },
     "MASS": {
       "Package": "MASS",
-      "Version": "7.3-60",
+      "Version": "7.3-60.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -51,7 +51,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "a56a6365b3fa73293ea8d084be0d9bb0"
+      "Hash": "b765b28387acc8ec9e9c1530713cb19c"
     },
     "Matrix": {
       "Package": "Matrix",
@@ -110,21 +110,6 @@
         "utils"
       ],
       "Hash": "e749cae40fa9ef469b6050959517453c"
-    },
-    "adaptivelearnr": {
-      "Package": "adaptivelearnr",
-      "Version": "0.6.10",
-      "Source": "Local",
-      "RemoteType": "local",
-      "RemoteUrl": "../adaptivelearnr",
-      "Requirements": [
-        "fs",
-        "htmltools",
-        "jsonlite",
-        "learnr",
-        "shiny"
-      ],
-      "Hash": "c5795d7d2d88cba004389702f94db53c"
     },
     "backports": {
       "Package": "backports",
@@ -775,6 +760,21 @@
       ],
       "Hash": "dc1688afc60662f96f6f847f7bf86402"
     },
+    "learnrextra": {
+      "Package": "learnrextra",
+      "Version": "0.6.10",
+      "Source": "Local",
+      "RemoteType": "local",
+      "RemoteUrl": "../learnrextra",
+      "Requirements": [
+        "fs",
+        "htmltools",
+        "jsonlite",
+        "learnr",
+        "shiny"
+      ],
+      "Hash": "f09e69cd08e832df8f6388e474107f3b"
+    },
     "lifecycle": {
       "Package": "lifecycle",
       "Version": "1.0.3",
@@ -824,7 +824,7 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.9-0",
+      "Version": "1.9-1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -837,7 +837,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "086028ca0460d0c368028d3bda58f31b"
+      "Hash": "110ee9d83b496279960e162ac97764ce"
     },
     "mime": {
       "Package": "mime",
