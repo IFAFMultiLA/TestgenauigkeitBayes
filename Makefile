@@ -7,7 +7,7 @@ RSYNC_COMMON := -rcv --exclude-from=.rsyncexclude
 
 devserver:
 	-rm testgenauigkeit.html
-	R -e 'renv::install("../adaptivelearnr");rmarkdown::run("testgenauigkeit.Rmd", shiny_args = list(port = 8001, launch.browser = FALSE))'
+	R -e 'renv::install("../learnrextra");rmarkdown::run("testgenauigkeit.Rmd", shiny_args = list(port = 8001, launch.browser = FALSE))'
 
 staging_sync: deploymentfiles
 	rsync $(RSYNC_COMMON) . $(SERVER_STAGING_APP)
