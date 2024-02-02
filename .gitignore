@@ -5,3 +5,4 @@
 testgenauigkeit_files/
 testgenauigkeit.html
 testgenauigkeit_prod.Rmd
+Makefile
