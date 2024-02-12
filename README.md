@@ -6,8 +6,6 @@ Markus Konrad <markus.konrad@htw-berlin.de>, Februar 2023
 
 Dieses Lerndashboard verwendet [learnr](https://rstudio.github.io/learnr/).
 
-Es ist momentan online verfügbar unter https://rshiny.f4.htw-berlin.de/users/mk/TestgenauigkeitBayes/.
-
 ## Installation
 
 - zunächst muss das Paket [renv](https://rstudio.github.io/renv/index.html) installiert sein
