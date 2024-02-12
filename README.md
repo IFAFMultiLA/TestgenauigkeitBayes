@@ -24,11 +24,3 @@ Es ist momentan online verfügbar unter https://rshiny.f4.htw-berlin.de/users/mk
 - momentan wird die Entwicklungsversion von learnrextra in ein [öffentliches GitHub-Repository](https://github.com/IFAFMultiLA/learnrextra) geladen
 - wird die Entwicklungsversion von learnrextra aktualisiert, also ein neuer Commit in den Main-Branch des Repositories geladen, kann diese neue Version mittels `devtools::install_github('IFAFMultiLA/learnrextra')` installiert werden (alternativ kann `devtools::install_local(<Pfad-zum-lokalen-Projekt>)` verwendet werden)
 
-## Deployment auf HTW Server
-
-- das Deployment kann über die `Makefile` gesteuert werden
-- hierzu müssen ggf. erst die Pfade im `Makefile` angepasst werden, denn die beziehen sich auf den User `mk`
-- danach können mittels `make installdeps` die benötigten Pakete installiert werden
-- mittels `make testsync` kann simuliert werden, welche Dateien für das Deployment auf den Server kopiert werden würden
-- mittels `make sync` werden die Dateien dann tatsächlich auf den Server übertragen
-- mittels `make reload` wird die App auf dem Server neu gestartet – **das ist notwendig, damit die Änderungen nach einem Upload tatsächlich angezeigt werden**
