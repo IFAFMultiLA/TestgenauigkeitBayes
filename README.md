@@ -4,7 +4,7 @@ Markus Konrad <markus.konrad@htw-berlin.de>, Februar 2023
 
 ## Grundlegendes
 
-Dieses Lerndashboard verwendet [learnr](https://rstudio.github.io/learnr/).
+Dieses Lerndashboard verwendet [learnrextra](https://github.com/IFAFMultiLA/learnrextra).
 
 ## Installation
 
