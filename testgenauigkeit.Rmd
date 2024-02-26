@@ -601,3 +601,93 @@ ggplot(nvw_param, aes(praev, nvw, color = sens, group = sens)) +
 ```{r nvw_c-code-check}
 grade_this_code()
 ```
+
+
+::: tracking_consent_text
+
+### Einverständniserklärung
+
+Das Projekt "Multimodale interaktive Lerndashboards mit Learning Analytics" (MultiLA) hat sich zum Ziel gesetzt das Lernverhalten in den zur Verfügung gestellten Lernanwendungen zu erforschen. Beim ersten Besuch dieser Webseite wird eine zufällige Nutzerkennung erzeugt. Für diese Nutzerkennung werden im Hintergrund Daten gesammelt, die wesentlich dazu beitragen das Nutzerverhalten pseudonymisiert zu erfassen und im Anschluss in Bezug auf das Lernverhalten zu analysieren. Die Nutzerkennung wird als Browser Cookie gespeichert, so dass bei einem erneuten Besuch Informationen zur bestehenden Nutzerkennung ergänzt werden können. Die Speicherung von Cookies hilft außerdem, den schon bearbeiteten Stand der Lernanwendung zu speichern und den Bearbeitungsstand des Nutzers/der Nutzerin wieder zu erkennen und aufzurufen.
+
+Bei den aufgezeichneten Daten handelt es sich um folgende Informationen:
+
+<ul>
+    <li>Browserinformationen (Browsersoftware, Fenstergröße)</li>
+    <li>Start- und Endzeitpunkt der Nutzung der Webseite</li>
+    <li class="trackingdata-chapters">Informationen über Seitenwechsel</li>
+    <li>Informationen beim Ausfüllen der Quizze (gegebene Antworten, Resultat)</li>
+    <li>Informationen beim Ausfüllen der Code-Aufgaben (eingegebener Code, Resultat, Erfolg)</li>
+    <li class="trackingdata-inputs">Änderungen an Bedienelementen (für interaktive Grafiken, etc.)</li>
+    <li class="trackingdata-mouse">Mausbewegungen</li>
+    <li class="trackingdata-mouse">Scrollbewegungen</li>
+    <li class="trackingdata-mouse">Klicks</li>
+</ul>
+
+All diese Daten werden nur innerhalb der Lernanwendung aufgezeichnet. Sie werden auf den Servern der HTW-Berlin gespeichert und werden mit Auslaufen des Projektes oder möglichen Folgeprojekten gelöscht.
+
+Weiterhin werden diese Daten die Grundlage zur Erforschung und Analyse des Lernverhaltens darstellen und somit in mögliche wissenschaftliche Publikationen einfließen.
+
+**Dieses Vorgehen dient ausschließlich der wissenschaftlichen Forschung. Es gibt zu keiner Zeit Rückschlüsse auf die jeweilige Person und somit keinerlei Auswirkungen auf Studienleistungen.**
+
+Wenn Sie die Einwilligung für Aufzeichnung der Daten für Forschungszwecke verweigern, werden ausschließlich Cookies zur Speicherung von Nutzerpräferenzen und dem schon bearbeiteten Stand der Lernanwendung in Ihrem Browser gespeichert. Durch die weitere Nutzung der Website stimmen Sie der Verwendung zu diesem Zwecke zu.
+
+Weitere Informationen entnehmen Sie bitte den <a href="#" onclick="showDataProtectionModal(true)">Datenschutzhinweisen</a>.
+
+:::
+
+::: data_protection_text
+
+### Datenschutzhinweise
+
+#### Datenschutzrechtliche Informationspflichten über die Datensammlung im Forschungsprojekt "MultiLA" nach Art. 13 DSGVO
+
+Das Projekt "Multimodale interaktive Lerndashboards mit Learning Analytics" (MultiLA) hat sich zum Ziel gesetzt das Lernverhalten in den zur Verfügung gestellten Lernanwendungen zu erforschen. Zu diesem Zwecke werden Daten erhoben und verarbeiten, worüber wir im folgenden aufklären.
+
+##### 1. Name und Kontaktdaten des Verantwortlichen
+
+Hochschule für Technik und Wirtschaft Berlin  
+Treskowallee 8  
+10318 Berlin
+
+T: +49.40.42875-0
+
+Vertreten durch die [Präsidentin](https://www.htw-berlin.de/einrichtungen/hochschulleitung/praesidentin/)
+Praesidentin@HTW-Berlin.de
+
+
+##### 2. Datenschutzbeauftragter
+
+Behördlicher Datenschutzbeauftragter  
+Vitali Dick (HiSolutions AG)  
+datenschutz@htw-berlin.de
+
+Projektverantwortlicher  
+Andre Beinrucker  
+andre.beinrucker@htw-berlin.de
+
+##### 3. Die Verarbeitung von personenbezogenen Daten
+
+###### 3.1 Zweck
+
+Die Verarbeitung personenbezogener Daten dient dem Zweck der Analyse des Lernverhaltens und des Umgangs mit interaktiven Lernanwendungen im Rahmen des Foschungsprojekts "MultiLA".
+
+###### 3.2 Rechtsgrundlage
+
+Die Rechtsgrundlage ist Art. 6 Abs. 1 lit. e DSGVO.
+
+###### 3.3 Dauer der Speicherung
+
+Alle Daten werden nur innerhalb der Lernanwendung aufgezeichnet. Sie werden auf den Servern der HTW-Berlin gespeichert und werden mit Auslaufen des Projektes oder möglichen Folgeprojekten gelöscht.
+
+##### 4. Ihre Rechte
+
+Sie haben das Recht, von der Hochschule Auskunft über die zu Ihrer Person gespeicherten Daten zu erhalten und/oder unrichtig gespeicherte Daten berichtigen zu lassen.
+Sie haben darüber hinaus das Recht auf Löschung oder auf Einschränkung der Verarbeitung oder ein Widerspruchsrecht gegen die Verarbeitung.
+Außerdem haben Sie in dem Fall, in dem als Rechtsgrundlage für die Verarbeitung Sie die Einwilligung gegeben haben, das Recht, die Einwilligung jederzeit zu widerrufen. Die Rechtmäßigkeit, der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung bleibt davon unberührt. Bitte wenden Sie sich in dem Fall jeweils an folgende Person: Andre Beinrucker, andre.beinrucker@htw-berlin.de.
+Sie haben das Recht auf Beschwerde bei einer Aufsichtsbehörde, wenn Sie der Ansicht sind, dass die Verarbeitung der Sie betreffenden personenbezogenen Daten gegen die Rechtsvorschriften verstößt.
+
+##### 5. Information über Ihr Widerspruchsrecht nach Art . 21 Abs. 1 DSGVO
+
+Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender Daten, die aufgrund von Art. 6 Abs. 1 lit. e DSGVO                  (Datenverarbeitung im öffentlichen Interesse) erfolgt, Widerspruch einzulegen.
+
+:::

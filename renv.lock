@@ -540,6 +540,16 @@
       ],
       "Hash": "36b4265fb818f6a342bed217549cd896"
     },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rprojroot"
+      ],
+      "Hash": "24b224366f9c2e7534d2344d10d59211"
+    },
     "highr": {
       "Package": "highr",
       "Version": "0.10",
@@ -762,18 +772,19 @@
     },
     "learnrextra": {
       "Package": "learnrextra",
-      "Version": "0.6.10",
+      "Version": "0.7.0",
       "Source": "Local",
       "RemoteType": "local",
-      "RemoteUrl": "../learnrextra",
+      "RemoteUrl": "../../learnrextra",
       "Requirements": [
         "fs",
+        "here",
         "htmltools",
         "jsonlite",
         "learnr",
         "shiny"
       ],
-      "Hash": "f09e69cd08e832df8f6388e474107f3b"
+      "Hash": "074abf7f001f6afb72115c201cc52894"
     },
     "lifecycle": {
       "Package": "lifecycle",
