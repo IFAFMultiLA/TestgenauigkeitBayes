@@ -1,24 +1,19 @@
-# Lerndashboard für Anwendung des Satzes von Bayes auf die Genauigkeit von klinischen Tests
+# Lernanwendung für Anwendung des Satzes von Bayes auf die Genauigkeit von klinischen Tests
 
-Markus Konrad <markus.konrad@htw-berlin.de>, Februar 2023
+Markus Konrad <markus.konrad@htw-berlin.de>, März 2024
 
 ## Grundlegendes
 
-Dieses Lerndashboard verwendet [learnrextra](https://github.com/IFAFMultiLA/learnrextra).
+Dieses Lernanwendung verwendet [learnrextra](https://github.com/IFAFMultiLA/learnrextra).
 
 ## Installation
 
 - zunächst muss das Paket [renv](https://rstudio.github.io/renv/index.html) installiert sein
 - dann können alle Paketabhängigkeiten installiert werden mittels `renv::restore()`
 
-## Entwicklung
-
-- alternativ zum "Run document" Knopf in RStudio kann `make devserver` verwendet werden, womit die Anwendung auf `http://localhost:8000` zur Verfügung gestellt wird
-
 ## "learnrextra" Paket
 
-- dieses Lerndashboard ist abhängig von einer selbstentwickelten Erweiterung zu learnr namens *learnrextra*
-- learnrextra fügt u.a. JavaScript hinzu, um eine Anpassbarkeit des Lerndashboards via JSON zu gewährleisten
-- momentan wird die Entwicklungsversion von learnrextra in ein [öffentliches GitHub-Repository](https://github.com/IFAFMultiLA/learnrextra) geladen
+- dieses Lernanwendung ist abhängig von einer selbstentwickelten Erweiterung zu learnr namens *learnrextra*
+- die Entwicklungsversion von learnrextra ist in einem [öffentlichen GitHub-Repository](https://github.com/IFAFMultiLA/learnrextra) verfügbar
 - wird die Entwicklungsversion von learnrextra aktualisiert, also ein neuer Commit in den Main-Branch des Repositories geladen, kann diese neue Version mittels `devtools::install_github('IFAFMultiLA/learnrextra')` installiert werden (alternativ kann `devtools::install_local(<Pfad-zum-lokalen-Projekt>)` verwendet werden)
 
