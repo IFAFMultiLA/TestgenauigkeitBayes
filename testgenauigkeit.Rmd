@@ -592,6 +592,45 @@ können Sie mittels Auswahl der Spalte machen und der Funktion `sum()`. Anschlie
 $T \cap K$ teilen durch die Anzahl für $K$.
 </div>
 
+---
+
+### Umfrage
+
+```{r survey_mehrere_tabs}
+question("Haben oder hatten Sie mehrere Fenster oder Tabs dieser Seite geöffnet?",
+  answer("j", label = "Ja.", correct = TRUE),
+  answer("n", label = "Nein.", correct = TRUE),
+  answer("ka", label = "Weiß nicht / verstehe die Frage nicht.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_kommentar}
+question_text("Wie ist Ihr genereller Eindruck zu dieser Lernanwendung?",
+  answer_fn(correct, label = "survey_kommentar"),
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+::: survey_zusammenfassung
+
+```{r survey_zusammenfassung}
+question("Wie hilfreich finden Sie die Zusammenfassungsleiste auf der rechten Seite?",
+  answer("1", label = "Gar nicht hilfreich.", correct = TRUE),
+  answer("2", label = "Überwiegend nicht hilfreich.", correct = TRUE),
+  answer("3", label = "Überwiegend hilfreich.", correct = TRUE),
+  answer("4", label = "Sehr hilfreich.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+:::
+
 ## Der Einfluss von Prävalenz und Testgenauigkeit
 
 Schauen wir uns noch mal die Berechnung der bedingten Wahrscheinlichkeit $P(K \mid T)$ an:
