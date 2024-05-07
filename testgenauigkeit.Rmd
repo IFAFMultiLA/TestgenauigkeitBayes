@@ -865,7 +865,7 @@ question("Die Lernanwendung finde ich insgesamt ...",
   answer("2", label = "... eher schlecht.", correct = TRUE),
   answer("3", label = "... mittelmäßig.", correct = TRUE),
   answer("4", label = "... eher gut.", correct = TRUE),
-  answer("5", label = "... sehr schlecht.", correct = TRUE),
+  answer("5", label = "... sehr gut.", correct = TRUE),
   type = "learnr_radio",
   allow_retry = FALSE,
   correct = "Danke."
