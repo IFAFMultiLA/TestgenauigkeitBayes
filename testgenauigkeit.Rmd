@@ -592,112 +592,6 @@ können Sie mittels Auswahl der Spalte machen und der Funktion `sum()`. Anschlie
 $T \cap K$ teilen durch die Anzahl für $K$.
 </div>
 
----
-
-### Umfrage
-
-```{r survey_schwierigkeit}
-question("Die Lernanwendung ist inhaltlich ...",
-  answer("1", label = "... sehr schwer.", correct = TRUE),
-  answer("2", label = "... eher schwer.", correct = TRUE),
-  answer("3", label = "... genau richtig.", correct = TRUE),
-  answer("4", label = "... eher leicht.", correct = TRUE),
-  answer("5", label = "... zu leicht.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_verwendung_uebung}
-question("Solche Lernanwendungen sollten in der Übung ...",
-  answer("1", label = "... nie verwendet werden.", correct = TRUE),
-  answer("2", label = "... eher selten verwendet werden.", correct = TRUE),
-  answer("3", label = "... ab und an verwendet werden.", correct = TRUE),
-  answer("4", label = "... eher oft verwendet werden.", correct = TRUE),
-  answer("5", label = "... immer verwendet werden.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_verwendung_zuhause}
-question("Ich würde solche Lernanwendungen zum Selbstlernen zu Hause ...",
-  answer("1", label = "... nie verwenden.", correct = TRUE),
-  answer("2", label = "... eher selten verwenden.", correct = TRUE),
-  answer("3", label = "... ab und an verwenden.", correct = TRUE),
-  answer("4", label = "... eher oft verwenden.", correct = TRUE),
-  answer("5", label = "... ständig verwenden.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_bedienung}
-question("Das Layout und die Bedienung der Lernanwendung sind  ...",
-  answer("1", label = "... sehr schwer verständlich.", correct = TRUE),
-  answer("2", label = "... eher schwer verständlich.", correct = TRUE),
-  answer("3", label = "... mittelmäßig verständlich.", correct = TRUE),
-  answer("4", label = "... eher leicht verständlich.", correct = TRUE),
-  answer("5", label = "... sehr leicht verständlich.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_mehrere_tabs}
-question("Haben oder hatten Sie mehrere Fenster oder Tabs dieser Seite geöffnet?",
-  answer("j", label = "Ja.", correct = TRUE),
-  answer("n", label = "Nein.", correct = TRUE),
-  answer("ka", label = "Weiß nicht / verstehe die Frage nicht.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-::: survey_zusammenfassung
-
-```{r survey_zusammenfassung}
-question("Ich habe die Zusammenfassungsleiste auf der rechten Seite  ...",
-  answer("1", label = "... gar nicht genutzt bzw. nicht gesehen.", correct = TRUE),
-  answer("2", label = "... selten genutzt.", correct = TRUE),
-  answer("3", label = "... ab und an genutzt.", correct = TRUE),
-  answer("4", label = "... eher oft genutzt.", correct = TRUE),
-  answer("5", label = "... ständig genutzt.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-:::
-
-```{r survey_zufriedenheit}
-question("Die Lernanwendung finde ich insgesamt ...",
-  answer("1", label = "... sehr schlecht.", correct = TRUE),
-  answer("2", label = "... eher schlecht.", correct = TRUE),
-  answer("3", label = "... mittelmäßig.", correct = TRUE),
-  answer("4", label = "... eher gut.", correct = TRUE),
-  answer("5", label = "... sehr schlecht.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_kommentar}
-question_text("Was würden Sie an der Lernanwendung verbessern?",
-  answer_fn(correct, label = "survey_kommentar"),
-  allow_retry = FALSE,
-  placeholder = "",
-  correct = "Danke."
-)
-```
-
 
 ## Der Einfluss von Prävalenz und Testgenauigkeit
 
@@ -841,6 +735,151 @@ und da $P(K)$ sehr klein ist, ist $P(\overline K)$ sehr groß und somit hat die 
 Wir sehen also: gute Tests (insbesondere mit hoher Spezifität) können hier gerade am Anfang einer Krankheitswelle einen großen Unterschied machen, denn sie erlauben es schon frühzeitig recht zuverlässig Infektionen zu erkennen, selbst wenn die Prävalenz noch niedrig ist.
 
 Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte haben noch bedeutenden Einfluss auf das Ergebnis. Insbesondere ist es wichtig, wie gründlich der Abstrich vorgenommen wurde. Es ist auch bekannt, dass die Temperatur die Genauigkeit von Covid-Schnelltests beeinflusst. Sie sehen also, dass die Berechnungen noch deutlich komplexer werden können!
+
+---
+
+### Umfrage
+
+```{r survey_schwierigkeit}
+question("Die Lernanwendung ist inhaltlich ...",
+  answer("1", label = "... sehr schwer.", correct = TRUE),
+  answer("2", label = "... eher schwer.", correct = TRUE),
+  answer("3", label = "... genau richtig.", correct = TRUE),
+  answer("4", label = "... eher leicht.", correct = TRUE),
+  answer("5", label = "... zu leicht.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_praxisbeispiel}
+question("Medizinische Tests als Praxisbeispiel für den Satz von Bayes finde ich ...",
+  answer("1", label = "... gar nicht interessant.", correct = TRUE),
+  answer("2", label = "... eher wenig interessant.", correct = TRUE),
+  answer("3", label = "... mittelmäßig interessant.", correct = TRUE),
+  answer("4", label = "... eher interessant.", correct = TRUE),
+  answer("5", label = "... sehr interessant.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_verwendung_uebung}
+question("Solche Lernanwendungen sollten in der Übung ...",
+  answer("1", label = "... nie verwendet werden.", correct = TRUE),
+  answer("2", label = "... eher selten verwendet werden.", correct = TRUE),
+  answer("3", label = "... ab und an verwendet werden.", correct = TRUE),
+  answer("4", label = "... eher oft verwendet werden.", correct = TRUE),
+  answer("5", label = "... immer verwendet werden.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_verwendung_zuhause}
+question("Ich würde solche Lernanwendungen zum Selbstlernen zu Hause ...",
+  answer("1", label = "... nie verwenden.", correct = TRUE),
+  answer("2", label = "... eher selten verwenden.", correct = TRUE),
+  answer("3", label = "... ab und an verwenden.", correct = TRUE),
+  answer("4", label = "... eher oft verwenden.", correct = TRUE),
+  answer("5", label = "... ständig verwenden.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_bedienung}
+question("Das Layout und die Bedienung der Lernanwendung sind  ...",
+  answer("1", label = "... sehr schwer verständlich.", correct = TRUE),
+  answer("2", label = "... eher schwer verständlich.", correct = TRUE),
+  answer("3", label = "... mittelmäßig verständlich.", correct = TRUE),
+  answer("4", label = "... eher leicht verständlich.", correct = TRUE),
+  answer("5", label = "... sehr leicht verständlich.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_interakt_grafik}
+question("Die interaktive Grafik fand ich  ...",
+  answer("1", label = "... gar nicht hilfreich.", correct = TRUE),
+  answer("2", label = "... eher wenig hilfreich.", correct = TRUE),
+  answer("3", label = "... mittelmäßig hilfreich.", correct = TRUE),
+  answer("4", label = "... eher hilfreich.", correct = TRUE),
+  answer("5", label = "... sehr hilfreich.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_mehrere_tabs}
+question("Haben oder hatten Sie mehrere Fenster oder Tabs dieser Seite geöffnet?",
+  answer("j", label = "Ja.", correct = TRUE),
+  answer("n", label = "Nein.", correct = TRUE),
+  answer("ka", label = "Weiß nicht / verstehe die Frage nicht.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+::: survey_zusammenfassung
+
+```{r survey_zusammenfassung}
+question("Ich habe die Zusammenfassungsleiste auf der rechten Seite  ...",
+  answer("1", label = "... gar nicht genutzt.", correct = TRUE),
+  answer("2", label = "... selten genutzt.", correct = TRUE),
+  answer("3", label = "... ab und an genutzt.", correct = TRUE),
+  answer("4", label = "... eher oft genutzt.", correct = TRUE),
+  answer("5", label = "... ständig genutzt.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+:::
+
+```{r survey_umfang}
+question("Vom Umfang her ist diese Lernanwendung ...",
+  answer("1", label = "... viel zu kurz.", correct = TRUE),
+  answer("2", label = "... etwas zu kurz.", correct = TRUE),
+  answer("3", label = "... genau richtig.", correct = TRUE),
+  answer("4", label = "... etwas zu lang.", correct = TRUE),
+  answer("5", label = "... viel zu lang.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_zufriedenheit}
+question("Die Lernanwendung finde ich insgesamt ...",
+  answer("1", label = "... sehr schlecht.", correct = TRUE),
+  answer("2", label = "... eher schlecht.", correct = TRUE),
+  answer("3", label = "... mittelmäßig.", correct = TRUE),
+  answer("4", label = "... eher gut.", correct = TRUE),
+  answer("5", label = "... sehr schlecht.", correct = TRUE),
+  type = "learnr_radio",
+  allow_retry = FALSE,
+  correct = "Danke."
+)
+```
+
+```{r survey_kommentar}
+question_text("Was würden Sie an der Lernanwendung verbessern?",
+  answer_fn(correct, label = "survey_kommentar"),
+  allow_retry = FALSE,
+  placeholder = "",
+  correct = "Danke."
+)
+```
 
 ---
 
