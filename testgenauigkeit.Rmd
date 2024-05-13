@@ -157,7 +157,7 @@ question("Nehmen wir an, ein Computersystem kann anhand eines Röntgenbildes erk
 )
 ```
 
-Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung, die wir in der Zusammenfassung rechts oben sehen? Das werden wir uns auf der folgenden Seite anschauen.
+Warum beantworten Testgenauigkeit, Sensitivität und Spezifität nicht unsere eigentliche Fragestellung<span class="survey_zusammenfassung">, die wir in der Zusammenfassung rechts oben sehen</span>? Das werden wir uns auf der folgenden Seite anschauen.
 
 ## Analyse
 
@@ -201,7 +201,7 @@ question("Was gibt die Wahrscheinlichkeit $P(T \\mid K)$ an?",
 )
 ```
 
-$P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test, wie wir im Beipackzettel schon gesehen haben. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt. 
+$P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test, wie wir im Beipackzettel schon gesehen haben. Die Sensitivität gibt an, wie hoch die Wahrscheinlichkeit ist, dass der Test ein positives Ergebnis anzeigt für eine tatsächlich erkrankte Person und wird daher auch *Richtig-positiv-Rate* genannt.
 
 Um nun den eigentlich gesuchten *positiven Vorhersagewert*, also die bedingte Wahrscheinlichkeit $P(K \mid T)$ zu berechnen, können wir den **Satz von Bayes** benutzen:
 
@@ -311,7 +311,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
 (Achtung, das Dezimalzeichen ist der Punkt).",
   answer_fn(function(input) {
     expected_result <- 152/617
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
     allowed_max_length <- 128
 
     if (nchar(input) > allowed_max_length) {
@@ -322,10 +322,11 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
         return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
                                     gsub("\\", "", allowed_chars, fixed = TRUE))))
     }
-
-    result <- eval(parse(text = input), envir = new.env())
     
-    if (identical(round(result, 4), round(expected_result, 4))) {
+    result <- NULL
+    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
+    
+    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
         correct(sprintf("Das Ergebnis ist %.2f.", result))
     } else {
         incorrect(NULL)
@@ -351,7 +352,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
 ",
   answer_fn(function(input) {
     expected_result <- 0.914*0.25+(1-0.994)*(1-0.25)
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
     allowed_max_length <- 128
 
     if (nchar(input) > allowed_max_length) {
@@ -363,9 +364,10 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
                                     gsub("\\", "", allowed_chars, fixed = TRUE))))
     }
 
-    result <- eval(parse(text = input), envir = new.env())
+    result <- NULL
+    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (identical(round(result, 4), round(expected_result, 4))) {
+    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
         correct(sprintf("Das Ergebnis ist %.2f.", result))
     } else {
         incorrect(NULL)
@@ -392,7 +394,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
 (Achtung, das Dezimalzeichen ist der Punkt).",
   answer_fn(function(input) {
     expected_result <- 0.914*0.25/0.233
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
     allowed_max_length <- 128
 
     if (nchar(input) > allowed_max_length) {
@@ -404,9 +406,10 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
                                     gsub("\\", "", allowed_chars, fixed = TRUE))))
     }
 
-    result <- eval(parse(text = input), envir = new.env())
+    result <- NULL
+    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (identical(round(result, 4), round(expected_result, 4))) {
+    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
         correct(sprintf("Das Ergebnis ist %.2f.", result))
     } else {
         incorrect(NULL)
@@ -449,7 +452,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
 (Achtung, das Dezimalzeichen ist der Punkt).",
   answer_fn(function(input) {
     expected_result <- 0.994 * (1-0.002) / (0.994 * (1-0.002) + (1-0.914) * 0.002)
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)-^"
+    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
     allowed_max_length <- 128
 
     if (nchar(input) > allowed_max_length) {
@@ -461,9 +464,10 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
                                     gsub("\\", "", allowed_chars, fixed = TRUE))))
     }
 
-    result <- eval(parse(text = input), envir = new.env())
+    result <- NULL
+    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (identical(round(result, 4), round(expected_result, 4))) {
+    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
         correct(sprintf("Das Ergebnis ist %.6f.", result))
     } else {
         incorrect(NULL)
