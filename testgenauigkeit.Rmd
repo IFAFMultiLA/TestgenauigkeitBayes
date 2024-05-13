@@ -304,7 +304,8 @@ Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich 
 question_text(
   "Nehmen wir an, die Studie mit der der Schnelltest evaluiert wurde, spiegelt die wirkliche Krankheitsrate
 in der Bevölkerung (d.h. die Prävalenz) wider. Berechnen Sie diese Prävalenz $P(K)$ aus den Daten in der 
-Konfusionsmatrix, abgebildet in der Zusammenfassung auf der rechten Seite.
+Konfusionsmatrix<span class=\"survey_zusammenfassung\">, abgebildet in der Zusammenfassung auf der rechten
+Seite</span>.
 
 Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
 (Achtung, das Dezimalzeichen ist der Punkt).",
