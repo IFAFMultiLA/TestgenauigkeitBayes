@@ -525,14 +525,6 @@ rownames(konfmat) <- c("positiv", "negativ")
 konfmat
 ```
 
-```{r konfmat_randsummen-solution}
-konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
-colnames(konfmat) <- c("krank", "gesund")
-rownames(konfmat) <- c("positiv", "negativ")
-konfmat2 <- addmargins(konfmat)
-konfmat2
-```
-
 ```{r konfmat_randsummen-check}
 grade_this({
     konfmat <- matrix(c(139, 13, 3, 462), ncol = 2)
