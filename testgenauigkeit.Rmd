@@ -119,7 +119,16 @@ Unter der Konfusionsmatrix im Beipackzettel finden wir noch zwei Prozentangaben:
 ```{r calc_sens}
 question_text("Wie wurde die Richtig-Positiv-Rate, bzw. Sensitivität von 91.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
   answer_fn(function (input) {
-      mark_as(gsub("\\s+", "", input) == "139/152*100")   # Leerzeichen im Text ignorieren
+      expected <- "139/152*100"
+      input <- gsub("\\s+", "", input)  # Leerzeichen im Text ignorieren
+      
+      if (input == gsub("\\*100$", "", expected)) {
+        incorrect('Fast richtig. Multiplizieren Sie das Ergebnis noch mit 100 um einen Prozentwert zu bekommen.')
+      } else if (!grepl("^\\d+/\\d+\\*100$", input)) {
+        incorrect('Geben Sie eine Prozentrechnung der Form "a/b*100" ein.')
+      } else {
+        mark_as(input == expected)
+      }
   }),
   allow_retry = TRUE,
   trim = TRUE,
@@ -133,7 +142,16 @@ question_text("Wie wurde die Richtig-Positiv-Rate, bzw. Sensitivität von 91.4% 
 ```{r calc_spec}
 question_text("Wie wird die Richtig-Negativ-Rate, bzw. Spezifität von 99.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
   answer_fn(function (input) {
-      mark_as(gsub("\\s+", "", input) == "462/465*100")   # Leerzeichen im Text ignorieren
+      expected <- "462/465*100"
+      input <- gsub("\\s+", "", input)  # Leerzeichen im Text ignorieren
+      
+      if (input == gsub("\\*100$", "", expected)) {
+        incorrect('Fast richtig. Multiplizieren Sie das Ergebnis noch mit 100 um einen Prozentwert zu bekommen.')
+      } else if (!grepl("^\\d+/\\d+\\*100$", input)) {
+        incorrect('Geben Sie eine Prozentrechnung der Form "a/b*100" ein.')
+      } else {
+        mark_as(input == expected)
+      }
   }),
   allow_retry = TRUE,
   trim = TRUE,
@@ -368,7 +386,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
     if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
-        correct(sprintf("Das Ergebnis ist %.2f.", result))
+        correct(sprintf("Das Ergebnis ist %.3f.", result))
     } else {
         incorrect(NULL)
     }
@@ -410,7 +428,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
     if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
-        correct(sprintf("Das Ergebnis ist %.2f.", result))
+        correct(sprintf("Das Ergebnis ist %.3f.", result))
     } else {
         incorrect(NULL)
     }
@@ -418,6 +436,19 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
   allow_retry = TRUE,
   trim = TRUE,
   placeholder = 'Mathematischer Ausdruck bzw. Zahl',
+  correct = correct_msg,
+  incorrect = incorrect_msg
+)
+```
+
+```{r P_K_T_vergleich}
+question("Wie unterscheidet sich der oben berechnete positive Vorhersagewert $P(K|T)$ für eine Prävalenz von
+          $P(K)=0.25$ zum Wert von $P(K|T)$ für die Prävalenz $P(K)=0.002$ aus der Beispielrechnung?",
+  answer("$P(K|T)$ ist niedriger für eine Prävalenz von $P(K)=0.25$, als für eine  Prävalenz von $P(K)=0.002$."),
+  answer("$P(K|T)$ für eine Prävalenz von $P(K)=0.25$ ist in etwa gleich $P(K|T)$ für $P(K)=0.002$."),
+  answer("$P(K|T)$ ist höher für eine Prävalenz von $P(K)=0.25$, als für eine Prävalenz von $P(K)=0.002$.",
+         correct = TRUE),
+  allow_retry = TRUE,
   correct = correct_msg,
   incorrect = incorrect_msg
 )
@@ -468,7 +499,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
     if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
-        correct(sprintf("Das Ergebnis ist %.6f.", result))
+        correct(sprintf("Das Ergebnis ist %.4f.", result))
     } else {
         incorrect(NULL)
     }
