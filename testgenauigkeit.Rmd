@@ -33,6 +33,8 @@ options("gradethis.pass" = correct_msg)
 options("gradethis.fail" = incorrect_msg)   # damit werden Codevorschläge bei falscher Antwort deaktiviert
 gradethis_setup()
 
+options("tutorial.exercise.debounce" = 1000)
+
 # Werte für das Beispiel
 prevalence <- 0.2 / 100.0   # P(K)
 sens <- 0.914   # P(T|K)
