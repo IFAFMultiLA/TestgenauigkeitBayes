@@ -60,7 +60,7 @@ Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *
 
 Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, dass wir dort Antworten auf unsere Fragen finden. 
 
-![Der Beipackzettel eines handelsüblichen Covid-19-Schnelltests](images/test-performance-clungene2edit.png){height=350px}
+![Der Beipackzettel eines handelsüblichen Covid-19-Schnelltests](images/test-performance-clungene2edit.png){height=275px}
 
 ::: summary
 
@@ -104,7 +104,7 @@ Man kann das übersichtlich als Tabelle darstellen:
 Diese Tabellendarstellung wird *Wahrheitsmatrix* oder auch *Konfusionsmatrix* genannt.
 
 ```{r clinicalstudy2}
-question_numeric("Bei wie vielen Personen in der Studie hat der Test den Krankheitszustand richtig erkannt?",
+question_numeric("Bei wie vielen Personen in der Studie hat der Test den Gesundheitszustand (krank/gesund) richtig erkannt?",
   answer(601, correct = TRUE),
   allow_retry = TRUE,
   correct = correct_msg,
@@ -248,7 +248,7 @@ $$
 
 $P(K)$ gibt an, wie hoch generell die Wahrscheinlichkeit ist, zu diesem Zeitpunkt an Corona erkrankt zu sein – ganz unabhängig von einem Testergebnis. Diesen Wert nennt man auch *Prävalenz.* Genau können wir diese Wahrscheinlichkeit niemals wissen, aber wir können einen Schätzwert nehmen, der dem Anteil der aktuell an Corona infizierten Menschen in Deutschland entspricht. Setzen wir zunächst $P(K) = `r prevalence * 100`\%$. Das ist in etwa die Prävalenz bei der ersten Coronawelle im Frühjahr 2020 in Deutschland.
 
-Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen, doch das ist in den meisten Fällen nicht sinnvoll: die Studie, die zu den Ergebnissen im Beipackzettel geführt hat, untersucht ja gerade wie gut der Test bei kranken Personen funktioniert, daher wurden gezielt Menschen mit nachweislicher Covid-Infektion getestet, so dass hier nicht von einem Querschnitt der Bevölkerung gesprochen werden kann.
+Man könnte auch auf die Idee kommen, $P(K)$ aus der Studie im Beipackzettel abzulesen, doch das ist in den meisten Fällen nicht sinnvoll: die Studie, die zu den Ergebnissen im Beipackzettel geführt hat, untersucht ja gerade wie gut der Test bei kranken Personen funktioniert, daher wurden gezielt Menschen mit und ohne nachweislicher Covid-Infektion getestet, so dass hier nicht von einem Querschnitt der Bevölkerung gesprochen werden kann.
 
 ::: summary
 
