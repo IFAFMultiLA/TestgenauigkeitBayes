@@ -1021,15 +1021,23 @@ Das Projekt "Multimodale interaktive Lerndashboards mit Learning Analytics" (Mul
 Bei den aufgezeichneten Daten handelt es sich um folgende Informationen:
 
 <ul>
-    <li>Browserinformationen (Browsersoftware, Fenstergröße)</li>
     <li>Start- und Endzeitpunkt der Nutzung der Webseite</li>
-    <li class="trackingdata-chapters">Informationen über Seitenwechsel</li>
-    <li>Informationen beim Ausfüllen der Quizze (gegebene Antworten, Resultat)</li>
-    <li>Informationen beim Ausfüllen der Code-Aufgaben (eingegebener Code, Resultat, Erfolg)</li>
-    <li class="trackingdata-inputs">Änderungen an Bedienelementen (für interaktive Grafiken, etc.)</li>
+    <li class="trackingdata-ip">IP-Adresse</li>
+    <li class="trackingdata-user_agent">Browsersoftware</li>
+    <li class="trackingdata-device_info">Gerätetyp und Fenstergröße des Browsers</li>
+    <li class="trackingdata-visibility">Anzeigestatus des Browserfensters</li>
     <li class="trackingdata-mouse">Mausbewegungen</li>
-    <li class="trackingdata-mouse">Scrollbewegungen</li>
-    <li class="trackingdata-mouse">Klicks</li>
+    <li class="trackingdata-clicks">Klicks bzw. Taps</li>
+    <li class="trackingdata-scrolling">Scrollbewegungen</li>
+    <li class="trackingdata-inputs">Änderungen an Bedienelementen (für interaktive Grafiken, etc.)</li>
+    <li class="trackingdata-attribute_changes">Änderungen an HTML Elementen</li>
+    <li class="trackingdata-chapters">Informationen über Seitenwechsel</li>
+    <li class="trackingdata-summary">Anzeige und Aktualisierung der Zusammenfassungsleiste</li>
+    <li class="trackingdata-exercise_hint">Informationen beim Ausfüllen der Code-Aufgaben (Anzeige des Hinweises)</li>
+    <li class="trackingdata-exercise_submitted">Informationen beim Ausfüllen der Code-Aufgaben (Abgabe)</li>
+    <li class="trackingdata-exercise_result">Informationen beim Ausfüllen der Code-Aufgaben (Resultat)</li>
+    <li class="trackingdata-question_submission">Informationen beim Ausfüllen der Quizze (gegebene Antworten, Resultat)</li>
+    <li class="trackingdata-video_progress">Informationen über das Abspielen von Videos</li>
 </ul>
 
 All diese Daten werden nur innerhalb der Lernanwendung aufgezeichnet. Sie werden auf den Servern der HTW-Berlin gespeichert und werden mit Auslaufen des Projektes oder möglichen Folgeprojekten gelöscht.
