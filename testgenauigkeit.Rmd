@@ -387,7 +387,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
+    if (!is.null(result) && identical(round(result, 2), round(expected_result, 2))) {
         correct(sprintf("Das Ergebnis ist %.3f.", result))
     } else {
         incorrect(NULL)
@@ -429,7 +429,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
+    if (!is.null(result) && identical(round(result, 2), round(expected_result, 2))) {
         correct(sprintf("Das Ergebnis ist %.3f.", result))
     } else {
         incorrect(NULL)
@@ -500,7 +500,7 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
+    if (!is.null(result) && identical(round(result, 2), round(expected_result, 2))) {
         correct(sprintf("Das Ergebnis ist %.4f.", result))
     } else {
         incorrect(NULL)
