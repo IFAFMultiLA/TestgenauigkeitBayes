@@ -346,8 +346,16 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 4), round(expected_result, 4))) {
-        correct(sprintf("Das Ergebnis ist %.2f.", result))
+    if (!is.null(result)) {
+        if (identical(round(result, 2), round(expected_result, 2))) {
+            correct(sprintf("Das Ergebnis ist %.3f.", result))
+        } else if (result < 0 || result > 1) {
+            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
+                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
+                              Sie haben aber %f eingeben.", result))
+        } else {
+            incorrect(NULL)
+        }
     } else {
         incorrect(NULL)
     }
@@ -387,8 +395,16 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 2), round(expected_result, 2))) {
-        correct(sprintf("Das Ergebnis ist %.3f.", result))
+    if (!is.null(result)) {
+        if (identical(round(result, 2), round(expected_result, 2))) {
+            correct(sprintf("Das Ergebnis ist %.3f.", result))
+        } else if (result < 0 || result > 1) {
+            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
+                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
+                              Sie haben aber %f eingeben.", result))
+        } else {
+            incorrect(NULL)
+        }
     } else {
         incorrect(NULL)
     }
@@ -429,8 +445,16 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 2), round(expected_result, 2))) {
-        correct(sprintf("Das Ergebnis ist %.3f.", result))
+    if (!is.null(result)) {
+        if (identical(round(result, 2), round(expected_result, 2))) {
+            correct(sprintf("Das Ergebnis ist %.3f.", result))
+        } else if (result < 0 || result > 1) {
+            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
+                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
+                              Sie haben aber %f eingeben.", result))
+        } else {
+            incorrect(NULL)
+        }
     } else {
         incorrect(NULL)
     }
@@ -500,8 +524,16 @@ Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine 
     result <- NULL
     try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
     
-    if (!is.null(result) && identical(round(result, 2), round(expected_result, 2))) {
-        correct(sprintf("Das Ergebnis ist %.4f.", result))
+    if (!is.null(result)) {
+        if (identical(round(result, 2), round(expected_result, 2))) {
+            correct(sprintf("Das Ergebnis ist %.3f.", result))
+        } else if (result < 0 || result > 1) {
+            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
+                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
+                              Sie haben aber %f eingeben.", result))
+        } else {
+            incorrect(NULL)
+        }
     } else {
         incorrect(NULL)
     }
