@@ -13,6 +13,7 @@ output:
 ```{r setup, include=FALSE}
 require(RAppArmor)     # auf Server notwendig für abgesicherte Codeausführung in Übungen
 library(learnr)        # für Quizze, Code-Übungen, etc.
+library(learnrextra)   # Erweiterungen für learnr
 library(gradethis)     # für Evaluierung von Code-Einsendungen
 library(shiny)         # für interaktive Elemente
 library(ggplot2)       # für Grafiken
@@ -27,6 +28,27 @@ knitr::opts_chunk$set(echo = FALSE)
 # Wir überschreiben die englischsprachigen Nachrichten:
 correct_msg <- "Richtig!"
 incorrect_msg <- "Leider falsch. Versuch's noch einmal."
+incorrect_too_long <- "Deine Eingabe ist leider zu lang."
+incorrect_invalid_chars <- "Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:"
+incorrect_cannot_evaluate <- "Deine Eingabe ist leider keine gültige Zahl bzw. kein gültiger mathematischer Ausdruck."
+incorrect_out_of_range_probability <- "Gefragt ist eine Wahrscheinlichkeit, daher muss das Ergebnis zwischen %d und %d sein, deine Antwort ist aber %f."
+placeholder <- "Mathematischer Ausdruck oder Zahl"
+
+question_mathexpression_probability_default <- function(text, expected_result) {
+    question_mathexpression_probability(
+        paste0(text, "\n\nGeben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1` (Achtung, das Dezimalzeichen ist der Punkt)."),
+        expected_result,
+        correct = correct_msg,
+        incorrect = incorrect_msg,
+        incorrect_too_long = incorrect_too_long,
+        incorrect_invalid_chars = incorrect_invalid_chars,
+        incorrect_cannot_evaluate = incorrect_cannot_evaluate,
+        incorrect_out_of_range = incorrect_out_of_range_probability,
+        placeholder = placeholder,
+        allow_retry = TRUE,
+        trim = TRUE
+    )
+}
 
 # Das gleiche gilt für gradethis:
 options("gradethis.pass" = correct_msg)
@@ -321,149 +343,32 @@ Die Wahrscheinlichkeit, dass eine Person mit positivem Schnelltest tatsächlich 
 ### Quizaufgaben
 
 ```{r P_K}
-question_text(
+question_mathexpression_probability_default(
   "Nehmen wir an, die Studie mit der der Schnelltest evaluiert wurde, spiegelt die wirkliche Krankheitsrate
 in der Bevölkerung (d.h. die Prävalenz) wider. Berechnen Sie diese Prävalenz $P(K)$ aus den Daten in der 
 Konfusionsmatrix<span class=\"survey_zusammenfassung\">, abgebildet in der Zusammenfassung auf der rechten
-Seite</span>.
-
-Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
-(Achtung, das Dezimalzeichen ist der Punkt).",
-  answer_fn(function(input) {
-    expected_result <- 152/617
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
-    allowed_max_length <- 128
-
-    if (nchar(input) > allowed_max_length) {
-        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
-    }
-
-    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
-        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
-                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
-    }
-    
-    result <- NULL
-    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
-    
-    if (!is.null(result)) {
-        if (identical(round(result, 2), round(expected_result, 2))) {
-            correct(sprintf("Das Ergebnis ist %.3f.", result))
-        } else if (result < 0 || result > 1) {
-            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
-                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
-                              Sie haben aber %f eingeben.", result))
-        } else {
-            incorrect(NULL)
-        }
-    } else {
-        incorrect(NULL)
-    }
-  }),
-  allow_retry = TRUE,
-  trim = TRUE,
-  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
-  correct = correct_msg,
-  incorrect = incorrect_msg
-)
+Seite</span>.",
+  152/617)
 ```
 
 ```{r P_T}
-question_text(
+question_mathexpression_probability_default(
   "Berechnen Sie die totale Wahrscheinlichkeit $P(T)$, dass ein Test positiv ausfällt, unabhängig vom
 Krankheitszustand der getesteten Person. Nehmen Sie dieses mal eine Prävalenz von $P(K)=0.25$ an, aber nutzen
 Sie die Werte von Sensitivität und Spezifität vom Beipackzettel, d.h. $P(T \\mid K) = 0.914$ und
-$P(\\overline T \\mid \\overline K) = 0.994$.
-
-Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
-(Achtung, das Dezimalzeichen ist der Punkt).
-",
-  answer_fn(function(input) {
-    expected_result <- 0.914*0.25+(1-0.994)*(1-0.25)
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
-    allowed_max_length <- 128
-
-    if (nchar(input) > allowed_max_length) {
-        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
-    }
-
-    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
-        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
-                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
-    }
-
-    result <- NULL
-    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
-    
-    if (!is.null(result)) {
-        if (identical(round(result, 2), round(expected_result, 2))) {
-            correct(sprintf("Das Ergebnis ist %.3f.", result))
-        } else if (result < 0 || result > 1) {
-            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
-                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
-                              Sie haben aber %f eingeben.", result))
-        } else {
-            incorrect(NULL)
-        }
-    } else {
-        incorrect(NULL)
-    }
-  }),
-  allow_retry = TRUE,
-  trim = TRUE,
-  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
-  correct = correct_msg,
-  incorrect = incorrect_msg
+$P(\\overline T \\mid \\overline K) = 0.994$.",
+  0.914*0.25+(1-0.994)*(1-0.25)
 )
 ```
 
-
 ```{r P_K_T}
-question_text(
+question_mathexpression_probability_default(
   "Berechnen Sie die Wahrscheinlichkeit $P(K|T)$, dass eine positiv getestete Person tatsächlich krank ist.
 Nehmen Sie dieses mal eine Prävalenz von $P(K)=0.25$ sowie eine totale Wahrscheinlichkeit für einen positiven Test
 von $P(T)=0.233$ an, aber nutzen Sie die Werte von Sensitivität und Spezifität vom Beipackzettel, d.h.
 $P(T \\mid K) = 0.914$ und $P(\\overline T \\mid \\overline K) = 0.994$. Vergleichen Sie das Ergebnis mit dem
-Ergebnis, dass bei der Beispielrechnung mit einer Prävalenz von $P(K) = 0.2\\%$ erzeugt wurde.
-
-Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
-(Achtung, das Dezimalzeichen ist der Punkt).",
-  answer_fn(function(input) {
-    expected_result <- 0.914*0.25/0.233
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
-    allowed_max_length <- 128
-
-    if (nchar(input) > allowed_max_length) {
-        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
-    }
-
-    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
-        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
-                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
-    }
-
-    result <- NULL
-    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
-    
-    if (!is.null(result)) {
-        if (identical(round(result, 2), round(expected_result, 2))) {
-            correct(sprintf("Das Ergebnis ist %.3f.", result))
-        } else if (result < 0 || result > 1) {
-            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
-                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
-                              Sie haben aber %f eingeben.", result))
-        } else {
-            incorrect(NULL)
-        }
-    } else {
-        incorrect(NULL)
-    }
-  }),
-  allow_retry = TRUE,
-  trim = TRUE,
-  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
-  correct = correct_msg,
-  incorrect = incorrect_msg
+Ergebnis, dass bei der Beispielrechnung mit einer Prävalenz von $P(K) = 0.2\\%$ erzeugt wurde.",
+  0.914*0.25/0.233
 )
 ```
 
@@ -496,53 +401,15 @@ question("Sie möchten die Wahrscheinlichkeit berechnen, dass eine Person, die e
 ```
 
 ```{r P_nK_nT_berechnet}
-question_text(
+question_mathexpression_probability_default(
   "Sie möchten die Wahrscheinlichkeit berechnen, dass eine Person, die einen negativen Schnelltest hat, tatsächlich
 gesund ist. Nehmen Sie eine Prävalenz von $P(K)=0.2\\%$ an. Für die Güte des Schnelltests nehmen Sie die Werte von
 Sensitivität und Spezifität aus dem Beipackzettel, d.h. $P(T \\mid K) = 0.914$ und
 $P(\\overline T \\mid \\overline K) = 0.994$.
 
 Tipp: Versuchen Sie, den Satz von Bayes für die bedingte Wahrscheinlichkeit $P(\\overline K \\mid \\overline T)$
-anzuwenden.
-
-Geben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1`
-(Achtung, das Dezimalzeichen ist der Punkt).",
-  answer_fn(function(input) {
-    expected_result <- 0.994 * (1-0.002) / (0.994 * (1-0.002) + (1-0.914) * 0.002)
-    allowed_chars <- "0123456789\\.\\+\\*/\\(\\)\\^-"
-    allowed_max_length <- 128
-
-    if (nchar(input) > allowed_max_length) {
-        return(learnr::incorrect("Deine Eingabe ist leider zu lang."))
-    }
-
-    if (grepl(paste0("[^ ", allowed_chars, "]"), input)) {
-        return(learnr::incorrect(paste("Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:",
-                                    gsub("\\", "", allowed_chars, fixed = TRUE))))
-    }
-
-    result <- NULL
-    try({ result <- eval(parse(text = input), envir = new.env()) }, silent = TRUE)
-    
-    if (!is.null(result)) {
-        if (identical(round(result, 2), round(expected_result, 2))) {
-            correct(sprintf("Das Ergebnis ist %.3f.", result))
-        } else if (result < 0 || result > 1) {
-            incorrect(sprintf("Beachten Sie, dass eine Wahrscheinlichkeit gefragt ist. Eine
-                              Wahrscheinlichkeit muss einen Wert zwischen 0 und 1 annehmen, 
-                              Sie haben aber %f eingeben.", result))
-        } else {
-            incorrect(NULL)
-        }
-    } else {
-        incorrect(NULL)
-    }
-  }),
-  allow_retry = TRUE,
-  trim = TRUE,
-  placeholder = 'Mathematischer Ausdruck bzw. Zahl',
-  correct = correct_msg,
-  incorrect = incorrect_msg
+anzuwenden.",
+  0.994 * (1-0.002) / (0.994 * (1-0.002) + (1-0.914) * 0.002)
 )
 ```
 
