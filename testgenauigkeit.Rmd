@@ -707,7 +707,7 @@ survey(
     list(
         list(
             text = "Was würden Sie an der Lernanwendung verbessern?",
-            label = "kommentar",
+            label = "survey-kommentar",
             type = "learnr_text"
         )
     ),
