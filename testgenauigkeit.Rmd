@@ -141,47 +141,51 @@ Unter der Konfusionsmatrix im Beipackzettel finden wir noch zwei Prozentangaben:
 **NPA** bedeutet *Negative Percent Agreement* oder auch *Richtig-Negativ-Rate*, bzw. *Spezifität (Specificity).* Der Wert gibt an, wie viele Prozent von nachweislich negativen Covid-Fällen vom Test richtig als negativ erkannt werden. Bei unserem Test sind es im Mittel 99.4%.
 
 ```{r calc_sens}
-question_text("Wie wurde die Richtig-Positiv-Rate, bzw. Sensitivität von 91.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
-  answer_fn(function (input) {
-      expected <- "139/152*100"
-      input <- gsub("\\s+", "", input)  # Leerzeichen im Text ignorieren
-      
-      if (input == gsub("\\*100$", "", expected)) {
-        incorrect('Fast richtig. Multiplizieren Sie das Ergebnis noch mit 100 um einen Prozentwert zu bekommen.')
-      } else if (!grepl("^\\d+/\\d+\\*100$", input)) {
-        incorrect('Geben Sie eine Prozentrechnung der Form "a/b*100" ein.')
-      } else {
-        mark_as(input == expected)
+answer_fn_fractions_percentage <- function(expected_numerator, expected_denominator, correct_msg, incorrect_msg) {
+    function (input) {
+      input <- gsub("[\\s+%]", "", input)  # Leerzeichen und Prozentzeichen im Text ignorieren
+
+      m <- regexec("(\\d+)\\/(\\d+)", input)
+      m <- regmatches(input, m)
+
+      if (length(m) == 0 || length(m[[1]]) != 3) {
+          return(incorrect('Geben Sie eine Prozentrechnung der Form "a/b*100" ein.'))
       }
-  }),
-  allow_retry = TRUE,
-  trim = TRUE,
-  placeholder = 'Geben Sie eine Prozentrechnung der Form "a/b*100" ein.',
-  correct = correct_msg,
-  incorrect = incorrect_msg
+      
+      inp_a <- m[[1]][2]
+      inp_b <- m[[1]][3]
+      perc <- startsWith(input, "100*") || endsWith(input, "*100")
+
+      if (inp_a == expected_numerator && inp_b == expected_denominator) {
+          if (!perc) {
+              return(incorrect('Fast richtig. Multiplizieren Sie die ermittelte Wahrscheinlichkeit mit 100 um einen Prozentwert zu bekommen.'))
+          }
+          
+          correct(correct_msg)
+      } else {
+          incorrect(incorrect_msg)
+      }
+    }
+}
+
+question_text_custom_answer_fn(
+    "Wie wurde die Richtig-Positiv-Rate, bzw. Sensitivität von 91.4% aus der Konfusionsmatrix 
+     im Beipackzettel berechnet?",
+    answer_fn_fractions_percentage(139, 152, correct_msg = correct_msg, incorrect_msg = incorrect_msg),
+    allow_retry = TRUE,
+    trim = TRUE,
+    placeholder = 'Geben Sie eine Prozentrechnung der Form "a/b*100" ein.'
 )
 ```
 
 
 ```{r calc_spec}
-question_text("Wie wird die Richtig-Negativ-Rate, bzw. Spezifität von 99.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
-  answer_fn(function (input) {
-      expected <- "462/465*100"
-      input <- gsub("\\s+", "", input)  # Leerzeichen im Text ignorieren
-      
-      if (input == gsub("\\*100$", "", expected)) {
-        incorrect('Fast richtig. Multiplizieren Sie das Ergebnis noch mit 100 um einen Prozentwert zu bekommen.')
-      } else if (!grepl("^\\d+/\\d+\\*100$", input)) {
-        incorrect('Geben Sie eine Prozentrechnung der Form "a/b*100" ein.')
-      } else {
-        mark_as(input == expected)
-      }
-  }),
-  allow_retry = TRUE,
-  trim = TRUE,
-  placeholder = 'Geben Sie eine Prozentrechnung der Form "a/b*100" ein.',
-  correct = correct_msg,
-  incorrect = incorrect_msg
+question_text_custom_answer_fn(
+    "Wie wird die Richtig-Negativ-Rate, bzw. Spezifität von 99.4% aus der Konfusionsmatrix im Beipackzettel berechnet?",
+    answer_fn_fractions_percentage(462, 465, correct_msg = correct_msg, incorrect_msg = incorrect_msg),
+    allow_retry = TRUE,
+    trim = TRUE,
+    placeholder = 'Geben Sie eine Prozentrechnung der Form "a/b*100" ein.'
 )
 ```
 
@@ -667,146 +671,48 @@ Auch andere Parameter und Umstände abseits der Prävalenz und der Testgüte hab
 
 ---
 
-### Umfrage
 
-```{r survey_schwierigkeit}
-question("Die Lernanwendung ist inhaltlich ...",
-  answer("1", label = "... sehr schwer.", correct = TRUE),
-  answer("2", label = "... eher schwer.", correct = TRUE),
-  answer("3", label = "... genau richtig.", correct = TRUE),
-  answer("4", label = "... eher leicht.", correct = TRUE),
-  answer("5", label = "... zu leicht.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_praxisbeispiel}
-question("Medizinische Tests als Praxisbeispiel für den Satz von Bayes finde ich ...",
-  answer("1", label = "... gar nicht interessant.", correct = TRUE),
-  answer("2", label = "... eher wenig interessant.", correct = TRUE),
-  answer("3", label = "... mittelmäßig interessant.", correct = TRUE),
-  answer("4", label = "... eher interessant.", correct = TRUE),
-  answer("5", label = "... sehr interessant.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_verwendung_uebung}
-question("Solche Lernanwendungen sollten in der Übung ...",
-  answer("1", label = "... nie verwendet werden.", correct = TRUE),
-  answer("2", label = "... eher selten verwendet werden.", correct = TRUE),
-  answer("3", label = "... ab und an verwendet werden.", correct = TRUE),
-  answer("4", label = "... eher oft verwendet werden.", correct = TRUE),
-  answer("5", label = "... immer verwendet werden.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_verwendung_zuhause}
-question("Ich würde solche Lernanwendungen zum Selbstlernen zu Hause ...",
-  answer("1", label = "... nie verwenden.", correct = TRUE),
-  answer("2", label = "... eher selten verwenden.", correct = TRUE),
-  answer("3", label = "... ab und an verwenden.", correct = TRUE),
-  answer("4", label = "... eher oft verwenden.", correct = TRUE),
-  answer("5", label = "... ständig verwenden.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_bedienung}
-question("Das Layout und die Bedienung der Lernanwendung sind  ...",
-  answer("1", label = "... sehr schwer verständlich.", correct = TRUE),
-  answer("2", label = "... eher schwer verständlich.", correct = TRUE),
-  answer("3", label = "... mittelmäßig verständlich.", correct = TRUE),
-  answer("4", label = "... eher leicht verständlich.", correct = TRUE),
-  answer("5", label = "... sehr leicht verständlich.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_interakt_grafik}
-question("Die interaktive Grafik fand ich  ...",
-  answer("1", label = "... gar nicht hilfreich.", correct = TRUE),
-  answer("2", label = "... eher wenig hilfreich.", correct = TRUE),
-  answer("3", label = "... mittelmäßig hilfreich.", correct = TRUE),
-  answer("4", label = "... eher hilfreich.", correct = TRUE),
-  answer("5", label = "... sehr hilfreich.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_mehrere_tabs}
-question("Haben oder hatten Sie mehrere Fenster oder Tabs dieser Seite geöffnet?",
-  answer("j", label = "Ja.", correct = TRUE),
-  answer("n", label = "Nein.", correct = TRUE),
-  answer("ka", label = "Weiß nicht / verstehe die Frage nicht.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-::: survey_zusammenfassung
-
-```{r survey_zusammenfassung}
-question("Ich habe die Zusammenfassungsleiste auf der rechten Seite  ...",
-  answer("1", label = "... gar nicht genutzt.", correct = TRUE),
-  answer("2", label = "... selten genutzt.", correct = TRUE),
-  answer("3", label = "... ab und an genutzt.", correct = TRUE),
-  answer("4", label = "... eher oft genutzt.", correct = TRUE),
-  answer("5", label = "... ständig genutzt.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-:::
-
-```{r survey_umfang}
-question("Vom Umfang her ist diese Lernanwendung ...",
-  answer("1", label = "... viel zu kurz.", correct = TRUE),
-  answer("2", label = "... etwas zu kurz.", correct = TRUE),
-  answer("3", label = "... genau richtig.", correct = TRUE),
-  answer("4", label = "... etwas zu lang.", correct = TRUE),
-  answer("5", label = "... viel zu lang.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
-)
-```
-
-```{r survey_zufriedenheit}
-question("Die Lernanwendung finde ich insgesamt ...",
-  answer("1", label = "... sehr schlecht.", correct = TRUE),
-  answer("2", label = "... eher schlecht.", correct = TRUE),
-  answer("3", label = "... mittelmäßig.", correct = TRUE),
-  answer("4", label = "... eher gut.", correct = TRUE),
-  answer("5", label = "... sehr gut.", correct = TRUE),
-  type = "learnr_radio",
-  allow_retry = FALSE,
-  correct = "Danke."
+```{r survey}
+survey_likert(
+    items = c(
+        "schwierigkeit" = "Die Lernanwendung ist inhaltlich ...",
+        "praxisbeispiel" = "Medizinische Tests als Praxisbeispiel für den Satz von Bayes finde ich ...",
+        "verwendung_uebung" = "Solche Lernanwendungen sollten in der Übung ...",
+        "verwendung_zuhause" = "Ich würde solche Lernanwendungen zum Selbstlernen zu Hause ...",
+        "bedienung" = "Das Layout und die Bedienung der Lernanwendung sind ...",
+        "interakt_grafik" = "Die interaktive Grafik fand ich ...",
+        "mehrere_tabs" = "Haben oder hatten Sie mehrere Fenster oder Tabs dieser Seite geöffnet?",
+        "zusammenfassung" = "Ich habe die Zusammenfassungsleiste auf der rechten Seite ...",
+        "umfang" = "Vom Umfang her ist diese Lernanwendung ...",
+        "zufriedenheit" = "Die Lernanwendung finde ich insgesamt ..."
+    ),
+    levels = list(
+        paste0("... ", c("sehr schwer", "eher schwer", "genau richtig", "eher leicht", "zu leicht"), "."),
+        paste0("... ", c("gar nicht interessant", "eher wenig interessant", "mittelmäßig interessant", "eher interessant", "sehr interessant"), "."),
+        paste0("... ", c("nie verwendet werden", "eher selten verwendet werden", "ab und an verwendet werden", "eher oft verwendet werden", "immer verwendet werden"), "."),
+        paste0("... ", c("nie verwenden", "eher selten verwenden", "ab und an verwenden", "eher oft verwenden", "ständig verwenden"), "."),
+        paste0("... ", c("sehr schwer verständlich", "eher schwer verständlich", "mittelmäßig verständlich", "eher leicht verständlich", "sehr leicht verständlich"), "."),
+        paste0("... ", c("gar nicht hilfreich", "eher wenig hilfreich", "mittelmäßig hilfreich", "eher hilfreich", "sehr hilfreich"), "."),
+        paste0(c("Ja", "Nein", "Weiß nicht / verstehe die Frage nicht"), "."),
+        paste0("... ", c("gar nicht genutzt", "selten genutzt", "ab und an genutzt", "eher oft genutzt", "ständig genutzt"), "."),
+        paste0("... ", c("viel zu kurz", "etwas zu kurz", "genau richtig", "etwas zu lang", "viel zu lang"), "."),
+        paste0("... ", c("sehr schlecht", "eher schlecht", "mittelmäßig", "eher gut", "sehr gut"), ".")
+    ),
+    caption = "Umfrage", message = "Danke."
 )
 ```
 
 ```{r survey_kommentar}
-question_text("Was würden Sie an der Lernanwendung verbessern?",
-  answer_fn(correct, label = "survey_kommentar"),
-  allow_retry = FALSE,
-  placeholder = "",
-  correct = "Danke."
+survey(
+    list(
+        list(
+            text = "Was würden Sie an der Lernanwendung verbessern?",
+            label = "kommentar",
+            type = "learnr_text"
+        )
+    ),
+    caption = "",
+    message = "Danke."
 )
 ```
 
