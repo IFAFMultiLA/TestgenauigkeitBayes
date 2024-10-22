@@ -29,7 +29,8 @@ knitr::opts_chunk$set(echo = FALSE)
 correct_msg <- "Richtig!"
 incorrect_msg <- "Leider falsch. Versuch's noch einmal."
 incorrect_too_long <- "Deine Eingabe ist leider zu lang."
-incorrect_invalid_chars <- "Deine Eingabe enthält ungültige Zeichen. Nur folgende Zeichen sind möglich:"
+incorrect_comma <- "Deine Eingabe enthält ein Komma. Bitte benutze wie in R den Punkt als Dezimaltrennzeichen, statt das Komma."
+incorrect_invalid_symbols <- "Deine Eingabe enthält ungültige Symbole oder Funktionen. Nur folgende Symbole und Funktionen sind möglich: "
 incorrect_cannot_evaluate <- "Deine Eingabe ist leider keine gültige Zahl bzw. kein gültiger mathematischer Ausdruck."
 incorrect_out_of_range_probability <- "Gefragt ist eine Wahrscheinlichkeit, daher muss das Ergebnis zwischen %d und %d sein, deine Antwort ist aber %f."
 placeholder <- "Mathematischer Ausdruck oder Zahl"
@@ -38,10 +39,11 @@ question_mathexpression_probability_default <- function(text, expected_result) {
     question_mathexpression_probability(
         paste0(text, "\n\nGeben Sie entweder einen mathematischen Ausdruck wie `(20+11)/10` ein oder eine Zahl wie `3.1` (Achtung, das Dezimalzeichen ist der Punkt)."),
         expected_result,
+        handle_comma_in_input = incorrect_comma,
         correct = correct_msg,
         incorrect = incorrect_msg,
         incorrect_too_long = incorrect_too_long,
-        incorrect_invalid_chars = incorrect_invalid_chars,
+        incorrect_invalid_symbols = incorrect_invalid_symbols,
         incorrect_cannot_evaluate = incorrect_cannot_evaluate,
         incorrect_out_of_range = incorrect_out_of_range_probability,
         placeholder = placeholder,
@@ -70,8 +72,6 @@ Eine Person fühlt sich gerade krank und macht einen Corona-Schnelltest. Leider 
 
 ![Ein positiver Schnelltest](images/covid19test.jpg){height=300px}    
 
-Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie wirklich an Corona erkrankt ist, d.h. wie sicher kann sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass die Person wirklich *nicht* an Corona erkrankt ist?
-
 ::: summary
 
 #### Fragestellung
@@ -79,6 +79,8 @@ Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie w
 Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit positivem Corona-Test *wirklich* erkrankt ist? Wie hoch ist die Wahrscheinlichkeit, dass ein Mensch mit negativem Corona-Test *wirklich* gesund ist?  
 
 :::
+
+Der Test ist zwar positiv, aber wie sicher kann sich die Person sein, dass sie wirklich an Corona erkrankt ist, d.h. wie sicher kann sie sich sein, dass das Testergebnis korrekt ist? Die gleiche Frage könnte man sich auch stellen, wenn der Test negativ wäre: Wie sicher ist es in diesem Fall, dass die Person wirklich *nicht* an Corona erkrankt ist?
 
 Als erstes sehen wir uns den Beipackzettel des Schnelltests in der Hoffnung an, dass wir dort Antworten auf unsere Fragen finden. 
 
@@ -251,6 +253,16 @@ $P(T \mid K)$ wird *Sensitivität* genannt und ist ein Gütemaß für einen Test
 
 Um nun den eigentlich gesuchten *positiven Vorhersagewert*, also die bedingte Wahrscheinlichkeit $P(K \mid T)$ zu berechnen, können wir den **Satz von Bayes** benutzen:
 
+::: summary
+
+#### Satz von Bayes
+
+$$
+P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
+$$
+
+:::
+
 
 $$
 P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
@@ -263,12 +275,6 @@ Was wir also brauchen, um $P(K \mid T)$ zu berechnen, sind drei Wahrscheinlichke
 #### Definition der bedingten Wahrscheinlichkeiten
 
 $P(K \mid T)$ – Wahrscheinlichkeit, dass eine Person tatsächlich krank ist, unter der Bedingung dass der Test positiv ist
-
-#### Satz von Bayes
-
-$$
-P(K \mid T) = \frac{P(T \mid K) P(K)}{P(T)}.
-$$
 
 :::
 
