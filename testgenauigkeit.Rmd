@@ -818,7 +818,7 @@ ggplot(nvw_param, aes(praev, nvw, color = sens, group = sens)) +
     theme_minimal()
 ```
 
-```{r nvw_c-code-check}
+```{r nvw_c-check}
 grade_this_code()
 ```
 
